@@ -9,59 +9,66 @@ public class ClienteDAC {
 
 	}
 
-	public Connection abrirConexion() throws SQLException {
-		String url = "jdbc:mysql://localhost:3306/";
-		String dbName = "canchas_futbol";
-		String userName = "root";
-		String password = "123456";
-		Connection conn = null;
+	public Connection abrirConexion() {
+		Connection conexion = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			conn = DriverManager
-					.getConnection(url + dbName, userName, password);
-		} catch (Exception e) {
-			e.printStackTrace();
+			Class.forName("org.sqlite.JDBC");
+			conexion = DriverManager
+					.getConnection("jdbc:sqlite:C:/sampleDario.db");
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.err.println(e.getMessage());
 		}
-		return conn;
+		return conexion;
 	}
 
-	public ArrayList getClientes() throws SQLException {
-		Connection conn = this.abrirConexion();
-		CallableStatement cStmt = conn.prepareCall("{call demoSp(?, ?)}");
-		cStmt.setString(1, "abcdefg");
+	public static ArrayList<String[]> getClientes() {
 		
-		return null;
-
+		ClienteDAC cliente = new ClienteDAC();
+		Connection conn = cliente.abrirConexion();
+		ArrayList<String[]> array = new ArrayList<String[]>();
+		try 
+		{			
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			ResultSet rs = statement.executeQuery("SELECT * FROM clientes");
+			while (rs.next()) 
+			{
+				String[] vector = new String[4];
+				vector[0] = String.valueOf(rs.getInt("id"));
+				vector[1] = rs.getString("nombre");
+				vector[2] = rs.getString("apellido");
+				vector[3] = String.valueOf(rs.getInt("telefono"));
+				array.add(vector);
+			}			
+			conn.close(); // Cierro conexion.
+		} 
+		catch (Exception e) 
+		{
+			System.err.println(e.getMessage());
+		}
+		return array;
 	}
 
-	public static void main(String[] args) {
-		String url = "jdbc:mysql://localhost:3306/";
-		String dbName = "canchas_futbol";
-		String userName = "root";
-		String password = "123456";
+	public static void crearClientesDePrueba() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			Connection conn = DriverManager.getConnection(url + dbName,
-					userName, password);
+			ClienteDAC cliente = new ClienteDAC();
+			Connection conn = cliente.abrirConexion();
 
-			Statement st = conn.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM  clientes");
-			ResultSetMetaData rsmd = res.getMetaData();
-			int columnsNumber = rsmd.getColumnCount();
-			while (res.next()) {
-				for (int i = 1; i <= columnsNumber; i++) {
-					if (i > 1)
-						System.out.print(",  ");
-					String columnValue = res.getString(i);
-					System.out.print(columnValue + " " + rsmd.getColumnName(i));
-				}
-				System.out.println("");
-			}
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			statement.executeUpdate("drop table if exists CLIENTES");
+			statement
+					.executeUpdate("create table CLIENTES (id integer, nombre string, apellido string, telefono integer)");
+			statement
+					.executeUpdate("insert into CLIENTES values(1, 'Karen', 'Perez', 46600000)");
+			statement
+					.executeUpdate("insert into CLIENTES values(2, 'Darío', 'Rick', 42223456)");
 
-			conn.close();
+			conn.close();// Cierro conexion.
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 	}
-
 }

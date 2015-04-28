@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
+
+import Persistencia.ClienteDAC;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -61,6 +64,17 @@ public class Principal {
 		frame.getContentPane().add(btnCanchas);
 		
 		JButton btnCanchasDisponibles = new JButton("Canchas disponibles");
+		btnCanchasDisponibles.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					ClienteDAC.crearClientesDePrueba();
+					Logica.Cliente.getClientes();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		btnCanchasDisponibles.setBounds(54, 175, 129, 23);
 		frame.getContentPane().add(btnCanchasDisponibles);
 	}

@@ -39,4 +39,5 @@ public class Cliente extends JFrame {
 		setContentPane(contentPane);
 	}
 
+	
 }
