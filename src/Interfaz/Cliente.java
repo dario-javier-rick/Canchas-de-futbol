@@ -6,10 +6,16 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class Cliente extends JFrame {
 
 	private JPanel contentPane;
+	JLabel lblNewLabel = new JLabel("New label");
+
 
 	/**
 	 * Launch the application.
@@ -35,9 +41,24 @@ public class Cliente extends JFrame {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton btnVerClientes = new JButton("Ver clientes");
+		btnVerClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					lblNewLabel.setText(Logica.Cliente.getClientes().toString());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		btnVerClientes.setBounds(10, 11, 89, 23);
+		contentPane.add(btnVerClientes);
+		
+		lblNewLabel.setBounds(193, 15, 231, 236);
+		contentPane.add(lblNewLabel);
 	}
-
-	
 }
