@@ -1,6 +1,15 @@
+drop table if exists USUARIOS;
 drop table if exists CLIENTES;
 drop table if exists CANCHAS;
 drop table if exists RESERVAS;
+
+create table USUARIOS (
+	idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, 
+	usuario STRING, 
+	contraseña STRING, 
+	email STRING,
+	nivelPermisos INTEGER
+); 
 
 create table CLIENTES (
 	idCliente INTEGER PRIMARY KEY AUTOINCREMENT, 

@@ -1,15 +1,14 @@
 package Logica;
 
 import java.awt.Image;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Persistencia.ClienteDAC;
 
 public class Cliente {
 
-	String nombre;
-	String apellido;
+	private String nombre;
+	private String apellido;
 	int telefono;
 	Image foto;
 	private static ClienteDAC DAC = new ClienteDAC();
@@ -20,8 +19,8 @@ public class Cliente {
 
 	public Cliente(String nombre, String apellido, int telefono,
 			boolean persistirCliente) {
-		this.nombre = nombre;
-		this.apellido = apellido;
+		this.setNombre(nombre);
+		this.setApellido(apellido);
 		this.telefono = telefono;
 		if (persistirCliente) {
 			DAC.persistirCliente(nombre, apellido, telefono);
@@ -47,8 +46,24 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-		return "Cliente [nombre=" + nombre + ", apellido=" + apellido
+		return "Cliente [nombre=" + getNombre() + ", apellido=" + getApellido()
 				+ ", telefono=" + telefono + ", foto=" + foto + "]";
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	void setApellido(String apellido) {
+		this.apellido = apellido;
 	}
 
 }
