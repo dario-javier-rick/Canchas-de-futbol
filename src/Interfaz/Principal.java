@@ -5,8 +5,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 
-import Persistencia.ClienteDAC;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 

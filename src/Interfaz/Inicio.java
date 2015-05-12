@@ -7,6 +7,7 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import Logica.Usuario;
+import Persistencia.BBDD;
 import Recursos.Fondo;
 
 import javax.swing.JLabel;
@@ -146,20 +147,19 @@ public class Inicio extends JFrame {
 		JButton btnOk = new JButton("Ingresar");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try
+				{
 				if (Usuario.validarDatos(txtUsuario.getText(), txtContraseña.getPassword()))
 				{
-					// Ingresar
-					lblMensaje1.setText("VALIDOS!");
-					lblMensaje2.setText("VALIDOS!");
-
+					lblMensaje1.setText("Bienvenido al sistema!");
+					lblMensaje2.setText("Bienvenido al sistema!");
 					ControlCentral.main(null);
 				}
-				else
+				}
+				catch (Exception e)
 				{
-					lblMensaje1.setText("Usuario o contraseña incorrectos");
-					lblMensaje2.setText("Usuario o contraseña incorrectos");
-					txtUsuario.setText("");
-					txtContraseña.setText("");
+					lblMensaje1.setText(e.getMessage());
+					lblMensaje2.setText(e.getMessage());
 				}
 			}
 

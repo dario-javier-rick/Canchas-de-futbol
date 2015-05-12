@@ -12,26 +12,30 @@ public class UsuarioDAC {
 		try {
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
-			ResultSet rs = statement.executeQuery("SELECT contraseña FROM usuarios WHERE usuario = '" + usuario + "';");
-			String passwordBBDD = rs.getString("contraseña");
-			if (passwordBBDD == "" || passwordBBDD.equals(null))
-			{
-				//Usuario inexistente
+			ResultSet rs = statement
+					.executeQuery("SELECT contraseña FROM usuarios WHERE usuario = '"
+							+ usuario + "' ORDER BY ROWID ASC LIMIT 1;");
+			String passwordBBDD = "";
+			
+			if (!rs.isBeforeFirst())
+				throw new RuntimeException("Usuario inexistente");
+				
+			
+			
+			while (rs.next()) {
+				passwordBBDD = rs.getString("contraseña");
 			}
-			else
-			{
-				if (passwordBBDD == password)
-				{
-					return true;
-				}
-			}			
 			conn.close(); // Cierro conexion.
+			System.out.println("Capa: UsuarioDAC Usuario =" + usuario +"; Password = " + password + "; PasswordBBDD = " + passwordBBDD +";");
+			if (passwordBBDD.equals(password))
+				return true;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+
 		return false;
 	}
-	
+
 	public ArrayList<String[]> getUsuarios() {
 
 		Connection conn = BBDD.abrirConexion();
