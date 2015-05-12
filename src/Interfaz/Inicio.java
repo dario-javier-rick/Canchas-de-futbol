@@ -1,39 +1,27 @@
 package Interfaz;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPasswordField;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Logica.Usuario;
-import Persistencia.BBDD;
 import Recursos.Fondo;
-
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
 import java.awt.Font;
 import java.awt.Color;
-
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.JButton;
-
 import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class Inicio extends JFrame {
 
-
-	private static final long serialVersionUID = 1L;
-	
-	JLabel lblMensaje1 = new JLabel("");
-	JLabel lblMensaje2 = new JLabel("");
-	private JPasswordField txtContraseña;
-	private JTextField txtUsuario;
+	private JPanel contentPane;
+	private JTextField txtPassword;
 
 	/**
 	 * Launch the application.
@@ -67,120 +55,73 @@ public class Inicio extends JFrame {
 		setContentPane(p);
 		p.setLayout(null);
 		
-		JLabel lblCacho1 = new JLabel("Cacho");
-		lblCacho1.setForeground(Color.WHITE);
-		lblCacho1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
-		lblCacho1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCacho1.setBounds(271, 26, 118, 31);
-		p.add(lblCacho1);
+		JLabel lblNewLabel = new JLabel("Login");
+		lblNewLabel.setBackground(Color.RED);
+		lblNewLabel.setForeground(Color.BLACK);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 24));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(294, 118, 76, 25);
+		p.add(lblNewLabel);
 		
-		JLabel lblCacho2 = new JLabel("Cacho");
-		lblCacho2.setForeground(Color.BLACK);
-		lblCacho2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCacho2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
-		lblCacho2.setBounds(266, 26, 118, 31);
-		p.add(lblCacho2);
+		JLabel label = new JLabel("Login");
+		label.setForeground(Color.LIGHT_GRAY);
+		label.setBackground(Color.WHITE);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 24));
+		label.setBounds(290, 118, 76, 25);
+		p.add(label);
 		
-		JLabel lblElRey1 = new JLabel("El Rey de las canchas");
-		lblElRey1.setForeground(Color.WHITE);
-		lblElRey1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblElRey1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 28));
-		lblElRey1.setBounds(143, 79, 378, 31);
-		p.add(lblElRey1);
+		txtPassword = new JTextField();
+		txtPassword.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.LOWERED, new Color(64, 64, 64), new Color(64, 64, 64), new Color(64, 64, 64), new Color(64, 64, 64)), null));
+		txtPassword.setHorizontalAlignment(SwingConstants.CENTER);
+		txtPassword.setForeground(Color.BLACK);
+		txtPassword.setBackground(Color.WHITE);
+		txtPassword.setBounds(256, 154, 152, 20);
+		p.add(txtPassword);
+		txtPassword.setColumns(10);
 		
-		JLabel lblElRey2 = new JLabel("El Rey de las canchas");
-		lblElRey2.setForeground(Color.BLACK);
-		lblElRey2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblElRey2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 28));
-		lblElRey2.setBounds(138, 79, 378, 31);
-		p.add(lblElRey2);
-		
-		JLabel lblUsuario1 = new JLabel("Usuario:");
-		lblUsuario1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUsuario1.setForeground(Color.WHITE);
-		lblUsuario1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
-		lblUsuario1.setBackground(Color.WHITE);
-		lblUsuario1.setBounds(111, 167, 173, 25);
-		p.add(lblUsuario1);
-		
-		JLabel lblUsuario2 = new JLabel("Usuario:");
-		lblUsuario2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUsuario2.setForeground(Color.BLACK);
-		lblUsuario2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
-		lblUsuario2.setBackground(Color.WHITE);
-		lblUsuario2.setBounds(120, 169, 146, 25);
-		p.add(lblUsuario2);
-		
-		txtUsuario = new JTextField();
-		txtUsuario.setForeground(Color.BLACK);
-		txtUsuario.setBounds(256, 169, 152, 20);
-		p.add(txtUsuario);
-		txtUsuario.setColumns(10);
-		
-		JLabel lblContraseña1 = new JLabel("Contrase\u00F1a:");
-		lblContraseña1.setBackground(Color.WHITE);
-		lblContraseña1.setForeground(Color.WHITE);
-		lblContraseña1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
-		lblContraseña1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblContraseña1.setBounds(94, 205, 173, 25);
-		p.add(lblContraseña1);
-		
-		JLabel lblContraseña2 = new JLabel("Contrase\u00F1a:");
-		lblContraseña2.setForeground(Color.BLACK);
-		lblContraseña2.setBackground(Color.WHITE);
-		lblContraseña2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblContraseña2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
-		lblContraseña2.setBounds(102, 205, 146, 25);
-		p.add(lblContraseña2);
-		
-		txtContraseña = new JPasswordField(10);
-		txtContraseña.setSize(152, 20);
-		txtContraseña.setLocation(256, 209);
-		txtContraseña.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.LOWERED, new Color(64, 64, 64), new Color(64, 64, 64), new Color(64, 64, 64), new Color(64, 64, 64)), null));
-		txtContraseña.setHorizontalAlignment(SwingConstants.CENTER);
-		txtContraseña.setForeground(Color.BLACK);
-		txtContraseña.setBackground(Color.WHITE);
-		p.add(txtContraseña);
-		txtContraseña.setColumns(10);
-
-		
-		JButton btnOk = new JButton("Ingresar");
-		btnOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try
-				{
-				if (Usuario.validarDatos(txtUsuario.getText(), txtContraseña.getPassword()))
-				{
-					lblMensaje1.setText("Bienvenido al sistema!");
-					lblMensaje2.setText("Bienvenido al sistema!");
-					ControlCentral.main(null);
-				}
-				}
-				catch (Exception e)
-				{
-					lblMensaje1.setText(e.getMessage());
-					lblMensaje2.setText(e.getMessage());
-				}
-			}
-
-
-		});
-		btnOk.setBounds(437, 208, 77, 23);
+		JButton btnOk = new JButton("Ok");
+		btnOk.setBounds(413, 153, 52, 23);
 		p.add(btnOk);
 		
+		JLabel label_1 = new JLabel("Generar Password");
+		label_1.setForeground(Color.WHITE);
+		label_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
+		label_1.setBounds(256, 189, 152, 14);
+		p.add(label_1);
 		
-		lblMensaje1.setForeground(Color.WHITE);
-		lblMensaje1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
-		lblMensaje1.setBounds(256, 308, 300, 14);
-		p.add(lblMensaje1);
+		JLabel label_2 = new JLabel("Generar Password");
+		label_2.setForeground(Color.BLACK);
+		label_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
+		label_2.setBounds(254, 189, 152, 14);
+		p.add(label_2);
 		
-		lblMensaje2.setForeground(Color.BLACK);
-		lblMensaje2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
-		lblMensaje2.setBounds(256, 304, 300, 14);
-		p.add(lblMensaje2);
+		JLabel lblCacho = new JLabel("Cacho");
+		lblCacho.setForeground(Color.WHITE);
+		lblCacho.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		lblCacho.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCacho.setBounds(266, 214, 118, 31);
+		p.add(lblCacho);
 		
-		JButton btnRecordarDatos = new JButton("Recordar datos");
-		btnRecordarDatos.setBounds(10, 308, 107, 23);
-		p.add(btnRecordarDatos);
+		JLabel lblElReyDe = new JLabel("El Rey de las canchas");
+		lblElReyDe.setForeground(Color.WHITE);
+		lblElReyDe.setHorizontalAlignment(SwingConstants.CENTER);
+		lblElReyDe.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 28));
+		lblElReyDe.setBounds(142, 256, 378, 31);
+		p.add(lblElReyDe);
+		
+		JLabel label_3 = new JLabel("Cacho");
+		label_3.setForeground(Color.BLACK);
+		label_3.setHorizontalAlignment(SwingConstants.CENTER);
+		label_3.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		label_3.setBounds(260, 214, 118, 31);
+		p.add(label_3);
+		
+		JLabel label_4 = new JLabel("El Rey de las canchas");
+		label_4.setForeground(Color.BLACK);
+		label_4.setHorizontalAlignment(SwingConstants.CENTER);
+		label_4.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 28));
+		label_4.setBounds(138, 256, 378, 31);
+		p.add(label_4);
 	}
 }
