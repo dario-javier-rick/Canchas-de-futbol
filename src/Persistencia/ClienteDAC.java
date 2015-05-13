@@ -3,16 +3,13 @@ package Persistencia;
 import java.sql.*;
 import java.util.ArrayList;
 
-
-
 public class ClienteDAC {
 
 	public ClienteDAC() {
 
 	}
 
-	public ArrayList<String[]> getClientes() {
-
+	public ArrayList<String[]> obtenerClientes() {
 		Connection conn = BBDD.abrirConexion();
 		ArrayList<String[]> array = new ArrayList<String[]>();
 		try {
@@ -34,15 +31,14 @@ public class ClienteDAC {
 		return array;
 	}
 
-	public void persistirCliente(String nombre, String apellido,
-			int telefono) {
+	public void persistirCliente(String nombre, String apellido, int telefono) {
 		Connection conn = BBDD.abrirConexion();
 		Statement statement;
 		try {
 			statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
-			statement
-					.executeUpdate("insert into CLIENTES values('"+nombre+"', '"+apellido+"', "+telefono+")");
+			statement.executeUpdate("insert into CLIENTES values('" + nombre
+					+ "', '" + apellido + "', " + telefono + ")");
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}

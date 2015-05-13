@@ -27,10 +27,10 @@ public class Cliente {
 		}
 	}
 
-	public static ArrayList<Cliente> getClientes() {
+	public static ArrayList<Cliente> obtenerClientes() {
 		ArrayList<Cliente> arrayClientes = new ArrayList<Cliente>();
 		try {
-			ArrayList<String[]> array = DAC.getClientes();
+			ArrayList<String[]> array = DAC.obtenerClientes();
 
 			for (int i = 0; i < array.size(); i++) {
 				Cliente cliente = new Cliente(array.get(i)[1], array.get(i)[2],
