@@ -16,23 +16,17 @@ public class UsuarioDAC {
 					.executeQuery("SELECT contraseña FROM usuarios WHERE usuario = '"
 							+ usuario + "' ORDER BY ROWID ASC LIMIT 1;");
 			String passwordBBDD = "";
-			
 			if (!rs.isBeforeFirst())
-				throw new RuntimeException("Usuario inexistente");
-				
-			
-			
+				return false;
 			while (rs.next()) {
 				passwordBBDD = rs.getString("contraseña");
 			}
 			conn.close(); // Cierro conexion.
-			System.out.println("Capa: UsuarioDAC Usuario =" + usuario +"; Password = " + password + "; PasswordBBDD = " + passwordBBDD +";");
 			if (passwordBBDD.equals(password))
 				return true;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-
 		return false;
 	}
 

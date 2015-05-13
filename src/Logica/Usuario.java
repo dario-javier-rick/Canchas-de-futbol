@@ -18,7 +18,7 @@ public class Usuario {
 			}
 			if (!DAC.validarDatos(usuario, password))
 			{
-				throw new RuntimeException("Contraseña incorrecta");
+				throw new RuntimeException("Usuario o contraseña incorrecta");
 			}
 			return true;
 		}

@@ -71,12 +71,18 @@ public class ControlCentral extends JFrame {
 		panel.add(comboBox);
 		
 		JButton btnNewButton = new JButton("Agregar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AgregarCancha.main(null);
+			}
+		});
 		btnNewButton.setBounds(6, 47, 89, 23);
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Eliminar");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				EliminarCancha.main(null);
 			}
 		});
 		btnNewButton_1.setBounds(105, 47, 89, 23);
@@ -96,6 +102,11 @@ public class ControlCentral extends JFrame {
 		panel_1.add(comboBox_1);
 		
 		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AgregarSocios.main(null);
+			}
+		});
 		btnAgregar.setBounds(6, 47, 89, 23);
 		panel_1.add(btnAgregar);
 		
