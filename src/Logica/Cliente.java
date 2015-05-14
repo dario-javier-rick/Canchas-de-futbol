@@ -36,7 +36,6 @@ public class Cliente {
 				Cliente cliente = new Cliente(array.get(i)[1], array.get(i)[2],
 						Integer.parseInt(array.get(i)[3]), false);
 				arrayClientes.add(cliente);
-				System.out.println(cliente);
 			}
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -64,6 +63,11 @@ public class Cliente {
 
 	void setApellido(String apellido) {
 		this.apellido = apellido;
+	}
+
+	public static Cliente obtenerCliente(int IdCliente) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

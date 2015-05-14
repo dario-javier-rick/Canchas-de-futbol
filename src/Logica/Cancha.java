@@ -7,7 +7,7 @@ import Persistencia.CanchaDAC;
 public class Cancha {
 
 	private String nombre;
-	String tipo_cancha;
+	private String tipo_cancha;
 	int precioPorHora;
 	int maxJugadores;
 	private static CanchaDAC DAC = new CanchaDAC();
@@ -15,7 +15,7 @@ public class Cancha {
 	public Cancha(String nombre, String tipo_cancha, int precioPorHora,
 			int maxJugadores) {
 		this.setNombre(nombre);
-		this.tipo_cancha = tipo_cancha;
+		this.setTipo_cancha(tipo_cancha);
 		this.precioPorHora = precioPorHora;
 		this.maxJugadores = maxJugadores;
 	}
@@ -38,17 +38,30 @@ public class Cancha {
 
 	@Override
 	public String toString() {
-		return "Cancha [nombre=" + getNombre() + ", tipo_cancha=" + tipo_cancha
+		return "Cancha [nombre=" + getNombre() + ", tipo_cancha=" + getTipo_cancha()
 				+ ", precioPorHora=" + precioPorHora + ", maxJugadores="
 				+ maxJugadores + "]";
 	}
 
-	String getNombre() {
+	public String getNombre() {
 		return nombre;
 	}
 
 	void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getTipo_cancha() {
+		return tipo_cancha;
+	}
+
+	void setTipo_cancha(String tipo_cancha) {
+		this.tipo_cancha = tipo_cancha;
+	}
+
+	public static Cancha obtenerCancha(int IdCancha) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
