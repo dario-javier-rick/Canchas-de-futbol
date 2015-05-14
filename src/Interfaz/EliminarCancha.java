@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -12,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Logica.Cancha;
 import Recursos.Fondo;
 
 public class EliminarCancha extends JFrame {
@@ -20,6 +22,7 @@ public class EliminarCancha extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -222451083314467403L;
+	JComboBox cboCanchas = new JComboBox();
 	private JPanel contentPane;
 
 	/**
@@ -64,10 +67,18 @@ public class EliminarCancha extends JFrame {
 		btnNewButton.setBounds(299, 86, 89, 23);
 		p.add(btnNewButton);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Seleccione una cancha. . . . "}));
-		comboBox.setBounds(10, 11, 275, 20);
-		p.add(comboBox);
+		cboCanchas.setModel(new DefaultComboBoxModel(new String[] {"Seleccione una cancha. . . . "}));
+		cboCanchas.setBounds(10, 11, 275, 20);
+		p.add(cboCanchas);
 		
+		bindCanchas();
+	}
+	
+	private void bindCanchas() {
+		ArrayList<Cancha> canchas = Cancha.obtenerCanchas();
+		for (Cancha cancha : canchas) {
+			cboCanchas.addItem(cancha.getNombre() + ", Tipo: "
+					+ cancha.getTipo_cancha());
+		}
 	}
 }
