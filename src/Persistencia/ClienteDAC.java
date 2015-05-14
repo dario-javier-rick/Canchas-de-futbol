@@ -5,8 +5,7 @@ import java.util.ArrayList;
 
 public class ClienteDAC {
 
-	public ClienteDAC() 
-	{
+	public ClienteDAC() {
 
 	}
 
@@ -38,9 +37,40 @@ public class ClienteDAC {
 		try {
 			statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
-			statement.executeUpdate("insert into CLIENTES values('" + nombre
+			statement.executeUpdate("INSERT INTO clientes VALUES('" + nombre
 					+ "', '" + apellido + "', " + telefono + ")");
 		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+
+	public int obteneridCliente(String nombre, String apellido, int telefono) {
+		int resultado = 0;
+		try {
+			Connection conn = BBDD.abrirConexion();
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			ResultSet rs = statement.executeQuery("SELECT idCliente FROM clientes WHERE nombre = "
+					+ nombre + ";");
+			if (rs.next()) {
+				resultado = rs.getInt(1);
+			}
+			conn.close(); // Cierro conexion.
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return resultado;
+	}
+
+	public void eliminarCliente(int idCliente) {
+		try {
+			Connection conn = BBDD.abrirConexion();
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			statement.executeQuery("DELETE FROM clientes WHERE idCliente = "
+					+ idCliente + ";");
+			conn.close(); // Cierro conexion.
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 	}
