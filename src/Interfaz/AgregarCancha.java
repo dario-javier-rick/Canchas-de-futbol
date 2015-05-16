@@ -119,14 +119,31 @@ public class AgregarCancha extends JFrame {
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Cancha cancha = new Cancha(nombre.getText(), tipo_cancha
-						.getText(), Integer.parseInt(precioPorHora.getText()),
-						Integer.parseInt(maxJugadores.getText()));
-				cancha.persistirCancha();
+				if (nombre.getText() == "" || maxJugadores.getText() == ""
+						|| precioPorHora.getText() == ""
+						|| tipo_cancha.getText() == "") {
+					// Falla validación
+				} else {
+					Cancha cancha = new Cancha(nombre.getText(), tipo_cancha
+							.getText(), Integer.parseInt(precioPorHora
+							.getText()), Integer.parseInt(maxJugadores
+							.getText()));
+					cancha.persistirCancha();
+				}
 			}
 		});
-		btnAgregar.setBounds(284, 188, 89, 23);
+		btnAgregar.setBounds(284, 146, 89, 23);
 		p.add(btnAgregar);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false); 
+				dispose();
+			}
+		});
+		btnCancelar.setBounds(284, 188, 89, 23);
+		p.add(btnCancelar);
 
 	}
 }

@@ -10,6 +10,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -54,31 +55,45 @@ public class EliminarCancha extends JFrame {
 		p.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(p);
 		p.setLayout(null);
-		
+
 		JButton btnNewButton_1 = new JButton("Eliminar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cboCanchas.getSelectedIndex() != 0)
+				{
+				 Cancha.eliminarCancha((Cancha) cboCanchas.getSelectedItem());
+				 JOptionPane.showMessageDialog(null, "Cancha eliminada!");
+				 cboCanchas.removeAllItems();
+				 cboCanchas.addItem("Seleccione una cancha. . . . ");
+				 bindCanchas();
+				}
+			}
+		});
 		btnNewButton_1.setBounds(196, 86, 89, 23);
 		p.add(btnNewButton_1);
-		
+
 		JButton btnNewButton = new JButton("Cancelar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+				dispose();
 			}
 		});
 		btnNewButton.setBounds(299, 86, 89, 23);
 		p.add(btnNewButton);
-		
-		cboCanchas.setModel(new DefaultComboBoxModel(new String[] {"Seleccione una cancha. . . . "}));
+
+		cboCanchas.setModel(new DefaultComboBoxModel(
+				new String[] { "Seleccione una cancha. . . . " }));
 		cboCanchas.setBounds(10, 11, 275, 20);
 		p.add(cboCanchas);
-		
+
 		bindCanchas();
 	}
-	
+
 	private void bindCanchas() {
 		ArrayList<Cancha> canchas = Cancha.obtenerCanchas();
 		for (Cancha cancha : canchas) {
-			cboCanchas.addItem(cancha.getNombre() + ", Tipo: "
-					+ cancha.getTipo_cancha());
+			cboCanchas.addItem(cancha);
 		}
 	}
 }

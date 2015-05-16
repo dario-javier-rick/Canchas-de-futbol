@@ -8,16 +8,22 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Recursos.Fondo;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
+
 import java.awt.Font;
+
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JLabel;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AgregarSocios extends JFrame {
 
@@ -259,6 +265,12 @@ public class AgregarSocios extends JFrame {
 		p.add(btnAgregar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false); 
+				dispose();
+			}
+		});
 		btnCancelar.setBounds(425, 245, 89, 23);
 		p.add(btnCancelar);
 		

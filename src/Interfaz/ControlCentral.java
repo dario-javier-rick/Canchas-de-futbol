@@ -75,11 +75,12 @@ public class ControlCentral extends JFrame {
 		panel.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"), "Canchas",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
-		panel.setBounds(27, 30, 200, 77);
+		panel.setBounds(10, 30, 257, 77);
 		p.add(panel);
 		panel.setLayout(null);
+		cboCanchas.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
-		cboCanchas.setBounds(6, 16, 188, 20);
+		cboCanchas.setBounds(6, 16, 241, 20);
 		panel.add(cboCanchas);
 
 		JButton btnNewButton = new JButton("Agregar");
@@ -97,7 +98,7 @@ public class ControlCentral extends JFrame {
 				EliminarCancha.main(null);
 			}
 		});
-		btnNewButton_1.setBounds(105, 47, 89, 23);
+		btnNewButton_1.setBounds(158, 47, 89, 23);
 		panel.add(btnNewButton_1);
 
 		JPanel panel_1 = new JPanel();
@@ -108,10 +109,11 @@ public class ControlCentral extends JFrame {
 				.getBorder("TitledBorder.border"), "Socios",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.WHITE));
 		panel_1.setBackground(Color.BLACK);
-		panel_1.setBounds(28, 127, 200, 77);
+		panel_1.setBounds(10, 127, 257, 77);
 		p.add(panel_1);
+		cboClientes.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
-		cboClientes.setBounds(6, 16, 188, 20);
+		cboClientes.setBounds(6, 16, 241, 20);
 		panel_1.add(cboClientes);
 
 		JButton btnAgregar = new JButton("Agregar");
@@ -124,7 +126,7 @@ public class ControlCentral extends JFrame {
 		panel_1.add(btnAgregar);
 
 		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(105, 47, 89, 23);
+		btnEliminar.setBounds(158, 47, 89, 23);
 		panel_1.add(btnEliminar);
 
 		JPanel panel_2 = new JPanel();
@@ -136,10 +138,11 @@ public class ControlCentral extends JFrame {
 				TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
 		panel_2.setBackground(Color.BLACK);
-		panel_2.setBounds(28, 228, 200, 77);
+		panel_2.setBounds(10, 228, 257, 77);
 		p.add(panel_2);
+		cboReservas.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
-		cboReservas.setBounds(6, 16, 188, 20);
+		cboReservas.setBounds(6, 16, 241, 20);
 		panel_2.add(cboReservas);
 
 		JButton btnAgregar_1 = new JButton("Agregar");
@@ -147,7 +150,7 @@ public class ControlCentral extends JFrame {
 		panel_2.add(btnAgregar_1);
 
 		JButton btnEliminar_1 = new JButton("Eliminar");
-		btnEliminar_1.setBounds(105, 47, 89, 23);
+		btnEliminar_1.setBounds(158, 47, 89, 23);
 		panel_2.add(btnEliminar_1);
 
 		JPanel panel_3 = new JPanel();
@@ -245,7 +248,7 @@ public class ControlCentral extends JFrame {
 		ArrayList<Cancha> canchas = Cancha.obtenerCanchas();
 		for (Cancha cancha : canchas) {
 			cboCanchas.addItem(cancha.getNombre() + ", Tipo: "
-					+ cancha.getTipo_cancha());
+					+ cancha.getTipo_cancha() + ", Precio: $" + cancha.getPrecioPorHora());
 		}
 	}
 }

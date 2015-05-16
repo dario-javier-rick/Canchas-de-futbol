@@ -42,6 +42,14 @@ public class Cliente {
 		}
 		return arrayClientes;
 	}
+	
+	public static Cliente obtenerCliente(int IdCliente) {
+		String[] datos = DAC.obtenerCliente(IdCliente);
+		Cliente cliente = new Cliente(datos[1], datos[2],
+				Integer.parseInt(datos[3]), false);
+		return cliente;
+	}
+
 
 	@Override
 	public String toString() {
@@ -65,9 +73,5 @@ public class Cliente {
 		this.apellido = apellido;
 	}
 
-	public static Cliente obtenerCliente(int IdCliente) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

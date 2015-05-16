@@ -31,6 +31,28 @@ public class CanchaDAC {
 		}
 		return array;
 	}
+	
+	public String[] obtenerCancha(int idCancha) {
+		Connection conn = BBDD.abrirConexion();
+		String[] datos = new String[5];
+		try {
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			ResultSet rs = statement.executeQuery("SELECT * FROM canchas WHERE idCancha = "
+					+ idCancha + ";");
+			if (rs.next()) {
+				datos[0] = String.valueOf(rs.getInt("idCancha"));
+				datos[1] = rs.getString("nombre");
+				datos[2] = rs.getString("tipo_cancha");
+				datos[3] = String.valueOf(rs.getInt("maxJugadores"));
+				datos[4] = String.valueOf(rs.getInt("precioPorHora"));
+			}
+			conn.close(); // Cierro conexion.
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return datos;
+	}
 
 	public int obtenerIdCancha(String nombre, String tipo_cancha,
 			int maxJugadores, int precioPorHora) {
@@ -85,5 +107,6 @@ public class CanchaDAC {
 			System.err.println(e.getMessage());
 		}		
 	}
+
 
 }

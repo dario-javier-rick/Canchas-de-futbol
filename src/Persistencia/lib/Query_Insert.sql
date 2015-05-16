@@ -8,6 +8,6 @@ insert into CANCHAS values(2, 'Cancha 2', 'Cancha de 11', 11, 20);
 /*
  * Agrego reservas de prueba
  */ 
-insert into RESERVAS values (1, 1, 1, '2015-01-01 10:00:00', 0);
+insert into RESERVAS values (1, 1, 1, '01-01-2015 10:00:00', 0);
 
 

@@ -30,7 +30,7 @@ create table RESERVAS (
 	idReserva INTEGER PRIMARY KEY AUTOINCREMENT, 
 	idCliente INTEGER, 
 	idCancha INTEGER,
-	horario DATETIME,
+	horario STRING,
 	realizada BOOLEAN,
 	FOREIGN KEY(idCliente) REFERENCES CLIENTES(idCliente),
 	FOREIGN KEY(idCancha) REFERENCES CANCHAS(idCancha)

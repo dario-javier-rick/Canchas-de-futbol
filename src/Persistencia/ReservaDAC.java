@@ -21,7 +21,7 @@ public class ReservaDAC {
 				vector[0] = String.valueOf(rs.getInt("idReserva"));
 				vector[1] = String.valueOf(rs.getInt("idCliente"));
 				vector[2] = String.valueOf(rs.getInt("idCancha"));
-				vector[3] = String.valueOf(rs.getInt("horario"));
+				vector[3] = rs.getString("horario");
 				vector[4] = String.valueOf(rs.getInt("realizada"));
 				array.add(vector);
 			}

@@ -30,6 +30,27 @@ public class ClienteDAC {
 		}
 		return array;
 	}
+	
+	public String[] obtenerCliente(int idCliente) {
+		Connection conn = BBDD.abrirConexion();
+		String[] datos = new String[4];
+		try {
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			ResultSet rs = statement.executeQuery("SELECT * FROM clientes WHERE idCliente = "
+					+ idCliente + ";");
+			if (rs.next()) {
+				datos[0] = String.valueOf(rs.getInt("idCliente"));
+				datos[1] = rs.getString("nombre");
+				datos[2] = rs.getString("apellido");
+				datos[3] = String.valueOf(rs.getInt("telefono"));
+			}
+			conn.close(); // Cierro conexion.
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return datos;
+	}
 
 	public void persistirCliente(String nombre, String apellido, int telefono) {
 		Connection conn = BBDD.abrirConexion();
@@ -61,7 +82,8 @@ public class ClienteDAC {
 		}
 		return resultado;
 	}
-
+	
+	
 	public void eliminarCliente(int idCliente) {
 		try {
 			Connection conn = BBDD.abrirConexion();
@@ -74,5 +96,7 @@ public class ClienteDAC {
 			System.err.println(e.getMessage());
 		}
 	}
+
+
 
 }
