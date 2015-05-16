@@ -65,4 +65,25 @@ public class CanchaDAC {
 		}
 	}
 
+	public void persitirCancha(String nombre, String tipo_cancha,
+			int precioPorHora, int maxJugadores) {
+		Connection conn = BBDD.abrirConexion();
+		try {
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			PreparedStatement prep = conn.prepareStatement("INSERT INTO canchas VALUES (?,?,?,?,?)");
+			prep.setString(1, ""); // idCancha
+			prep.setString(2, nombre);
+			prep.setString(3, tipo_cancha);
+			prep.setInt(4, precioPorHora);
+			prep.setInt(5, maxJugadores);
+		    conn.setAutoCommit(false);
+		    prep.executeBatch();
+		    conn.setAutoCommit(true);
+			conn.close(); // Cierro conexion.
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}		
+	}
+
 }

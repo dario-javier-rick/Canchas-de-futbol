@@ -41,6 +41,7 @@ public class Inicio extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					Persistencia.BBDD.verificarExistenciaBBDD();
 					Inicio frame = new Inicio();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -54,6 +55,7 @@ public class Inicio extends JFrame {
 	 * Create the frame.
 	 */
 	public Inicio() {
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Inicio.class.getResource("/Recursos/images.jpg")));
 		setTitle("CourtManager");
 		setResizable(false);
@@ -109,13 +111,7 @@ public class Inicio extends JFrame {
 		lblUsuario2.setBackground(Color.WHITE);
 		lblUsuario2.setBounds(120, 169, 146, 25);
 		p.add(lblUsuario2);
-		
-		txtUsuario = new JTextField();
-		txtUsuario.setForeground(Color.BLACK);
-		txtUsuario.setBounds(256, 169, 152, 20);
-		p.add(txtUsuario);
-		txtUsuario.setColumns(10);
-		
+
 		JLabel lblContraseña1 = new JLabel("Contrase\u00F1a:");
 		lblContraseña1.setBackground(Color.WHITE);
 		lblContraseña1.setForeground(Color.WHITE);
@@ -132,6 +128,14 @@ public class Inicio extends JFrame {
 		lblContraseña2.setBounds(102, 205, 146, 25);
 		p.add(lblContraseña2);
 		
+		
+		txtUsuario = new JTextField();
+		txtUsuario.setForeground(Color.BLACK);
+		txtUsuario.setBounds(256, 169, 152, 20);
+		p.add(txtUsuario);
+		txtUsuario.setColumns(10);
+		
+		
 		txtContraseña = new JPasswordField(10);
 		txtContraseña.setSize(152, 20);
 		txtContraseña.setLocation(256, 209);
@@ -144,6 +148,7 @@ public class Inicio extends JFrame {
 
 		
 		JButton btnOk = new JButton("Ingresar");
+		btnOk.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try
@@ -166,21 +171,19 @@ public class Inicio extends JFrame {
 		});
 		btnOk.setBounds(437, 208, 77, 23);
 		p.add(btnOk);
+		lblMensaje1.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		
 		lblMensaje1.setForeground(Color.WHITE);
 		lblMensaje1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
-		lblMensaje1.setBounds(256, 308, 300, 14);
+		lblMensaje1.setBounds(200, 308, 300, 14);
 		p.add(lblMensaje1);
+		lblMensaje2.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		lblMensaje2.setForeground(Color.BLACK);
 		lblMensaje2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
-		lblMensaje2.setBounds(256, 304, 300, 14);
+		lblMensaje2.setBounds(200, 304, 300, 14);
 		p.add(lblMensaje2);
-		
-		JButton btnRecordarDatos = new JButton("Recordar datos");
-		btnRecordarDatos.setBounds(10, 308, 107, 23);
-		p.add(btnRecordarDatos);
 	}
 }
 

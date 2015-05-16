@@ -36,11 +36,26 @@ public class Cancha {
 		return arrayCanchas;
 	}
 
+	public static Cancha obtenerCancha(int IdCancha) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void persistirCancha() {
+		try {
+			DAC.persitirCancha(this.nombre, this.tipo_cancha,
+					this.precioPorHora, this.maxJugadores);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
+	}
+
 	@Override
 	public String toString() {
-		return "Cancha [nombre=" + getNombre() + ", tipo_cancha=" + getTipo_cancha()
-				+ ", precioPorHora=" + precioPorHora + ", maxJugadores="
-				+ maxJugadores + "]";
+		return "Cancha [nombre=" + getNombre() + ", tipo_cancha="
+				+ getTipo_cancha() + ", precioPorHora=" + precioPorHora
+				+ ", maxJugadores=" + maxJugadores + "]";
 	}
 
 	public String getNombre() {
@@ -57,11 +72,6 @@ public class Cancha {
 
 	void setTipo_cancha(String tipo_cancha) {
 		this.tipo_cancha = tipo_cancha;
-	}
-
-	public static Cancha obtenerCancha(int IdCancha) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

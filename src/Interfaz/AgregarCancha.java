@@ -7,11 +7,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Logica.Cancha;
 import Recursos.Fondo;
+
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AgregarCancha extends JFrame {
 
@@ -19,10 +24,10 @@ public class AgregarCancha extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 4219519238158446784L;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField txtSis;
+	private JTextField nombre;
+	private JTextField maxJugadores;
+	private JTextField precioPorHora;
+	private JTextField tipo_cancha;
 
 	/**
 	 * Launch the application.
@@ -53,56 +58,75 @@ public class AgregarCancha extends JFrame {
 		p.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(p);
 		p.setLayout(null);
-		
+
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Nombre de la cancha", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+		panel.setBorder(new TitledBorder(UIManager
+				.getBorder("TitledBorder.border"), "Nombre de la cancha",
+				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 		panel.setBounds(4, 22, 237, 43);
 		p.add(panel);
 		panel.setLayout(null);
-		
-		textField = new JTextField();
-		textField.setBounds(6, 16, 225, 20);
-		panel.add(textField);
-		textField.setColumns(10);
-		
+
+		nombre = new JTextField();
+		nombre.setBounds(6, 16, 225, 20);
+		panel.add(nombre);
+		nombre.setColumns(10);
+
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Tama\u00F1o", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_1.setBorder(new TitledBorder(UIManager
+				.getBorder("TitledBorder.border"), "Cantidad de jugadores",
+				TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
 		panel_1.setBounds(4, 65, 237, 43);
 		p.add(panel_1);
 		panel_1.setLayout(null);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(6, 16, 225, 20);
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
-		
+
+		maxJugadores = new JTextField();
+		maxJugadores.setBounds(6, 16, 225, 20);
+		panel_1.add(maxJugadores);
+		maxJugadores.setColumns(10);
+
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Capacidad", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_2.setBorder(new TitledBorder(UIManager
+				.getBorder("TitledBorder.border"), "Precio por hora",
+				TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
 		panel_2.setBounds(4, 108, 237, 43);
 		p.add(panel_2);
 		panel_2.setLayout(null);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(6, 16, 225, 20);
-		panel_2.add(textField_2);
-		textField_2.setColumns(10);
-		
+
+		precioPorHora = new JTextField();
+		precioPorHora.setBounds(6, 16, 225, 20);
+		panel_2.add(precioPorHora);
+		precioPorHora.setColumns(10);
+
 		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Piso", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_3.setBorder(new TitledBorder(UIManager
+				.getBorder("TitledBorder.border"), "Piso",
+				TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(0, 0, 0)));
 		panel_3.setBounds(4, 150, 237, 43);
 		p.add(panel_3);
 		panel_3.setLayout(null);
-		
-		txtSis = new JTextField();
-		txtSis.setEnabled(false);
-		txtSis.setBounds(6, 16, 225, 20);
-		panel_3.add(txtSis);
-		txtSis.setText("Sintetico");
-		txtSis.setColumns(10);
-		
+
+		tipo_cancha = new JTextField();
+		tipo_cancha.setEnabled(false);
+		tipo_cancha.setBounds(6, 16, 225, 20);
+		panel_3.add(tipo_cancha);
+		tipo_cancha.setText("Sintetico");
+		tipo_cancha.setColumns(10);
+
 		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Cancha cancha = new Cancha(nombre.getText(), tipo_cancha
+						.getText(), Integer.parseInt(precioPorHora.getText()),
+						Integer.parseInt(maxJugadores.getText()));
+				cancha.persistirCancha();
+			}
+		});
 		btnAgregar.setBounds(284, 188, 89, 23);
 		p.add(btnAgregar);
-		
+
 	}
 }

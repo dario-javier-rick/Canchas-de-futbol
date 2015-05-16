@@ -14,7 +14,6 @@ public class BBDD {
 	private static String Path = "C:/sampleDario.db";
 
 	public static Connection abrirConexion() {
-		verificarExistenciaBBDD();
 		Connection conexion = null;
 		try {
 			Class.forName("org.sqlite.JDBC");

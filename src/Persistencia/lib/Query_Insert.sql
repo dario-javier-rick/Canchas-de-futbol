@@ -5,5 +5,9 @@ insert into CLIENTES values(2, 'Darío', 'Rick', 42223456);
 insert into CANCHAS values(1, 'Cancha 1', 'Cancha de 7', 8, 20);
 insert into CANCHAS values(2, 'Cancha 2', 'Cancha de 11', 11, 20);
 
--- Agrego reservas de prueba
+/*
+ * Agrego reservas de prueba
+ */ 
 insert into RESERVAS values (1, 1, 1, '2015-01-01 10:00:00', 0);
+
+
