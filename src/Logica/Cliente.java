@@ -7,6 +7,7 @@ import Persistencia.ClienteDAC;
 
 public class Cliente {
 
+	private int idCliente;
 	private String nombre;
 	private String apellido;
 	int telefono;
@@ -17,8 +18,9 @@ public class Cliente {
 
 	}
 
-	public Cliente(String nombre, String apellido, int telefono,
+	public Cliente(int idCliente, String nombre, String apellido, int telefono,
 			boolean persistirCliente) {
+		this.setIdCliente(idCliente);
 		this.setNombre(nombre);
 		this.setApellido(apellido);
 		this.telefono = telefono;
@@ -33,8 +35,10 @@ public class Cliente {
 			ArrayList<String[]> array = DAC.obtenerClientes();
 
 			for (int i = 0; i < array.size(); i++) {
-				Cliente cliente = new Cliente(array.get(i)[1], array.get(i)[2],
-						Integer.parseInt(array.get(i)[3]), false);
+				Cliente cliente = new Cliente(
+						Integer.parseInt(array.get(i)[0]), array.get(i)[1],
+						array.get(i)[2], Integer.parseInt(array.get(i)[3]),
+						false);
 				arrayClientes.add(cliente);
 			}
 		} catch (Exception e) {
@@ -42,19 +46,35 @@ public class Cliente {
 		}
 		return arrayClientes;
 	}
-	
+
 	public static Cliente obtenerCliente(int IdCliente) {
 		String[] datos = DAC.obtenerCliente(IdCliente);
-		Cliente cliente = new Cliente(datos[1], datos[2],
-				Integer.parseInt(datos[3]), false);
+		Cliente cliente = new Cliente(Integer.parseInt(datos[0]), datos[1],
+				datos[2], Integer.parseInt(datos[3]), false);
 		return cliente;
 	}
 
+	public static void eliminarCliente(Cliente cliente) {
+		DAC.eliminarCliente(cliente.getIdCliente());
+	}
+
+	public void persistirCliente() {
+		try {
+			DAC.persistirCliente(this.nombre, this.apellido, this.telefono);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
+	}
+
+	public static void actualizarClientes(ArrayList<Cliente> clientes) {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
 	public String toString() {
-		return "Cliente [nombre=" + getNombre() + ", apellido=" + getApellido()
-				+ ", telefono=" + telefono + ", foto=" + foto + "]";
+		return getNombre() + ", " + getApellido();
 	}
 
 	public String getNombre() {
@@ -73,5 +93,12 @@ public class Cliente {
 		this.apellido = apellido;
 	}
 
+	public int getIdCliente() {
+		return idCliente;
+	}
+
+	private void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
+	}
 
 }

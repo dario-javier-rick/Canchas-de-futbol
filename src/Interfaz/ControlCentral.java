@@ -37,6 +37,7 @@ public class ControlCentral extends JFrame {
 	JComboBox cboReservas = new JComboBox();
 	private JTable table;
 	private JTable table_1;
+	private ControlCentral ControlCentral = this;
 
 	/**
 	 * Launch the application.
@@ -52,6 +53,38 @@ public class ControlCentral extends JFrame {
 				}
 			}
 		});
+	}
+	
+	public void actualizarCombos()
+	{
+		cboClientes.removeAllItems();
+		cboCanchas.removeAllItems();
+		cboReservas.removeAllItems();
+		bindClientes();
+		bindCanchas();
+		bindReservas();
+	
+		//persistirCombos();
+	}
+
+	private void persistirCombos() {
+		ArrayList<Cancha> canchas = new ArrayList<Cancha>();
+        for(int i=0;i<cboCanchas.getItemCount();i++){
+        	canchas.add((Cancha) cboCanchas.getItemAt(i));
+        }
+		Cancha.actualizarCanchas(canchas);
+		
+		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+        for(int i=0;i<cboClientes.getItemCount();i++){
+        	clientes.add((Cliente) cboClientes.getItemAt(i));
+        }
+        Cliente.actualizarClientes(clientes);
+		
+		ArrayList<Reserva> reservas = new ArrayList<Reserva>();
+        for(int i=0;i<cboReservas.getItemCount();i++){
+        	reservas.add((Reserva) cboReservas.getItemAt(i));
+        }
+        Reserva.actualizarReservas(reservas);
 	}
 
 	/**
@@ -95,7 +128,7 @@ public class ControlCentral extends JFrame {
 		JButton btnNewButton_1 = new JButton("Eliminar");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EliminarCancha.main(null);
+				EliminarCancha.main(null, ControlCentral );
 			}
 		});
 		btnNewButton_1.setBounds(158, 47, 89, 23);
@@ -119,13 +152,18 @@ public class ControlCentral extends JFrame {
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AgregarSocios.main(null);
+				AgregarClientes.main(null);
 			}
 		});
 		btnAgregar.setBounds(6, 47, 89, 23);
 		panel_1.add(btnAgregar);
 
 		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EliminarClientes.main(null, ControlCentral );
+			}
+		});
 		btnEliminar.setBounds(158, 47, 89, 23);
 		panel_1.add(btnEliminar);
 
@@ -239,8 +277,7 @@ public class ControlCentral extends JFrame {
 	private void bindClientes() {
 		ArrayList<Cliente> clientes = Cliente.obtenerClientes();
 		for (Cliente cliente : clientes) {
-			cboClientes.addItem(cliente.getNombre() + " "
-					+ cliente.getApellido());
+			cboClientes.addItem(cliente);
 		}
 	}
 

@@ -13,8 +13,9 @@ public class Cancha {
 	int maxJugadores;
 	private static CanchaDAC DAC = new CanchaDAC();
 
-	public Cancha(String nombre, String tipo_cancha, int precioPorHora,
+	public Cancha(int idCancha, String nombre, String tipo_cancha, int precioPorHora,
 			int maxJugadores) {
+		this.setIdCancha(idCancha);
 		this.setNombre(nombre);
 		this.setTipo_cancha(tipo_cancha);
 		this.setPrecioPorHora(precioPorHora);
@@ -26,7 +27,7 @@ public class Cancha {
 		try {
 			ArrayList<String[]> array = DAC.obtenerCanchas();
 			for (int i = 0; i < array.size(); i++) {
-				Cancha cancha = new Cancha(array.get(i)[1], array.get(i)[2],
+				Cancha cancha = new Cancha(Integer.parseInt(array.get(i)[0]), array.get(i)[1], array.get(i)[2],
 						Integer.parseInt(array.get(i)[3]),
 						Integer.parseInt(array.get(i)[4]));
 				arrayCanchas.add(cancha);
@@ -39,7 +40,7 @@ public class Cancha {
 
 	public static Cancha obtenerCancha(int IdCancha) {
 		String[] datos = DAC.obtenerCancha(IdCancha);
-		Cancha cancha = new Cancha(datos[1], datos[2],
+		Cancha cancha = new Cancha(Integer.parseInt(datos[0]), datos[1], datos[2],
 				Integer.parseInt(datos[3]), Integer.parseInt(datos[4]));
 		return cancha;
 	}
@@ -56,6 +57,11 @@ public class Cancha {
 			System.err.println(e.getMessage());
 		}
 
+	}
+	
+	public static void actualizarCanchas(ArrayList<Cancha> canchas) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -87,13 +93,15 @@ public class Cancha {
 		this.precioPorHora = precioPorHora;
 	}
 
-	private int getIdCancha() {
+	public int getIdCancha() {
 		return idCancha;
 	}
 
 	private void setIdCancha(int idCancha) {
 		this.idCancha = idCancha;
 	}
+
+
 
 
 }

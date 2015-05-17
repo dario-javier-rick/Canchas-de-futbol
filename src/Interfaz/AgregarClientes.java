@@ -25,7 +25,7 @@ import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AgregarSocios extends JFrame {
+public class AgregarClientes extends JFrame {
 
 	/**
 	 * 
@@ -46,7 +46,7 @@ public class AgregarSocios extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AgregarSocios frame = new AgregarSocios();
+					AgregarClientes frame = new AgregarClientes();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,7 +58,7 @@ public class AgregarSocios extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AgregarSocios() {
+	public AgregarClientes() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 530, 300);

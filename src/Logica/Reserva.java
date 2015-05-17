@@ -47,6 +47,20 @@ public class Reserva {
 		}
 		return arrayReservas;
 	}
+	
+	public static void actualizarReservas(ArrayList<Reserva> Reserva) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public static void eliminarReservasPorCancha(Cancha cancha) {
+		
+	}
+	
+	public static void eliminarReservasPorCliente(Cliente cliente) {
+		DAC.eliminarReservaPorCliente(cliente.getIdCliente());		
+	}
+
 
 	@Override
 	public String toString() {
@@ -78,5 +92,10 @@ public class Reserva {
 	void setCancha(Cancha cancha) {
 		this.cancha = cancha;
 	}
+
+
+
+
+
 
 }

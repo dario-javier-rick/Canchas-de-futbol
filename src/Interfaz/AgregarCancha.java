@@ -124,7 +124,8 @@ public class AgregarCancha extends JFrame {
 						|| tipo_cancha.getText() == "") {
 					// Falla validación
 				} else {
-					Cancha cancha = new Cancha(nombre.getText(), tipo_cancha
+					// tener en cuenta el idCancha
+					Cancha cancha = new Cancha(0, nombre.getText(), tipo_cancha
 							.getText(), Integer.parseInt(precioPorHora
 							.getText()), Integer.parseInt(maxJugadores
 							.getText()));

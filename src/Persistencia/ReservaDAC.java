@@ -55,8 +55,34 @@ public class ReservaDAC {
 			Connection conn = BBDD.abrirConexion();
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
-			statement.executeQuery("DELETE FROM canchas WHERE IdReserva = "
+			statement.executeQuery("DELETE FROM reservas WHERE IdReserva = "
 					+ IdReserva + ";");
+			conn.close(); // Cierro conexion.
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+	}
+
+	public void eliminarReservaPorCancha(int idCancha) {
+		try {
+			Connection conn = BBDD.abrirConexion();
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			statement.executeQuery("DELETE FROM reservas WHERE idCancha = "
+					+ idCancha + ";");
+			conn.close(); // Cierro conexion.
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+	}
+
+	public void eliminarReservaPorCliente(int idCliente) {
+		try {
+			Connection conn = BBDD.abrirConexion();
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			statement.executeQuery("DELETE FROM reservas WHERE idCliente = "
+					+ idCliente + ";");
 			conn.close(); // Cierro conexion.
 		} catch (Exception e) {
 			System.err.println(e.getMessage());

@@ -77,10 +77,13 @@ public class CanchaDAC {
 	public void eliminarCancha(int idCancha) {
 		try {
 			Connection conn = BBDD.abrirConexion();
+			conn.setAutoCommit(false);
 			Statement statement = conn.createStatement();
-			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
-			statement.executeQuery("DELETE FROM canchas WHERE idCancha = "
-					+ idCancha + ";");
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.	
+			statement.execute("DELETE FROM canchas WHERE idCancha = "
+					+ idCancha + ";");	
+			conn.commit();
+			conn.setAutoCommit(true);
 			conn.close(); // Cierro conexion.
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -93,7 +96,7 @@ public class CanchaDAC {
 		try {
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
-			PreparedStatement prep = conn.prepareStatement("INSERT INTO canchas VALUES (?,?,?,?,?)");
+			PreparedStatement prep = conn.prepareStatement("INSERT INTO canchas VALUES (?,?,?,?,?);");
 			prep.setString(1, ""); // idCancha
 			prep.setString(2, nombre);
 			prep.setString(3, tipo_cancha);
