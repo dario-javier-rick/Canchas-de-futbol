@@ -116,23 +116,23 @@ public class ControlCentral extends JFrame {
 		cboCanchas.setBounds(6, 16, 241, 20);
 		panel.add(cboCanchas);
 
-		JButton btnNewButton = new JButton("Agregar");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnAgregarCanchas = new JButton("Agregar");
+		btnAgregarCanchas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				AgregarCancha.main(null);
 			}
 		});
-		btnNewButton.setBounds(6, 47, 89, 23);
-		panel.add(btnNewButton);
+		btnAgregarCanchas.setBounds(6, 47, 89, 23);
+		panel.add(btnAgregarCanchas);
 
-		JButton btnNewButton_1 = new JButton("Eliminar");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnEliminarCanchas = new JButton("Eliminar");
+		btnEliminarCanchas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EliminarCancha.main(null, ControlCentral );
 			}
 		});
-		btnNewButton_1.setBounds(158, 47, 89, 23);
-		panel.add(btnNewButton_1);
+		btnEliminarCanchas.setBounds(158, 47, 89, 23);
+		panel.add(btnEliminarCanchas);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
@@ -149,23 +149,23 @@ public class ControlCentral extends JFrame {
 		cboClientes.setBounds(6, 16, 241, 20);
 		panel_1.add(cboClientes);
 
-		JButton btnAgregar = new JButton("Agregar");
-		btnAgregar.addActionListener(new ActionListener() {
+		JButton btnAgregarClientes = new JButton("Agregar");
+		btnAgregarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AgregarClientes.main(null);
 			}
 		});
-		btnAgregar.setBounds(6, 47, 89, 23);
-		panel_1.add(btnAgregar);
+		btnAgregarClientes.setBounds(6, 47, 89, 23);
+		panel_1.add(btnAgregarClientes);
 
-		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.addActionListener(new ActionListener() {
+		JButton btnEliminarClientes = new JButton("Eliminar");
+		btnEliminarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EliminarClientes.main(null, ControlCentral );
 			}
 		});
-		btnEliminar.setBounds(158, 47, 89, 23);
-		panel_1.add(btnEliminar);
+		btnEliminarClientes.setBounds(158, 47, 89, 23);
+		panel_1.add(btnEliminarClientes);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setLayout(null);
@@ -183,13 +183,18 @@ public class ControlCentral extends JFrame {
 		cboReservas.setBounds(6, 16, 241, 20);
 		panel_2.add(cboReservas);
 
-		JButton btnAgregar_1 = new JButton("Agregar");
-		btnAgregar_1.setBounds(6, 47, 89, 23);
-		panel_2.add(btnAgregar_1);
+		JButton btnAgregarReservas = new JButton("Agregar");
+		btnAgregarReservas.setBounds(6, 47, 89, 23);
+		panel_2.add(btnAgregarReservas);
 
-		JButton btnEliminar_1 = new JButton("Eliminar");
-		btnEliminar_1.setBounds(158, 47, 89, 23);
-		panel_2.add(btnEliminar_1);
+		JButton btnEliminarReservas = new JButton("Eliminar");
+		btnEliminarReservas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				EliminarReservas.main(null, ControlCentral );
+			}
+		});
+		btnEliminarReservas.setBounds(158, 47, 89, 23);
+		panel_2.add(btnEliminarReservas);
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setOpaque(false);

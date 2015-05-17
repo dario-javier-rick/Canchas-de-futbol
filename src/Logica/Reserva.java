@@ -9,6 +9,7 @@ import Persistencia.ReservaDAC;
 
 public class Reserva {
 
+	private int idReserva;
 	private Cliente cliente;
 	private Cancha cancha;
 	private Date horario;
@@ -16,8 +17,9 @@ public class Reserva {
 	int seña;
 	private static ReservaDAC DAC = new ReservaDAC();
 
-	public Reserva(Cliente cliente, Cancha cancha, Date horario) {
+	public Reserva(int idReserva, Cliente cliente, Cancha cancha, Date horario) {
 		realizada = false;
+		this.setIdReserva(idReserva);
 		this.setCliente(cliente);
 		this.setCancha(cancha);
 		this.setHorario(horario);
@@ -35,6 +37,7 @@ public class Reserva {
 				DateFormat formatter = new SimpleDateFormat(
 						"dd-MM-yyyy HH:mm:ss");
 				Reserva reserva = new Reserva(
+						Integer.parseInt(array.get(i)[0]),
 						Cliente.obtenerCliente(Integer.parseInt(array.get(i)[1])),
 						Cancha.obtenerCancha(Integer.parseInt(array.get(i)[2])),
 						formatter.parse(array.get(i)[3]));
@@ -47,20 +50,24 @@ public class Reserva {
 		}
 		return arrayReservas;
 	}
-	
+
 	public static void actualizarReservas(ArrayList<Reserva> Reserva) {
 		// TODO Auto-generated method stub
-		
-	}
-	
-	public static void eliminarReservasPorCancha(Cancha cancha) {
-		
-	}
-	
-	public static void eliminarReservasPorCliente(Cliente cliente) {
-		DAC.eliminarReservaPorCliente(cliente.getIdCliente());		
+
 	}
 
+	public static void eliminarReservasPorCancha(Cancha cancha) {
+
+	}
+
+	public static void eliminarReservasPorCliente(Cliente cliente) {
+		DAC.eliminarReservaPorCliente(cliente.getIdCliente());
+	}
+
+	public static void eliminarReserva(Reserva reserva) {
+		DAC.eliminarReserva(reserva.getIdReserva());
+
+	}
 
 	@Override
 	public String toString() {
@@ -93,9 +100,12 @@ public class Reserva {
 		this.cancha = cancha;
 	}
 
+	public int getIdReserva() {
+		return idReserva;
+	}
 
-
-
-
+	private void setIdReserva(int idReserva) {
+		this.idReserva = idReserva;
+	}
 
 }
