@@ -25,6 +25,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
+import com.toedter.calendar.JCalendar;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class ControlCentral extends JFrame {
 	JComboBox cboClientes = new JComboBox();
 	JComboBox cboCanchas = new JComboBox();
 	JComboBox cboReservas = new JComboBox();
+	JCalendar calendario = new JCalendar();
 	private JTable table;
 	private JTable table_1;
 	private ControlCentral ControlCentral = this;
@@ -206,7 +209,7 @@ public class ControlCentral extends JFrame {
 		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setBorder(new TitledBorder(null, "Revervas hechas",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		tabbedPane.setBounds(0, 0, 396, 252);
+		tabbedPane.setBounds(10, 105, 386, 147);
 		panel_3.add(tabbedPane);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -259,6 +262,12 @@ public class ControlCentral extends JFrame {
 				{ null, null, null, null, null }, }, new String[] {
 				"New column", "New column", "New column", "New column",
 				"New column" }));
+		
+		JPanel panel_calendario = new JPanel();
+		panel_calendario.setBounds(10, -46, 376, 147);
+		panel_3.add(panel_calendario);
+		
+		panel_calendario.add(calendario);
 
 		JButton btnCargar = new JButton("Cargar");
 		btnCargar.setBounds(584, 307, 89, 23);
