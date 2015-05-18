@@ -49,7 +49,7 @@ public class EliminarClientes extends JFrame {
 	 */
 	public EliminarClientes(final ControlCentral instancia) {
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 404, 150);
 
 		Fondo p = new Fondo();

@@ -30,6 +30,8 @@ import com.toedter.calendar.JCalendar;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ControlCentral extends JFrame {
 
@@ -37,7 +39,6 @@ public class ControlCentral extends JFrame {
 	JComboBox cboClientes = new JComboBox();
 	JComboBox cboCanchas = new JComboBox();
 	JComboBox cboReservas = new JComboBox();
-	JCalendar calendario = new JCalendar();
 	private JTable table;
 	private JTable table_1;
 	private ControlCentral ControlCentral = this;
@@ -96,7 +97,7 @@ public class ControlCentral extends JFrame {
 	public ControlCentral() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 400);
+		setBounds(100, 100, 700, 506);
 
 		Fondo p = new Fondo();
 		p.setBackground(Color.BLACK);
@@ -120,18 +121,24 @@ public class ControlCentral extends JFrame {
 		panel.add(cboCanchas);
 
 		JButton btnAgregarCanchas = new JButton("Agregar");
-		btnAgregarCanchas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				AgregarCancha.main(null);
+		btnAgregarCanchas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) 
+			{
+			  AgregarCancha Canchas = new AgregarCancha();
+			  Canchas.setVisible(true);
 			}
 		});
+		
 		btnAgregarCanchas.setBounds(6, 47, 89, 23);
 		panel.add(btnAgregarCanchas);
 
 		JButton btnEliminarCanchas = new JButton("Eliminar");
-		btnEliminarCanchas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				EliminarCancha.main(null, ControlCentral );
+		btnEliminarCanchas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				EliminarCancha Canchas = new EliminarCancha(ControlCentral);
+				  Canchas.setVisible(true);
 			}
 		});
 		btnEliminarCanchas.setBounds(158, 47, 89, 23);
@@ -153,18 +160,22 @@ public class ControlCentral extends JFrame {
 		panel_1.add(cboClientes);
 
 		JButton btnAgregarClientes = new JButton("Agregar");
-		btnAgregarClientes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AgregarClientes.main(null);
+		btnAgregarClientes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				AgregarClientes Canchas = new AgregarClientes();
+				  Canchas.setVisible(true);
 			}
 		});
 		btnAgregarClientes.setBounds(6, 47, 89, 23);
 		panel_1.add(btnAgregarClientes);
 
 		JButton btnEliminarClientes = new JButton("Eliminar");
-		btnEliminarClientes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EliminarClientes.main(null, ControlCentral );
+		btnEliminarClientes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				EliminarClientes Clientes = new EliminarClientes(ControlCentral);
+				  Clientes.setVisible(true);
 			}
 		});
 		btnEliminarClientes.setBounds(158, 47, 89, 23);
@@ -187,20 +198,29 @@ public class ControlCentral extends JFrame {
 		panel_2.add(cboReservas);
 
 		JButton btnAgregarReservas = new JButton("Agregar");
+		btnAgregarReservas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				AgregarReservas reservas = new AgregarReservas();
+				  reservas.setVisible(true);
+			}
+		});
 		btnAgregarReservas.setBounds(6, 47, 89, 23);
 		panel_2.add(btnAgregarReservas);
 
 		JButton btnEliminarReservas = new JButton("Eliminar");
-		btnEliminarReservas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				EliminarReservas.main(null, ControlCentral );
+		btnEliminarReservas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				EliminarReservas reservas = new EliminarReservas(ControlCentral);
+				  reservas.setVisible(true);
 			}
 		});
 		btnEliminarReservas.setBounds(158, 47, 89, 23);
 		panel_2.add(btnEliminarReservas);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(277, 0, 396, 327);
+		panel_3.setBounds(288, 11, 396, 294);
 		panel_3.setOpaque(false);
 		p.add(panel_3);
 		panel_3.setLayout(null);
@@ -209,39 +229,10 @@ public class ControlCentral extends JFrame {
 		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setBorder(new TitledBorder(null, "Revervas hechas",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		tabbedPane.setBounds(10, 180, 386, 147);
+		tabbedPane.setBounds(10, 11, 386, 266);
 		panel_3.add(tabbedPane);
 
-		JScrollPane scrollPane = new JScrollPane();
-		tabbedPane.addTab("New tab", null, scrollPane, null);
-
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		table.setModel(new DefaultTableModel(new Object[][] {
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null }, }, new String[] { "Cancha",
-				"Id Cliente", "Horario", "Se\u00F1a", "Tiempo de Reserva" }) {
-			Class[] columnTypes = new Class[] { String.class, String.class,
-					String.class, String.class, String.class };
-
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		table.getColumnModel().getColumn(4).setPreferredWidth(108);
-
 		JScrollPane scrollPane1 = new JScrollPane();
-		tabbedPane.addTab("Mañana", null, scrollPane, null);
 
 		tabbedPane.addTab("Tarde", null, scrollPane1, null);
 
@@ -263,15 +254,37 @@ public class ControlCentral extends JFrame {
 				"New column", "New column", "New column", "New column",
 				"New column" }));
 		
-		JPanel panel_calendario = new JPanel();
-		panel_calendario.setBackground(Color.WHITE);
-		panel_calendario.setBounds(10, 11, 386, 168);
-		panel_3.add(panel_calendario);
-		
-		panel_calendario.add(calendario);
+				JScrollPane scrollPane = new JScrollPane();
+				tabbedPane.addTab("New tab", null, scrollPane, null);
+				
+						table = new JTable();
+						scrollPane.setViewportView(table);
+						table.setModel(new DefaultTableModel(new Object[][] {
+								{ null, null, null, null, null },
+								{ null, null, null, null, null },
+								{ null, null, null, null, null },
+								{ null, null, null, null, null },
+								{ null, null, null, null, null },
+								{ null, null, null, null, null },
+								{ null, null, null, null, null },
+								{ null, null, null, null, null },
+								{ null, null, null, null, null },
+								{ null, null, null, null, null },
+								{ null, null, null, null, null },
+								{ null, null, null, null, null }, }, new String[] { "Cancha",
+								"Id Cliente", "Horario", "Se\u00F1a", "Tiempo de Reserva" }) {
+							Class[] columnTypes = new Class[] { String.class, String.class,
+									String.class, String.class, String.class };
+
+							public Class getColumnClass(int columnIndex) {
+								return columnTypes[columnIndex];
+							}
+						});
+						table.getColumnModel().getColumn(4).setPreferredWidth(108);
+						tabbedPane.addTab("Mañana", null, scrollPane, null);
 
 		JButton btnCargar = new JButton("Cargar");
-		btnCargar.setBounds(595, 338, 89, 23);
+		btnCargar.setBounds(595, 423, 89, 23);
 		p.add(btnCargar);
 
 		bindCanchas();

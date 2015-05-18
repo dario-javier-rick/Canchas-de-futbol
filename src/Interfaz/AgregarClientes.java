@@ -60,7 +60,7 @@ public class AgregarClientes extends JFrame {
 	 */
 	public AgregarClientes() {
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 530, 300);
 
 		Fondo p = new Fondo();
