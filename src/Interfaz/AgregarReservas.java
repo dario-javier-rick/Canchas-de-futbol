@@ -150,7 +150,7 @@ public class AgregarReservas extends JFrame {
 				if (true)
 				{
 							JOptionPane c = new JOptionPane();
-							JOptionPane.showMessageDialog(c, "Se agrego exisitosamente su reserva." );
+							JOptionPane.showMessageDialog(c, "Se agrego exitosamente su reserva." );
 							dispose();
 				}
 				else
