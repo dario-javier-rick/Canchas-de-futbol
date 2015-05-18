@@ -51,13 +51,18 @@ public class Cancha {
 
 	public void persistirCancha() {
 		try {
-			DAC.persitirCancha(this.nombre, this.tipo_cancha,
+			DAC.persitirCancha(this.idCancha, this.nombre, this.tipo_cancha,
 					this.getPrecioPorHora(), this.maxJugadores);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 
 	}
+	
+	public static int getUltimoIdCancha() {
+		return DAC.getUltimoIdCancha();
+	}
+
 	
 	public static void actualizarCanchas(ArrayList<Cancha> canchas) {
 		// TODO Auto-generated method stub
@@ -100,6 +105,7 @@ public class Cancha {
 	private void setIdCancha(int idCancha) {
 		this.idCancha = idCancha;
 	}
+
 
 
 

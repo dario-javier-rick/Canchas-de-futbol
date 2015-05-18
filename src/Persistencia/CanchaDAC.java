@@ -90,14 +90,14 @@ public class CanchaDAC {
 		}
 	}
 
-	public void persitirCancha(String nombre, String tipo_cancha,
+	public void persitirCancha(int idCancha, String nombre, String tipo_cancha,
 			int precioPorHora, int maxJugadores) {
 		Connection conn = BBDD.abrirConexion();
 		try {
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
 			PreparedStatement prep = conn.prepareStatement("INSERT INTO canchas VALUES (?,?,?,?,?);");
-			prep.setString(1, ""); // idCancha
+			prep.setInt(1, idCancha);
 			prep.setString(2, nombre);
 			prep.setString(3, tipo_cancha);
 			prep.setInt(4, precioPorHora);
@@ -109,6 +109,24 @@ public class CanchaDAC {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}		
+	}
+
+	public int getUltimoIdCancha() {
+		int resultado = 0;
+		try {
+			Connection conn = BBDD.abrirConexion();
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			ResultSet rs = statement
+					.executeQuery("SELECT MAX(idCancha) FROM canchas;");
+			if (rs.next()) {
+				resultado = rs.getInt(1);
+			}
+			conn.close(); // Cierro conexion.
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return resultado;
 	}
 
 

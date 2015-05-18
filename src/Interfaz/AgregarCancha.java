@@ -17,6 +17,9 @@ import javax.swing.JTextField;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class AgregarCancha extends JFrame {
 
@@ -28,6 +31,8 @@ public class AgregarCancha extends JFrame {
 	private JTextField maxJugadores;
 	private JTextField precioPorHora;
 	private JTextField tipo_cancha;
+	JLabel lblMensaje1 = new JLabel("");
+	JLabel lblMensaje2 = new JLabel("");
 
 	/**
 	 * Launch the application.
@@ -58,12 +63,26 @@ public class AgregarCancha extends JFrame {
 		p.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(p);
 		p.setLayout(null);
+		
+		JLabel labelMensaje1 = new JLabel("");
+		labelMensaje1.setHorizontalAlignment(SwingConstants.CENTER);
+		labelMensaje1.setForeground(Color.WHITE);
+		labelMensaje1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
+		labelMensaje1.setBounds(4, 189, 300, 14);
+		p.add(labelMensaje1);
+		
+		JLabel labelMensaje2 = new JLabel("");
+		labelMensaje2.setHorizontalAlignment(SwingConstants.CENTER);
+		labelMensaje2.setForeground(Color.BLACK);
+		labelMensaje2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
+		labelMensaje2.setBounds(14, 189, 300, 14);
+		p.add(labelMensaje2);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"), "Nombre de la cancha",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
-		panel.setBounds(4, 22, 237, 43);
+		panel.setBounds(4, 11, 237, 43);
 		p.add(panel);
 		panel.setLayout(null);
 
@@ -77,7 +96,7 @@ public class AgregarCancha extends JFrame {
 				.getBorder("TitledBorder.border"), "Cantidad de jugadores",
 				TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
-		panel_1.setBounds(4, 65, 237, 43);
+		panel_1.setBounds(4, 54, 237, 43);
 		p.add(panel_1);
 		panel_1.setLayout(null);
 
@@ -91,7 +110,7 @@ public class AgregarCancha extends JFrame {
 				.getBorder("TitledBorder.border"), "Precio por hora",
 				TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
-		panel_2.setBounds(4, 108, 237, 43);
+		panel_2.setBounds(4, 96, 237, 43);
 		p.add(panel_2);
 		panel_2.setLayout(null);
 
@@ -105,7 +124,7 @@ public class AgregarCancha extends JFrame {
 				.getBorder("TitledBorder.border"), "Piso",
 				TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
-		panel_3.setBounds(4, 150, 237, 43);
+		panel_3.setBounds(4, 135, 237, 43);
 		p.add(panel_3);
 		panel_3.setLayout(null);
 
@@ -119,13 +138,14 @@ public class AgregarCancha extends JFrame {
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (nombre.getText() == "" || maxJugadores.getText() == ""
-						|| precioPorHora.getText() == ""
-						|| tipo_cancha.getText() == "") {
-					// Falla validación
+				if (nombre.getText().equals("") || maxJugadores.getText().equals("")
+						|| precioPorHora.getText().equals("")
+						|| tipo_cancha.getText().equals("")) {
+					lblMensaje1.setText("Algunos campos estan vacíos!");
+					lblMensaje2.setText("Algunos campos estan vacíos!");
 				} else {
 					// tener en cuenta el idCancha
-					Cancha cancha = new Cancha(0, nombre.getText(), tipo_cancha
+					Cancha cancha = new Cancha(Cancha.getUltimoIdCancha()+1, nombre.getText(), tipo_cancha
 							.getText(), Integer.parseInt(precioPorHora
 							.getText()), Integer.parseInt(maxJugadores
 							.getText()));
@@ -133,7 +153,7 @@ public class AgregarCancha extends JFrame {
 				}
 			}
 		});
-		btnAgregar.setBounds(284, 146, 89, 23);
+		btnAgregar.setBounds(284, 50, 89, 23);
 		p.add(btnAgregar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -143,8 +163,9 @@ public class AgregarCancha extends JFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(284, 188, 89, 23);
+		btnCancelar.setBounds(284, 92, 89, 23);
 		p.add(btnCancelar);
+
 
 	}
 }
