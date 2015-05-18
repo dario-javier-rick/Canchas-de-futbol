@@ -105,13 +105,13 @@ public class ControlCentral extends JFrame {
 		p.setLayout(null);
 
 		JPanel panel = new JPanel();
+		panel.setBounds(10, 30, 257, 77);
 		panel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panel.setBackground(Color.BLACK);
 		panel.setOpaque(false);
 		panel.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"), "Canchas",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
-		panel.setBounds(10, 30, 257, 77);
 		p.add(panel);
 		panel.setLayout(null);
 		cboCanchas.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -138,6 +138,7 @@ public class ControlCentral extends JFrame {
 		panel.add(btnEliminarCanchas);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(10, 127, 257, 77);
 		panel_1.setLayout(null);
 		panel_1.setOpaque(false);
 		panel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -145,7 +146,6 @@ public class ControlCentral extends JFrame {
 				.getBorder("TitledBorder.border"), "Socios",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.WHITE));
 		panel_1.setBackground(Color.BLACK);
-		panel_1.setBounds(10, 127, 257, 77);
 		p.add(panel_1);
 		cboClientes.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
@@ -171,6 +171,7 @@ public class ControlCentral extends JFrame {
 		panel_1.add(btnEliminarClientes);
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(10, 228, 257, 77);
 		panel_2.setLayout(null);
 		panel_2.setOpaque(false);
 		panel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -179,7 +180,6 @@ public class ControlCentral extends JFrame {
 				TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
 		panel_2.setBackground(Color.BLACK);
-		panel_2.setBounds(10, 228, 257, 77);
 		p.add(panel_2);
 		cboReservas.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
@@ -200,8 +200,8 @@ public class ControlCentral extends JFrame {
 		panel_2.add(btnEliminarReservas);
 
 		JPanel panel_3 = new JPanel();
+		panel_3.setBounds(277, 0, 396, 327);
 		panel_3.setOpaque(false);
-		panel_3.setBounds(277, 53, 396, 252);
 		p.add(panel_3);
 		panel_3.setLayout(null);
 
@@ -209,7 +209,7 @@ public class ControlCentral extends JFrame {
 		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setBorder(new TitledBorder(null, "Revervas hechas",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		tabbedPane.setBounds(10, 105, 386, 147);
+		tabbedPane.setBounds(10, 180, 386, 147);
 		panel_3.add(tabbedPane);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -264,13 +264,14 @@ public class ControlCentral extends JFrame {
 				"New column" }));
 		
 		JPanel panel_calendario = new JPanel();
-		panel_calendario.setBounds(10, -46, 376, 147);
+		panel_calendario.setBackground(Color.WHITE);
+		panel_calendario.setBounds(10, 11, 386, 168);
 		panel_3.add(panel_calendario);
 		
 		panel_calendario.add(calendario);
 
 		JButton btnCargar = new JButton("Cargar");
-		btnCargar.setBounds(584, 307, 89, 23);
+		btnCargar.setBounds(595, 338, 89, 23);
 		p.add(btnCargar);
 
 		bindCanchas();
