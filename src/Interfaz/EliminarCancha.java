@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Logica.Cancha;
@@ -25,7 +24,6 @@ public class EliminarCancha extends JFrame {
 	 */
 	private static final long serialVersionUID = -222451083314467403L;
 	JComboBox cboCanchas = new JComboBox();
-	private JPanel contentPane;
 
 	/**
 	 * Launch the application.

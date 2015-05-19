@@ -1,6 +1,5 @@
 package Interfaz;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 
@@ -27,15 +26,17 @@ import javax.swing.JTabbedPane;
 
 import com.toedter.calendar.JCalendar;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ControlCentral extends JFrame {
 
-	private JPanel contentPane;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	JCalendar calendario = new JCalendar();
 	JComboBox cboClientes = new JComboBox();
 	JComboBox cboCanchas = new JComboBox();
 	JComboBox cboReservas = new JComboBox();
@@ -58,37 +59,36 @@ public class ControlCentral extends JFrame {
 			}
 		});
 	}
-	
-	public void actualizarCombos()
-	{
+
+	public void actualizarCombos() {
 		cboClientes.removeAllItems();
 		cboCanchas.removeAllItems();
 		cboReservas.removeAllItems();
 		bindClientes();
 		bindCanchas();
 		bindReservas();
-	
-		//persistirCombos();
+
+		// persistirCombos();
 	}
 
 	private void persistirCombos() {
 		ArrayList<Cancha> canchas = new ArrayList<Cancha>();
-        for(int i=0;i<cboCanchas.getItemCount();i++){
-        	canchas.add((Cancha) cboCanchas.getItemAt(i));
-        }
+		for (int i = 0; i < cboCanchas.getItemCount(); i++) {
+			canchas.add((Cancha) cboCanchas.getItemAt(i));
+		}
 		Cancha.actualizarCanchas(canchas);
-		
+
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-        for(int i=0;i<cboClientes.getItemCount();i++){
-        	clientes.add((Cliente) cboClientes.getItemAt(i));
-        }
-        Cliente.actualizarClientes(clientes);
-		
+		for (int i = 0; i < cboClientes.getItemCount(); i++) {
+			clientes.add((Cliente) cboClientes.getItemAt(i));
+		}
+		Cliente.actualizarClientes(clientes);
+
 		ArrayList<Reserva> reservas = new ArrayList<Reserva>();
-        for(int i=0;i<cboReservas.getItemCount();i++){
-        	reservas.add((Reserva) cboReservas.getItemAt(i));
-        }
-        Reserva.actualizarReservas(reservas);
+		for (int i = 0; i < cboReservas.getItemCount(); i++) {
+			reservas.add((Reserva) cboReservas.getItemAt(i));
+		}
+		Reserva.actualizarReservas(reservas);
 	}
 
 	/**
@@ -105,132 +105,138 @@ public class ControlCentral extends JFrame {
 		setContentPane(p);
 		p.setLayout(null);
 
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 30, 257, 77);
-		panel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panel.setBackground(Color.BLACK);
-		panel.setOpaque(false);
-		panel.setBorder(new TitledBorder(UIManager
+		JPanel panelCanchas = new JPanel();
+		panelCanchas.setBounds(10, 11, 257, 77);
+		panelCanchas.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelCanchas.setBackground(Color.BLACK);
+		panelCanchas.setOpaque(false);
+		panelCanchas.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"), "Canchas",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
-		p.add(panel);
-		panel.setLayout(null);
+		p.add(panelCanchas);
+		panelCanchas.setLayout(null);
 		cboCanchas.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
 		cboCanchas.setBounds(6, 16, 241, 20);
-		panel.add(cboCanchas);
+		panelCanchas.add(cboCanchas);
 
 		JButton btnAgregarCanchas = new JButton("Agregar");
 		btnAgregarCanchas.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) 
-			{
-			  AgregarCancha Canchas = new AgregarCancha();
-			  Canchas.setVisible(true);
+			public void mouseClicked(MouseEvent arg0) {
+				AgregarCancha Canchas = new AgregarCancha();
+				Canchas.setVisible(true);
 			}
 		});
-		
+
 		btnAgregarCanchas.setBounds(6, 47, 89, 23);
-		panel.add(btnAgregarCanchas);
+		panelCanchas.add(btnAgregarCanchas);
 
 		JButton btnEliminarCanchas = new JButton("Eliminar");
 		btnEliminarCanchas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				EliminarCancha Canchas = new EliminarCancha(ControlCentral);
-				  Canchas.setVisible(true);
+				Canchas.setVisible(true);
 			}
 		});
 		btnEliminarCanchas.setBounds(158, 47, 89, 23);
-		panel.add(btnEliminarCanchas);
+		panelCanchas.add(btnEliminarCanchas);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 127, 257, 77);
-		panel_1.setLayout(null);
-		panel_1.setOpaque(false);
-		panel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panel_1.setBorder(new TitledBorder(UIManager
+		JPanel panelSocios = new JPanel();
+		panelSocios.setBounds(10, 187, 257, 77);
+		panelSocios.setLayout(null);
+		panelSocios.setOpaque(false);
+		panelSocios.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelSocios.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"), "Socios",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.WHITE));
-		panel_1.setBackground(Color.BLACK);
-		p.add(panel_1);
+		panelSocios.setBackground(Color.BLACK);
+		p.add(panelSocios);
 		cboClientes.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
 		cboClientes.setBounds(6, 16, 241, 20);
-		panel_1.add(cboClientes);
+		panelSocios.add(cboClientes);
 
 		JButton btnAgregarClientes = new JButton("Agregar");
 		btnAgregarClientes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				AgregarClientes Canchas = new AgregarClientes();
-				  Canchas.setVisible(true);
+				Canchas.setVisible(true);
 			}
 		});
 		btnAgregarClientes.setBounds(6, 47, 89, 23);
-		panel_1.add(btnAgregarClientes);
+		panelSocios.add(btnAgregarClientes);
 
 		JButton btnEliminarClientes = new JButton("Eliminar");
 		btnEliminarClientes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				EliminarClientes Clientes = new EliminarClientes(ControlCentral);
-				  Clientes.setVisible(true);
+				Clientes.setVisible(true);
 			}
 		});
 		btnEliminarClientes.setBounds(158, 47, 89, 23);
-		panel_1.add(btnEliminarClientes);
+		panelSocios.add(btnEliminarClientes);
 
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 228, 257, 77);
-		panel_2.setLayout(null);
-		panel_2.setOpaque(false);
-		panel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panel_2.setBorder(new TitledBorder(UIManager
+		JPanel panelReservas = new JPanel();
+		panelReservas.setBounds(10, 99, 257, 77);
+		panelReservas.setLayout(null);
+		panelReservas.setOpaque(false);
+		panelReservas.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelReservas.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"), "Reservas",
 				TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
-		panel_2.setBackground(Color.BLACK);
-		p.add(panel_2);
+		panelReservas.setBackground(Color.BLACK);
+		p.add(panelReservas);
 		cboReservas.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
 		cboReservas.setBounds(6, 16, 241, 20);
-		panel_2.add(cboReservas);
+		panelReservas.add(cboReservas);
 
 		JButton btnAgregarReservas = new JButton("Agregar");
 		btnAgregarReservas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				AgregarReservas reservas = new AgregarReservas();
-				  reservas.setVisible(true);
+				reservas.setVisible(true);
 			}
 		});
 		btnAgregarReservas.setBounds(6, 47, 89, 23);
-		panel_2.add(btnAgregarReservas);
+		panelReservas.add(btnAgregarReservas);
 
 		JButton btnEliminarReservas = new JButton("Eliminar");
 		btnEliminarReservas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				EliminarReservas reservas = new EliminarReservas(ControlCentral);
-				  reservas.setVisible(true);
+				reservas.setVisible(true);
 			}
 		});
 		btnEliminarReservas.setBounds(158, 47, 89, 23);
-		panel_2.add(btnEliminarReservas);
+		panelReservas.add(btnEliminarReservas);
 
-		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(288, 11, 396, 294);
-		panel_3.setOpaque(false);
-		p.add(panel_3);
-		panel_3.setLayout(null);
+		JPanel panelGeneral = new JPanel();
+		panelGeneral.setBounds(277, 11, 407, 410);
+		panelGeneral.setOpaque(false);
+		p.add(panelGeneral);
+		panelGeneral.setLayout(null);
+		
+		JPanel panelCalendario = new JPanel();
+		panelCalendario.setForeground(new Color(0, 0, 0));
+		panelCalendario.setBounds(8, 11, 399, 197);
+		panelGeneral.add(panelCalendario);
+		
+		panelCalendario.add(calendario);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setBorder(new TitledBorder(null, "Revervas hechas",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		tabbedPane.setBounds(10, 11, 386, 266);
-		panel_3.add(tabbedPane);
+		tabbedPane.setBounds(8, 219, 399, 180);
+		panelGeneral.add(tabbedPane);
 
 		JScrollPane scrollPane1 = new JScrollPane();
 
@@ -253,35 +259,34 @@ public class ControlCentral extends JFrame {
 				{ null, null, null, null, null }, }, new String[] {
 				"New column", "New column", "New column", "New column",
 				"New column" }));
-		
-				JScrollPane scrollPane = new JScrollPane();
-				tabbedPane.addTab("New tab", null, scrollPane, null);
-				
-						table = new JTable();
-						scrollPane.setViewportView(table);
-						table.setModel(new DefaultTableModel(new Object[][] {
-								{ null, null, null, null, null },
-								{ null, null, null, null, null },
-								{ null, null, null, null, null },
-								{ null, null, null, null, null },
-								{ null, null, null, null, null },
-								{ null, null, null, null, null },
-								{ null, null, null, null, null },
-								{ null, null, null, null, null },
-								{ null, null, null, null, null },
-								{ null, null, null, null, null },
-								{ null, null, null, null, null },
-								{ null, null, null, null, null }, }, new String[] { "Cancha",
-								"Id Cliente", "Horario", "Se\u00F1a", "Tiempo de Reserva" }) {
-							Class[] columnTypes = new Class[] { String.class, String.class,
-									String.class, String.class, String.class };
 
-							public Class getColumnClass(int columnIndex) {
-								return columnTypes[columnIndex];
-							}
-						});
-						table.getColumnModel().getColumn(4).setPreferredWidth(108);
-						tabbedPane.addTab("Mañana", null, scrollPane, null);
+		JScrollPane scrollPane = new JScrollPane();
+		tabbedPane.addTab("New tab", null, scrollPane, null);
+
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setModel(new DefaultTableModel(new Object[][] {
+				{ null, null, null, null, null },
+				{ null, null, null, null, null },
+				{ null, null, null, null, null },
+				{ null, null, null, null, null },
+				{ null, null, null, null, null },
+				{ null, null, null, null, null },
+				{ null, null, null, null, null },
+				{ null, null, null, null, null },
+				{ null, null, null, null, null },
+				{ null, null, null, null, null },
+				{ null, null, null, null, null },
+				{ null, null, null, null, null }, }, new String[] { "Cancha",
+				"Id Cliente", "Horario", "Se\u00F1a", "Tiempo de Reserva" }) {
+			/**
+					 * 
+					 */
+			private static final long serialVersionUID = 1L;
+
+		});
+		table.getColumnModel().getColumn(4).setPreferredWidth(108);
+		tabbedPane.addTab("Mañana", null, scrollPane, null);
 
 		JButton btnCargar = new JButton("Cargar");
 		btnCargar.setBounds(595, 423, 89, 23);
@@ -313,7 +318,8 @@ public class ControlCentral extends JFrame {
 		ArrayList<Cancha> canchas = Cancha.obtenerCanchas();
 		for (Cancha cancha : canchas) {
 			cboCanchas.addItem(cancha.getNombre() + ", Tipo: "
-					+ cancha.getTipo_cancha() + ", Precio: $" + cancha.getPrecioPorHora());
+					+ cancha.getTipo_cancha() + ", Precio: $"
+					+ cancha.getPrecioPorHora());
 		}
 	}
 }

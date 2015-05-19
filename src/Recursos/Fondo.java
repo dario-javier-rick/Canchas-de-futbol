@@ -6,6 +6,11 @@ import javax.swing.ImageIcon;
 
 public class Fondo extends javax.swing.JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Fondo() {
 		this.setSize(400, 280);
 	}
