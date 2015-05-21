@@ -9,15 +9,26 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Recursos.Fondo;
+
 import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JButton;
+
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JComboBox;
+
+import java.awt.Font;
+
 
 public class AgregarReservas extends JFrame {
 
@@ -26,12 +37,13 @@ public class AgregarReservas extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	JCalendar calendar = new JCalendar();
+
 	private JTextField textField;
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JTextField textField_1;
 	private JPanel panel_3;
-	private JTextField textField_2;
+	private JTextField txtHoraReserva = new JTextField();
 	private JPanel panel_4;
 	private JTextField textField_3;
 	private JPanel panel_5;
@@ -39,6 +51,8 @@ public class AgregarReservas extends JFrame {
 	private JButton btnAceptar;
 	private JButton button;
 	private JPanel panel_6;
+	JComboBox cboHoras = new JComboBox();
+	JComboBox cboMinutos = new JComboBox();
 
 	/**
 	 * Launch the application.
@@ -76,7 +90,8 @@ public class AgregarReservas extends JFrame {
 		p.add(panel);
 
 		panel.add(calendar);
-
+				
+		
 		panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"), "Cancha",
@@ -115,11 +130,10 @@ public class AgregarReservas extends JFrame {
 		panel_3.setBounds(16, 227, 192, 43);
 		p.add(panel_3);
 
-		textField_2 = new JTextField();
-		textField_2.setEditable(false);
-		textField_2.setColumns(10);
-		textField_2.setBounds(6, 16, 176, 20);
-		panel_3.add(textField_2);
+		txtHoraReserva.setEditable(false);
+		txtHoraReserva.setColumns(10);
+		txtHoraReserva.setBounds(6, 16, 176, 20);
+		panel_3.add(txtHoraReserva);
 
 		panel_4 = new JPanel();
 		panel_4.setLayout(null);
@@ -143,7 +157,6 @@ public class AgregarReservas extends JFrame {
 		p.add(panel_5);
 
 		textField_4 = new JTextField();
-		textField_4.setEditable(false);
 		textField_4.setColumns(10);
 		textField_4.setBounds(6, 16, 169, 20);
 		panel_5.add(textField_4);
@@ -186,20 +199,50 @@ public class AgregarReservas extends JFrame {
 		panel_6.setBounds(16, 173, 192, 43);
 		p.add(panel_6);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(11, 14, 50, 20);
-		panel_6.add(comboBox);
+		cboHoras.setBounds(11, 14, 50, 20);
+		panel_6.add(cboHoras);
+		cboHoras.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				txtHoraReserva.setText(cboHoras.getSelectedItem().toString()+ ":" 
+//						+ cboMinutos.getSelectedItem().toString()
+						+ " Hs.");
+			}
+		});
 
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(100, 14, 50, 20);
-		panel_6.add(comboBox_1);
+		cboMinutos.setBounds(100, 14, 50, 20);
+		panel_6.add(cboMinutos);
+		cboMinutos.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				txtHoraReserva
+						.setText(cboHoras.getSelectedItem().toString() + ":"
+//								+ cboMinutos.getSelectedItem().toString()
+								+ " Hs.");
+			}
+		});
 
-		JLabel lblNewLabel = new JLabel("Horas");
-		lblNewLabel.setBounds(69, 17, 33, 14);
-		panel_6.add(lblNewLabel);
+		JLabel lblHoras = new JLabel("Horas");
+		lblHoras.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblHoras.setBounds(69, 17, 33, 14);
+		panel_6.add(lblHoras);
 
 		JLabel lblMin = new JLabel("Min");
+		lblMin.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblMin.setBounds(160, 17, 22, 15);
 		panel_6.add(lblMin);
+
+		bindHoras();
+		bindMinutos();
+	}
+
+	private void bindMinutos() {
+		for (int i = 0; i < 60; i++) {
+			cboMinutos.addItem(String.format("%02d", i));
+		}
+	}
+
+	private void bindHoras() {
+		for (int i = 0; i < 24; i++) {
+			cboHoras.addItem(String.format("%02d", i));
+		}
 	}
 }
