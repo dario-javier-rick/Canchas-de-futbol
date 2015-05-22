@@ -13,7 +13,6 @@ import Recursos.Fondo;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
-
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
@@ -28,7 +27,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JComboBox;
 
 import java.awt.Font;
-
 
 public class AgregarReservas extends JFrame {
 
@@ -90,8 +88,7 @@ public class AgregarReservas extends JFrame {
 		p.add(panel);
 
 		panel.add(calendar);
-				
-		
+
 		panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"), "Cancha",
@@ -199,13 +196,18 @@ public class AgregarReservas extends JFrame {
 		panel_6.setBounds(16, 173, 192, 43);
 		p.add(panel_6);
 
+		bindHoras();
+		bindMinutos();
+
 		cboHoras.setBounds(11, 14, 50, 20);
 		panel_6.add(cboHoras);
 		cboHoras.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				txtHoraReserva.setText(cboHoras.getSelectedItem().toString()+ ":" 
-//						+ cboMinutos.getSelectedItem().toString()
-						+ " Hs.");
+				txtHoraReserva.setText(calendar.getDate().getDate() + "/"+
+						calendar.getDate().getMonth() + "/"+
+						calendar.getDate().getYear() + " "
+						+ cboHoras.getSelectedItem().toString() + ":"
+						+ cboMinutos.getSelectedItem().toString() + " Hs.");
 			}
 		});
 
@@ -213,10 +215,9 @@ public class AgregarReservas extends JFrame {
 		panel_6.add(cboMinutos);
 		cboMinutos.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				txtHoraReserva
-						.setText(cboHoras.getSelectedItem().toString() + ":"
-//								+ cboMinutos.getSelectedItem().toString()
-								+ " Hs.");
+				txtHoraReserva.setText(cboHoras.getSelectedItem().toString()
+						+ ":" + cboMinutos.getSelectedItem().toString()
+						+ " Hs.");
 			}
 		});
 
@@ -230,8 +231,6 @@ public class AgregarReservas extends JFrame {
 		lblMin.setBounds(160, 17, 22, 15);
 		panel_6.add(lblMin);
 
-		bindHoras();
-		bindMinutos();
 	}
 
 	private void bindMinutos() {
