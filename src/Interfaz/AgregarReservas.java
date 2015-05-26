@@ -177,6 +177,9 @@ public class AgregarReservas extends JFrame {
 				dispose();
 			}
 		});
+		
+		bindHoras();
+		bindMinutos();
 
 		panelHorario = new JPanel();
 		panelHorario.setLayout(null);
@@ -204,9 +207,11 @@ public class AgregarReservas extends JFrame {
 		panelHorario.add(cboMinutos);
 		cboMinutos.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				txtHoraReserva.setText(cboHoras.getSelectedItem().toString()
-						+ ":" + cboMinutos.getSelectedItem().toString()
-						+ " Hs.");
+				txtHoraReserva.setText(calendar.getDate().getDate() + "/"
+						+ calendar.getDate().getMonth() + "/"
+						+ calendar.getDate().getYear() + " "
+						+ cboHoras.getSelectedItem().toString() + ":"
+						+ cboMinutos.getSelectedItem().toString() + " Hs.");
 			}
 		});
 
@@ -272,9 +277,6 @@ public class AgregarReservas extends JFrame {
 		});
 		button.setBounds(280, 248, 89, 23);
 		p.add(button);
-
-		bindHoras();
-		bindMinutos();
 
 	}
 

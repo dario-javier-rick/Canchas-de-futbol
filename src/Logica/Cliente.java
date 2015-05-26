@@ -18,6 +18,13 @@ public class Cliente {
 
 	}
 
+	public Cliente(int idCliente, String nombre, String apellido, int telefono) {
+		this.setIdCliente(idCliente);
+		this.setNombre(nombre);
+		this.setApellido(apellido);
+		this.telefono = telefono;
+	}
+	
 	public Cliente(int idCliente, String nombre, String apellido, int telefono,
 			boolean persistirCliente) {
 		this.setIdCliente(idCliente);
@@ -99,6 +106,10 @@ public class Cliente {
 
 	private void setIdCliente(int idCliente) {
 		this.idCliente = idCliente;
+	}
+
+	public static int getUltimoIdCliente() {
+		return DAC.getUltimoIdCliente();
 	}
 
 }
