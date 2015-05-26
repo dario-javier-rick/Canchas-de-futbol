@@ -96,6 +96,24 @@ public class ClienteDAC {
 			System.err.println(e.getMessage());
 		}
 	}
+	
+	public int getUltimoIdCliente() {
+		int resultado = 0;
+		try {
+			Connection conn = BBDD.abrirConexion();
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			ResultSet rs = statement
+					.executeQuery("SELECT MAX(idCliente) FROM clientes;");
+			if (rs.next()) {
+				resultado = rs.getInt(1);
+			}
+			conn.close(); // Cierro conexion.
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return resultado;
+	}
 
 
 

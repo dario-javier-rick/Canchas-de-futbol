@@ -36,6 +36,7 @@ public class ControlCentral extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static ControlCentral frame = new ControlCentral();
 	JCalendar calendario = new JCalendar();
 	JComboBox cboClientes = new JComboBox();
 	JComboBox cboCanchas = new JComboBox();
@@ -51,7 +52,6 @@ public class ControlCentral extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ControlCentral frame = new ControlCentral();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,29 +67,28 @@ public class ControlCentral extends JFrame {
 		bindClientes();
 		bindCanchas();
 		bindReservas();
-
-		// persistirCombos();
+//		persistirCombos();
 	}
 
-	private void persistirCombos() {
-		ArrayList<Cancha> canchas = new ArrayList<Cancha>();
-		for (int i = 0; i < cboCanchas.getItemCount(); i++) {
-			canchas.add((Cancha) cboCanchas.getItemAt(i));
-		}
-		Cancha.actualizarCanchas(canchas);
-
-		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-		for (int i = 0; i < cboClientes.getItemCount(); i++) {
-			clientes.add((Cliente) cboClientes.getItemAt(i));
-		}
-		Cliente.actualizarClientes(clientes);
-
-		ArrayList<Reserva> reservas = new ArrayList<Reserva>();
-		for (int i = 0; i < cboReservas.getItemCount(); i++) {
-			reservas.add((Reserva) cboReservas.getItemAt(i));
-		}
-		Reserva.actualizarReservas(reservas);
-	}
+//	private void persistirCombos() {
+//		ArrayList<Cancha> canchas = new ArrayList<Cancha>();
+//		for (int i = 0; i < cboCanchas.getItemCount(); i++) {
+//			canchas.add((Cancha) cboCanchas.getItemAt(i));
+//		}
+//		Cancha.actualizarCanchas(canchas);
+//
+//		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+//		for (int i = 0; i < cboClientes.getItemCount(); i++) {
+//			clientes.add((Cliente) cboClientes.getItemAt(i));
+//		}
+//		Cliente.actualizarClientes(clientes);
+//
+//		ArrayList<Reserva> reservas = new ArrayList<Reserva>();
+//		for (int i = 0; i < cboReservas.getItemCount(); i++) {
+//			reservas.add((Reserva) cboReservas.getItemAt(i));
+//		}
+//		Reserva.actualizarReservas(reservas);
+//	}
 
 	/**
 	 * Create the frame.
@@ -124,7 +123,7 @@ public class ControlCentral extends JFrame {
 		btnAgregarCanchas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				AgregarCancha Canchas = new AgregarCancha();
+				AgregarCancha Canchas = new AgregarCancha(frame);
 				Canchas.setVisible(true);
 			}
 		});
@@ -162,7 +161,7 @@ public class ControlCentral extends JFrame {
 		btnAgregarClientes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				AgregarClientes Canchas = new AgregarClientes();
+				AgregarClientes Canchas = new AgregarClientes(frame);
 				Canchas.setVisible(true);
 			}
 		});
@@ -200,7 +199,7 @@ public class ControlCentral extends JFrame {
 		btnAgregarReservas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				AgregarReservas reservas = new AgregarReservas();
+				AgregarReservas reservas = new AgregarReservas(frame);
 				reservas.setVisible(true);
 			}
 		});
@@ -315,11 +314,13 @@ public class ControlCentral extends JFrame {
 	}
 
 	private void bindCanchas() {
+		
 		ArrayList<Cancha> canchas = Cancha.obtenerCanchas();
 		for (Cancha cancha : canchas) {
 			cboCanchas.addItem(cancha.getNombre() + ", Tipo: "
 					+ cancha.getTipo_cancha() + ", Precio: $"
 					+ cancha.getPrecioPorHora());
 		}
+		
 	}
 }

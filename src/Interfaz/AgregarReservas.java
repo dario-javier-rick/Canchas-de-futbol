@@ -8,6 +8,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Logica.Cancha;
+import Logica.Cliente;
+import Logica.Reserva;
 import Recursos.Fondo;
 
 import com.toedter.calendar.JCalendar;
@@ -27,6 +30,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.JComboBox;
 
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.Date;
 
 public class AgregarReservas extends JFrame {
 
@@ -36,19 +42,19 @@ public class AgregarReservas extends JFrame {
 	private static final long serialVersionUID = 1L;
 	JCalendar calendar = new JCalendar();
 
-	private JTextField textField;
-	private JPanel panel_1;
-	private JPanel panel_2;
-	private JTextField textField_1;
-	private JPanel panel_3;
+	private JTextField txtCancha;
+	private JPanel panelCancha;
+	private JPanel panelIdCliente;
+	private JTextField txtIdCliente;
+	private JPanel panelHoraReserva;
 	private JTextField txtHoraReserva = new JTextField();
-	private JPanel panel_4;
-	private JTextField textField_3;
-	private JPanel panel_5;
-	private JTextField textField_4;
+	private JPanel panelSeña;
+	private JTextField txtSeña;
+	private JPanel panelTiempoReserva;
+	private JTextField txtTiempoReserva;
 	private JButton btnAceptar;
 	private JButton button;
-	private JPanel panel_6;
+	private JPanel panelHorario;
 	JComboBox cboHoras = new JComboBox();
 	JComboBox cboMinutos = new JComboBox();
 
@@ -59,7 +65,7 @@ public class AgregarReservas extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AgregarReservas frame = new AgregarReservas();
+					AgregarReservas frame = new AgregarReservas(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,7 +77,7 @@ public class AgregarReservas extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AgregarReservas() {
+	public AgregarReservas(final ControlCentral instancia) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 500, 320);
 
@@ -89,86 +95,165 @@ public class AgregarReservas extends JFrame {
 
 		panel.add(calendar);
 
-		panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(UIManager
-				.getBorder("TitledBorder.border"), "Cancha",
-				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(16, 11, 192, 43);
-		p.add(panel_1);
-		panel_1.setLayout(null);
+		panelCancha = new JPanel();
+		panelCancha
+				.setBorder(new TitledBorder(UIManager
+						.getBorder("TitledBorder.border"), "Cancha",
+						TitledBorder.CENTER, TitledBorder.TOP, null, new Color(
+								0, 0, 0)));
+		panelCancha.setBounds(16, 11, 192, 43);
+		p.add(panelCancha);
+		panelCancha.setLayout(null);
 
-		textField = new JTextField();
-		textField.setBounds(6, 16, 176, 20);
-		panel_1.add(textField);
-		textField.setColumns(10);
+		txtCancha = new JTextField();
+		txtCancha.setBounds(6, 16, 176, 20);
+		panelCancha.add(txtCancha);
+		txtCancha.setColumns(10);
 
-		JLabel label = new JLabel("New label");
-		label.setBounds(-54, 24, 200, 50);
-		p.add(label);
+		panelIdCliente = new JPanel();
+		panelIdCliente.setLayout(null);
+		panelIdCliente
+				.setBorder(new TitledBorder(UIManager
+						.getBorder("TitledBorder.border"), "Id del cliente",
+						TitledBorder.CENTER, TitledBorder.TOP, null, new Color(
+								0, 0, 0)));
+		panelIdCliente.setBounds(16, 65, 192, 43);
+		p.add(panelIdCliente);
 
-		panel_2 = new JPanel();
-		panel_2.setLayout(null);
-		panel_2.setBorder(new TitledBorder(UIManager
-				.getBorder("TitledBorder.border"), "Id del cliente",
-				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_2.setBounds(16, 65, 192, 43);
-		p.add(panel_2);
+		txtIdCliente = new JTextField();
+		txtIdCliente.setColumns(10);
+		txtIdCliente.setBounds(6, 16, 176, 20);
+		panelIdCliente.add(txtIdCliente);
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(6, 16, 176, 20);
-		panel_2.add(textField_1);
-
-		panel_3 = new JPanel();
-		panel_3.setLayout(null);
-		panel_3.setBorder(new TitledBorder(UIManager
-				.getBorder("TitledBorder.border"), "Fecha & Hora de reserva",
-				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_3.setBounds(16, 227, 192, 43);
-		p.add(panel_3);
+		panelHoraReserva = new JPanel();
+		panelHoraReserva.setLayout(null);
+		panelHoraReserva
+				.setBorder(new TitledBorder(UIManager
+						.getBorder("TitledBorder.border"),
+						"Fecha & Hora de reserva", TitledBorder.CENTER,
+						TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panelHoraReserva.setBounds(16, 227, 192, 43);
+		p.add(panelHoraReserva);
 
 		txtHoraReserva.setEditable(false);
 		txtHoraReserva.setColumns(10);
 		txtHoraReserva.setBounds(6, 16, 176, 20);
-		panel_3.add(txtHoraReserva);
+		panelHoraReserva.add(txtHoraReserva);
 
-		panel_4 = new JPanel();
-		panel_4.setLayout(null);
-		panel_4.setBorder(new TitledBorder(UIManager
-				.getBorder("TitledBorder.border"), "Se\u00F1a",
-				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_4.setBounds(16, 119, 192, 43);
-		p.add(panel_4);
+		panelSeña = new JPanel();
+		panelSeña.setLayout(null);
+		panelSeña
+				.setBorder(new TitledBorder(UIManager
+						.getBorder("TitledBorder.border"), "Se\u00F1a",
+						TitledBorder.CENTER, TitledBorder.TOP, null, new Color(
+								0, 0, 0)));
+		panelSeña.setBounds(16, 119, 192, 43);
+		p.add(panelSeña);
 
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(6, 16, 176, 20);
-		panel_4.add(textField_3);
+		txtSeña = new JTextField();
+		txtSeña.setColumns(10);
+		txtSeña.setBounds(6, 16, 176, 20);
+		panelSeña.add(txtSeña);
 
-		panel_5 = new JPanel();
-		panel_5.setLayout(null);
-		panel_5.setBorder(new TitledBorder(UIManager
-				.getBorder("TitledBorder.border"), "Tiempo de reserva",
-				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_5.setBounds(272, 193, 195, 43);
-		p.add(panel_5);
+		panelTiempoReserva = new JPanel();
+		panelTiempoReserva.setLayout(null);
+		panelTiempoReserva
+				.setBorder(new TitledBorder(UIManager
+						.getBorder("TitledBorder.border"), "Tiempo de reserva",
+						TitledBorder.CENTER, TitledBorder.TOP, null, new Color(
+								0, 0, 0)));
+		panelTiempoReserva.setBounds(272, 193, 195, 43);
+		p.add(panelTiempoReserva);
 
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(6, 16, 169, 20);
-		panel_5.add(textField_4);
+		txtTiempoReserva = new JTextField();
+		txtTiempoReserva.setColumns(10);
+		txtTiempoReserva.setBounds(6, 16, 169, 20);
+		panelTiempoReserva.add(txtTiempoReserva);
 
-		btnAceptar = new JButton("Cancelar");
+		btnAceptar = new JButton("Cerrar");
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				dispose();
 			}
 		});
+
+		panelHorario = new JPanel();
+		panelHorario.setLayout(null);
+		panelHorario
+				.setBorder(new TitledBorder(UIManager
+						.getBorder("TitledBorder.border"), "Horario",
+						TitledBorder.CENTER, TitledBorder.TOP, null, new Color(
+								0, 0, 0)));
+		panelHorario.setBounds(16, 173, 192, 43);
+		p.add(panelHorario);
+
+		cboHoras.setBounds(11, 14, 50, 20);
+		panelHorario.add(cboHoras);
+		cboHoras.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				txtHoraReserva.setText(calendar.getDate().getDate() + "/"
+						+ calendar.getDate().getMonth() + "/"
+						+ calendar.getDate().getYear() + " "
+						+ cboHoras.getSelectedItem().toString() + ":"
+						+ cboMinutos.getSelectedItem().toString() + " Hs.");
+			}
+		});
+
+		cboMinutos.setBounds(100, 14, 50, 20);
+		panelHorario.add(cboMinutos);
+		cboMinutos.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				txtHoraReserva.setText(cboHoras.getSelectedItem().toString()
+						+ ":" + cboMinutos.getSelectedItem().toString()
+						+ " Hs.");
+			}
+		});
+
+		JLabel lblHoras = new JLabel("Horas");
+		lblHoras.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblHoras.setBounds(69, 17, 33, 14);
+		panelHorario.add(lblHoras);
+
+		JLabel lblMin = new JLabel("Min");
+		lblMin.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblMin.setBounds(160, 17, 22, 15);
+		panelHorario.add(lblMin);
 		btnAceptar.setBounds(379, 247, 89, 23);
 		p.add(btnAceptar);
 
 		button = new JButton("Aceptar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (validarDatos()) {
+					// Llamar a lógica y persistir reserva
+					Date d = new Date();
+					Reserva reserva = new Reserva(
+							Reserva.getUltimoIdReserva() + 1, Cliente
+									.obtenerCliente(1),
+							Cancha.obtenerCancha(1), d);
+
+					// idReserva INTEGER PRIMARY KEY AUTOINCREMENT,
+					// idCliente INTEGER,
+					// idCancha INTEGER,
+					// horario STRING,
+					// realizada BOOLEAN,
+					// FOREIGN KEY(idCliente) REFERENCES CLIENTES(idCliente),
+					// FOREIGN KEY(idCancha) REFERENCES CANCHAS(idCancha)
+
+					reserva.persistirReserva();
+					JOptionPane.showMessageDialog(null, "Reserva agregada!");
+					instancia.actualizarCombos();
+					dispose();
+				}
+
+			}
+
+			private boolean validarDatos() {
+				// TODO Auto-generated method stub
+				return true;
+			}
+		});
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -188,48 +273,8 @@ public class AgregarReservas extends JFrame {
 		button.setBounds(280, 248, 89, 23);
 		p.add(button);
 
-		panel_6 = new JPanel();
-		panel_6.setLayout(null);
-		panel_6.setBorder(new TitledBorder(UIManager
-				.getBorder("TitledBorder.border"), "Horario",
-				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_6.setBounds(16, 173, 192, 43);
-		p.add(panel_6);
-
 		bindHoras();
 		bindMinutos();
-
-		cboHoras.setBounds(11, 14, 50, 20);
-		panel_6.add(cboHoras);
-		cboHoras.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				txtHoraReserva.setText(calendar.getDate().getDate() + "/"+
-						calendar.getDate().getMonth() + "/"+
-						calendar.getDate().getYear() + " "
-						+ cboHoras.getSelectedItem().toString() + ":"
-						+ cboMinutos.getSelectedItem().toString() + " Hs.");
-			}
-		});
-
-		cboMinutos.setBounds(100, 14, 50, 20);
-		panel_6.add(cboMinutos);
-		cboMinutos.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				txtHoraReserva.setText(cboHoras.getSelectedItem().toString()
-						+ ":" + cboMinutos.getSelectedItem().toString()
-						+ " Hs.");
-			}
-		});
-
-		JLabel lblHoras = new JLabel("Horas");
-		lblHoras.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblHoras.setBounds(69, 17, 33, 14);
-		panel_6.add(lblHoras);
-
-		JLabel lblMin = new JLabel("Min");
-		lblMin.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblMin.setBounds(160, 17, 22, 15);
-		panel_6.add(lblMin);
 
 	}
 

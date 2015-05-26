@@ -2,6 +2,7 @@ package Persistencia;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ReservaDAC {
 
@@ -87,6 +88,48 @@ public class ReservaDAC {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+	}
+
+	public void persistirReserva(int idReserva, int idCliente, int idCancha,
+			Date horario, Boolean realizada, int seña) {
+		Connection conn = BBDD.abrirConexion();
+		try {
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			PreparedStatement prep = conn.prepareStatement("INSERT INTO reservas VALUES (?,?,?,?,?);");
+			// Verificar!
+//			prep.setInt(1, idCancha);
+//			prep.setString(2, nombre);
+//			prep.setString(3, tipo_cancha);
+//			prep.setInt(4, maxJugadores);
+//			prep.setInt(5, precioPorHora);
+		    conn.setAutoCommit(false);
+		    prep.executeUpdate();
+		    conn.commit();
+		    conn.setAutoCommit(true);
+		    conn.close(); // Cierro conexion.
+			
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}		
+	}
+
+	public int getUltimoIdReserva() {
+		int resultado = 0;
+		try {
+			Connection conn = BBDD.abrirConexion();
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			ResultSet rs = statement
+					.executeQuery("SELECT MAX(idReserva) FROM reservas;");
+			if (rs.next()) {
+				resultado = rs.getInt(1);
+			}
+			conn.close(); // Cierro conexion.
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return resultado;
 	}
 
 }

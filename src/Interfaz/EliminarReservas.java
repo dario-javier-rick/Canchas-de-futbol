@@ -69,7 +69,7 @@ public class EliminarReservas extends JFrame {
 		btnNewButton_1.setBounds(196, 86, 89, 23);
 		p.add(btnNewButton_1);
 
-		JButton btnNewButton = new JButton("Cancelar");
+		JButton btnNewButton = new JButton("Cerrar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setVisible(false);

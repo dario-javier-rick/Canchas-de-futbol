@@ -27,7 +27,7 @@ public class BBDD {
 	}
 
 	public static void verificarExistenciaBBDD() {
-		if (!new File("path").isFile())
+		if (!new File(Path).isFile())
 			crearBBDD();
 	}
 

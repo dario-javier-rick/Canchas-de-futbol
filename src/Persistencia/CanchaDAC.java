@@ -100,12 +100,14 @@ public class CanchaDAC {
 			prep.setInt(1, idCancha);
 			prep.setString(2, nombre);
 			prep.setString(3, tipo_cancha);
-			prep.setInt(4, precioPorHora);
-			prep.setInt(5, maxJugadores);
+			prep.setInt(4, maxJugadores);
+			prep.setInt(5, precioPorHora);
 		    conn.setAutoCommit(false);
-		    prep.executeBatch();
+		    prep.executeUpdate();
+		    conn.commit();
 		    conn.setAutoCommit(true);
-			conn.close(); // Cierro conexion.
+		    conn.close(); // Cierro conexion.
+			
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}		

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -20,22 +21,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
 
 public class AgregarCancha extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4219519238158446784L;
 	private JTextField nombre;
 	private JTextField maxJugadores;
 	private JTextField precioPorHora;
-	private JTextField tipo_cancha;
-	JLabel lblMensaje1 = new JLabel("");
-	JLabel lblMensaje2 = new JLabel("");
+	JComboBox tipo_cancha = new JComboBox();
 
 	/**
 	 * Launch the application.
@@ -44,7 +38,7 @@ public class AgregarCancha extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AgregarCancha frame = new AgregarCancha();
+					AgregarCancha frame = new AgregarCancha(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,16 +47,20 @@ public class AgregarCancha extends JFrame {
 		});
 	}
 
+
 	/**
 	 * Create the frame.
+	 * 
+	 * @param frame
+	 * @param frame
 	 */
-	public AgregarCancha() {
+	public AgregarCancha(final ControlCentral instancia) {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent arg0) {
 			}
 		});
-		
+
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 400, 250);
@@ -72,20 +70,6 @@ public class AgregarCancha extends JFrame {
 		p.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(p);
 		p.setLayout(null);
-		
-		JLabel labelMensaje1 = new JLabel("");
-		labelMensaje1.setHorizontalAlignment(SwingConstants.CENTER);
-		labelMensaje1.setForeground(Color.WHITE);
-		labelMensaje1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
-		labelMensaje1.setBounds(4, 189, 300, 14);
-		p.add(labelMensaje1);
-		
-		JLabel labelMensaje2 = new JLabel("");
-		labelMensaje2.setHorizontalAlignment(SwingConstants.CENTER);
-		labelMensaje2.setForeground(Color.BLACK);
-		labelMensaje2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
-		labelMensaje2.setBounds(14, 189, 300, 14);
-		p.add(labelMensaje2);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager
@@ -137,44 +121,57 @@ public class AgregarCancha extends JFrame {
 		p.add(panel_3);
 		panel_3.setLayout(null);
 
-		tipo_cancha = new JTextField();
-		tipo_cancha.setEnabled(false);
 		tipo_cancha.setBounds(6, 16, 225, 20);
 		panel_3.add(tipo_cancha);
-		tipo_cancha.setText("Sintetico");
-		tipo_cancha.setColumns(10);
 
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (nombre.getText().equals("") || maxJugadores.getText().equals("")
-						|| precioPorHora.getText().equals("")
-						|| tipo_cancha.getText().equals("")) {
-					lblMensaje1.setText("Algunos campos estan vacíos!");
-					lblMensaje2.setText("Algunos campos estan vacíos!");
-				} else {
-					// tener en cuenta el idCancha
-					Cancha cancha = new Cancha(Cancha.getUltimoIdCancha()+1, nombre.getText(), tipo_cancha
-							.getText(), Integer.parseInt(precioPorHora
-							.getText()), Integer.parseInt(maxJugadores
-							.getText()));
+
+				if (validarDatos()) {
+					// Llamar a lógica y persistir cancha
+					Cancha cancha = new Cancha(Cancha.getUltimoIdCancha() + 1,
+							nombre.getText(), tipo_cancha.getSelectedItem()
+									.toString(), Integer.parseInt(precioPorHora
+									.getText()), Integer.parseInt(maxJugadores
+									.getText()));
 					cancha.persistirCancha();
+					JOptionPane.showMessageDialog(null, "Cancha cargada!");
+					instancia.actualizarCombos();
+					dispose();
 				}
+
+			}
+
+			private boolean validarDatos() {
+				if (nombre.getText().equals("")
+						|| maxJugadores.getText().equals("")
+						|| precioPorHora.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,
+							"Algunos campos estan vacíos");
+					return false;
+				}
+				return true;
 			}
 		});
 		btnAgregar.setBounds(284, 50, 89, 23);
 		p.add(btnAgregar);
-		
-		JButton btnCancelar = new JButton("Cancelar");
+
+		JButton btnCancelar = new JButton("Cerrar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false); 
+				setVisible(false);
 				dispose();
 			}
 		});
 		btnCancelar.setBounds(284, 92, 89, 23);
 		p.add(btnCancelar);
 
+		bindPiso();
+	}
 
+	private void bindPiso() {
+		tipo_cancha.addItem("Sintético");
+		tipo_cancha.addItem("Parquet");
 	}
 }

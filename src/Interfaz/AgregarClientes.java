@@ -46,7 +46,7 @@ public class AgregarClientes extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AgregarClientes frame = new AgregarClientes();
+					AgregarClientes frame = new AgregarClientes(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,11 +54,13 @@ public class AgregarClientes extends JFrame {
 			}
 		});
 	}
+	
+
 
 	/**
 	 * Create the frame.
 	 */
-	public AgregarClientes() {
+	public AgregarClientes(final ControlCentral instancia) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 530, 300);
@@ -261,10 +263,14 @@ public class AgregarClientes extends JFrame {
 		panel_9.add(label_5);
 		
 		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnAgregar.setBounds(326, 245, 89, 23);
 		p.add(btnAgregar);
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton("Cerrar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false); 

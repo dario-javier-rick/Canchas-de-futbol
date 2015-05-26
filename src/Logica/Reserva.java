@@ -50,10 +50,24 @@ public class Reserva {
 		}
 		return arrayReservas;
 	}
+	
+	public void persistirReserva() {
+		try {
+			DAC.persistirReserva(this.idReserva, this.cliente.getIdCliente(), this.cancha.getIdCancha(),
+					this.horario, this.realizada, this.seña);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		
+	}
 
 	public static void actualizarReservas(ArrayList<Reserva> Reserva) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public static int getUltimoIdReserva() {
+		return DAC.getUltimoIdReserva();
 	}
 
 	public static void eliminarReservasPorCancha(Cancha cancha) {
@@ -107,5 +121,6 @@ public class Reserva {
 	private void setIdReserva(int idReserva) {
 		this.idReserva = idReserva;
 	}
+
 
 }
