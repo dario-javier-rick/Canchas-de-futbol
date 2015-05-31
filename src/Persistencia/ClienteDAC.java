@@ -52,13 +52,13 @@ public class ClienteDAC {
 		return datos;
 	}
 
-	public void persistirCliente(String nombre, String apellido, int telefono) {
+	public void persistirCliente(int idCliente, String nombre, String apellido, int telefono) {
 		Connection conn = BBDD.abrirConexion();
 		Statement statement;
 		try {
 			statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
-			statement.executeUpdate("INSERT INTO clientes VALUES('" + nombre
+			statement.executeUpdate("INSERT INTO clientes VALUES(" + idCliente + ", '" + nombre
 					+ "', '" + apellido + "', " + telefono + ")");
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());

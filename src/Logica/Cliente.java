@@ -25,16 +25,6 @@ public class Cliente {
 		this.telefono = telefono;
 	}
 	
-	public Cliente(int idCliente, String nombre, String apellido, int telefono,
-			boolean persistirCliente) {
-		this.setIdCliente(idCliente);
-		this.setNombre(nombre);
-		this.setApellido(apellido);
-		this.telefono = telefono;
-		if (persistirCliente) {
-			DAC.persistirCliente(nombre, apellido, telefono);
-		}
-	}
 
 	public static ArrayList<Cliente> obtenerClientes() {
 		ArrayList<Cliente> arrayClientes = new ArrayList<Cliente>();
@@ -44,8 +34,7 @@ public class Cliente {
 			for (int i = 0; i < array.size(); i++) {
 				Cliente cliente = new Cliente(
 						Integer.parseInt(array.get(i)[0]), array.get(i)[1],
-						array.get(i)[2], Integer.parseInt(array.get(i)[3]),
-						false);
+						array.get(i)[2], Integer.parseInt(array.get(i)[3]));
 				arrayClientes.add(cliente);
 			}
 		} catch (Exception e) {
@@ -57,7 +46,7 @@ public class Cliente {
 	public static Cliente obtenerCliente(int IdCliente) {
 		String[] datos = DAC.obtenerCliente(IdCliente);
 		Cliente cliente = new Cliente(Integer.parseInt(datos[0]), datos[1],
-				datos[2], Integer.parseInt(datos[3]), false);
+				datos[2], Integer.parseInt(datos[3]));
 		return cliente;
 	}
 
@@ -67,21 +56,18 @@ public class Cliente {
 
 	public void persistirCliente() {
 		try {
-			DAC.persistirCliente(this.nombre, this.apellido, this.telefono);
+			DAC.persistirCliente(this.idCliente, this.nombre, this.apellido, this.telefono);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+		
 
 	}
 
-	public static void actualizarClientes(ArrayList<Cliente> clientes) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public String toString() {
-		return getNombre() + ", " + getApellido();
+		return "Id: " + getIdCliente() + " , " + getApellido() + ", " + getNombre() ;
 	}
 
 	public String getNombre() {
@@ -110,6 +96,11 @@ public class Cliente {
 
 	public static int getUltimoIdCliente() {
 		return DAC.getUltimoIdCliente();
+	}
+
+	public static boolean verificarExistenciaCliente(int idCliente) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -29,6 +29,8 @@ import com.toedter.calendar.JCalendar;
 import java.util.ArrayList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class ControlCentral extends JFrame {
 
@@ -41,8 +43,8 @@ public class ControlCentral extends JFrame {
 	JComboBox cboClientes = new JComboBox();
 	JComboBox cboCanchas = new JComboBox();
 	JComboBox cboReservas = new JComboBox();
-	private JTable table;
-	private JTable table_1;
+	private JTable tblMañana;
+	private JTable tblTarde;
 	private ControlCentral ControlCentral = this;
 
 	/**
@@ -227,6 +229,14 @@ public class ControlCentral extends JFrame {
 		panelCalendario.setForeground(new Color(0, 0, 0));
 		panelCalendario.setBounds(8, 11, 399, 197);
 		panelGeneral.add(panelCalendario);
+		calendario.addPropertyChangeListener("calendar",
+				new PropertyChangeListener() {
+					public void propertyChange(PropertyChangeEvent e) {
+						// Actualizar datatable
+						bindTablasReservas();
+					}
+				});
+
 		
 		panelCalendario.add(calendario);
 
@@ -241,9 +251,9 @@ public class ControlCentral extends JFrame {
 
 		tabbedPane.addTab("Tarde", null, scrollPane1, null);
 
-		table_1 = new JTable();
-		scrollPane1.setViewportView(table_1);
-		table_1.setModel(new DefaultTableModel(new Object[][] {
+		tblTarde = new JTable();
+		scrollPane1.setViewportView(tblTarde);
+		tblTarde.setModel(new DefaultTableModel(new Object[][] {
 				{ null, null, null, null, null },
 				{ null, null, null, null, null },
 				{ null, null, null, null, null },
@@ -262,9 +272,9 @@ public class ControlCentral extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		tabbedPane.addTab("New tab", null, scrollPane, null);
 
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		table.setModel(new DefaultTableModel(new Object[][] {
+		tblMañana = new JTable();
+		scrollPane.setViewportView(tblMañana);
+		tblMañana.setModel(new DefaultTableModel(new Object[][] {
 				{ null, null, null, null, null },
 				{ null, null, null, null, null },
 				{ null, null, null, null, null },
@@ -284,7 +294,7 @@ public class ControlCentral extends JFrame {
 			private static final long serialVersionUID = 1L;
 
 		});
-		table.getColumnModel().getColumn(4).setPreferredWidth(108);
+		tblMañana.getColumnModel().getColumn(4).setPreferredWidth(108);
 		tabbedPane.addTab("Mañana", null, scrollPane, null);
 
 		JButton btnCargar = new JButton("Cargar");
@@ -317,10 +327,14 @@ public class ControlCentral extends JFrame {
 		
 		ArrayList<Cancha> canchas = Cancha.obtenerCanchas();
 		for (Cancha cancha : canchas) {
-			cboCanchas.addItem(cancha.getNombre() + ", Tipo: "
-					+ cancha.getTipo_cancha() + ", Precio: $"
+			cboCanchas.addItem(cancha + ", Precio: $"
 					+ cancha.getPrecioPorHora());
 		}
 		
+	}
+	
+	private void bindTablasReservas() {
+		// TODO Auto-generated method stub
+		ArrayList<Reserva> reservas = Reserva.obtenerReservas(calendario.getCalendar());
 	}
 }

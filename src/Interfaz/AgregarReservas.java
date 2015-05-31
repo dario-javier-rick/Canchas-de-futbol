@@ -14,7 +14,6 @@ import Logica.Reserva;
 import Recursos.Fondo;
 
 import com.toedter.calendar.JCalendar;
-import com.toedter.calendar.JDateChooser;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -32,6 +31,9 @@ import javax.swing.JComboBox;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Calendar;
 import java.util.Date;
 
 public class AgregarReservas extends JFrame {
@@ -40,8 +42,7 @@ public class AgregarReservas extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JCalendar calendar = new JCalendar();
-
+	JCalendar calendar;
 	private JTextField txtCancha;
 	private JPanel panelCancha;
 	private JPanel panelIdCliente;
@@ -92,8 +93,6 @@ public class AgregarReservas extends JFrame {
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(262, 17, 222, 158);
 		p.add(panel);
-
-		panel.add(calendar);
 
 		panelCancha = new JPanel();
 		panelCancha
@@ -177,7 +176,7 @@ public class AgregarReservas extends JFrame {
 				dispose();
 			}
 		});
-		
+
 		bindHoras();
 		bindMinutos();
 
@@ -195,10 +194,10 @@ public class AgregarReservas extends JFrame {
 		panelHorario.add(cboHoras);
 		cboHoras.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				txtHoraReserva.setText(calendar.getDate().getDate() + "/"
-						+ calendar.getDate().getMonth() + "/"
-						+ calendar.getDate().getYear() + " "
-						+ cboHoras.getSelectedItem().toString() + ":"
+				Calendar c = (Calendar) calendar.getCalendar();
+				txtHoraReserva.setText(c.get(Calendar.DAY_OF_MONTH) + "/"
+						+ c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR)
+						+ " " + cboHoras.getSelectedItem().toString() + ":"
 						+ cboMinutos.getSelectedItem().toString() + " Hs.");
 			}
 		});
@@ -207,13 +206,30 @@ public class AgregarReservas extends JFrame {
 		panelHorario.add(cboMinutos);
 		cboMinutos.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				txtHoraReserva.setText(calendar.getDate().getDate() + "/"
-						+ calendar.getDate().getMonth() + "/"
-						+ calendar.getDate().getYear() + " "
-						+ cboHoras.getSelectedItem().toString() + ":"
+				Calendar c = (Calendar) calendar.getCalendar();
+				txtHoraReserva.setText(c.get(Calendar.DAY_OF_MONTH) + "/"
+						+ c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR)
+						+ " " + cboHoras.getSelectedItem().toString() + ":"
 						+ cboMinutos.getSelectedItem().toString() + " Hs.");
 			}
 		});
+
+		calendar = new JCalendar();
+		panel.add(calendar);
+		calendar.addPropertyChangeListener("calendar",
+				new PropertyChangeListener() {
+
+					@Override
+					public void propertyChange(PropertyChangeEvent e) {
+						Calendar c = (Calendar) e.getNewValue();
+						txtHoraReserva.setText(c.get(Calendar.DAY_OF_MONTH)
+								+ "/" + c.get(Calendar.MONTH) + "/"
+								+ c.get(Calendar.YEAR) + " "
+								+ cboHoras.getSelectedItem().toString() + ":"
+								+ cboMinutos.getSelectedItem().toString()
+								+ " Hs.");
+					}
+				});
 
 		JLabel lblHoras = new JLabel("Horas");
 		lblHoras.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -232,30 +248,93 @@ public class AgregarReservas extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (validarDatos()) {
 					// Llamar a lógica y persistir reserva
-					Date d = new Date();
-					Reserva reserva = new Reserva(
-							Reserva.getUltimoIdReserva() + 1, Cliente
-									.obtenerCliente(1),
-							Cancha.obtenerCancha(1), d);
+					try {
+						Date d = new Date();
+						Reserva reserva = new Reserva(Reserva
+								.getUltimoIdReserva() + 1, Cliente
+								.obtenerCliente(1), Cancha.obtenerCancha(1), d);
 
-					// idReserva INTEGER PRIMARY KEY AUTOINCREMENT,
-					// idCliente INTEGER,
-					// idCancha INTEGER,
-					// horario STRING,
-					// realizada BOOLEAN,
-					// FOREIGN KEY(idCliente) REFERENCES CLIENTES(idCliente),
-					// FOREIGN KEY(idCancha) REFERENCES CANCHAS(idCancha)
+						// idReserva INTEGER PRIMARY KEY AUTOINCREMENT,
+						// idCliente INTEGER,
+						// idCancha INTEGER,
+						// horario STRING,
+						// realizada BOOLEAN,
+						// FOREIGN KEY(idCliente) REFERENCES
+						// CLIENTES(idCliente),
+						// FOREIGN KEY(idCancha) REFERENCES CANCHAS(idCancha)
 
-					reserva.persistirReserva();
-					JOptionPane.showMessageDialog(null, "Reserva agregada!");
-					instancia.actualizarCombos();
-					dispose();
+						reserva.persistirReserva();
+						JOptionPane
+								.showMessageDialog(null, "Reserva agregada!");
+						instancia.actualizarCombos();
+						dispose();
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null,
+								"Ocurrio un problema al agregar la reserva. Codigo de error: "
+										+ ex.getMessage());
+					}
 				}
 
 			}
 
 			private boolean validarDatos() {
-				// TODO Auto-generated method stub
+				// Validaciones de cancha
+				try {
+					if (!txtCancha.getText().equals(""))
+						Integer.parseInt(txtCancha.getText());
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null,
+							"El id de la cancha no tiene formato numérico");
+					return false;
+				}
+				if (!Cancha.verificarExistenciaCancha(Integer
+						.parseInt(txtCancha.getText())))
+					JOptionPane.showMessageDialog(null,
+							"El id de la cancha ingresada no existe");
+
+				// Validaciones de cliente
+				try {
+					if (!txtIdCliente.getText().equals(""))
+						Integer.parseInt(txtIdCliente.getText());
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null,
+							"El id del cliente no tiene formato numérico");
+					return false;
+				}
+				if (!Cliente.verificarExistenciaCliente(Integer
+						.parseInt(txtIdCliente.getText())))
+					JOptionPane.showMessageDialog(null,
+							"El id del cliente ingresado no existe");
+
+				// Validaciones de seña
+				if (txtSeña.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,
+							"La seña se encuentra vacía");
+					return false;
+				}
+				try {
+					Integer.parseInt(txtSeña.getText());
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null,
+							"La seña no tiene formato numérico");
+					return false;
+				}
+
+				// Validaciones de tiempo de reserva
+
+				if (txtTiempoReserva.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,
+							"El tiempo de reserva se encuentra vacío");
+					return false;
+				}
+				try {
+					Integer.parseInt(txtTiempoReserva.getText());
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null,
+							"El tiempo de reserva no tiene formato numérico");
+					return false;
+				}
+
 				return true;
 			}
 		});

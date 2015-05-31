@@ -3,6 +3,7 @@ package Logica;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import Persistencia.ReservaDAC;
@@ -50,22 +51,48 @@ public class Reserva {
 		}
 		return arrayReservas;
 	}
-	
-	public void persistirReserva() {
+
+	public static ArrayList<Reserva> obtenerReservas(Calendar calendar) {
+		ArrayList<Reserva> arrayReservas = new ArrayList<Reserva>();
 		try {
-			DAC.persistirReserva(this.idReserva, this.cliente.getIdCliente(), this.cancha.getIdCancha(),
-					this.horario, this.realizada, this.seña);
+			ArrayList<String[]> array = DAC.obtenerReservas(
+					calendar.get(Calendar.DAY_OF_MONTH),
+					calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+			for (int i = 0; i < array.size(); i++) {
+				DateFormat formatter = new SimpleDateFormat(
+						"dd-MM-yyyy HH:mm:ss");
+				Reserva reserva = new Reserva(
+						Integer.parseInt(array.get(i)[0]),
+						Cliente.obtenerCliente(Integer.parseInt(array.get(i)[1])),
+						Cancha.obtenerCancha(Integer.parseInt(array.get(i)[2])),
+						formatter.parse(array.get(i)[3]));
+				if (Boolean.parseBoolean(array.get(i)[4]))
+					reserva.concretar();
+				arrayReservas.add(reserva);
+			}
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		
+		return arrayReservas;
+
+	}
+
+	public void persistirReserva() {
+		try {
+			DAC.persistirReserva(this.idReserva, this.cliente.getIdCliente(),
+					this.cancha.getIdCancha(), this.horario, this.realizada,
+					this.seña);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
 	}
 
 	public static void actualizarReservas(ArrayList<Reserva> Reserva) {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public static int getUltimoIdReserva() {
 		return DAC.getUltimoIdReserva();
 	}
@@ -121,6 +148,5 @@ public class Reserva {
 	private void setIdReserva(int idReserva) {
 		this.idReserva = idReserva;
 	}
-
 
 }

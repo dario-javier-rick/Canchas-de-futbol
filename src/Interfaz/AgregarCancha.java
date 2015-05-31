@@ -129,6 +129,8 @@ public class AgregarCancha extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				if (validarDatos()) {
+					try
+					{
 					// Llamar a lógica y persistir cancha
 					Cancha cancha = new Cancha(Cancha.getUltimoIdCancha() + 1,
 							nombre.getText(), tipo_cancha.getSelectedItem()
@@ -139,6 +141,12 @@ public class AgregarCancha extends JFrame {
 					JOptionPane.showMessageDialog(null, "Cancha cargada!");
 					instancia.actualizarCombos();
 					dispose();
+					}
+					catch (Exception ex)
+					{
+						JOptionPane.showMessageDialog(null, "Ocurrio un problema al agregar la cancha. Codigo de error: "
+										+ ex.getMessage());
+					}
 				}
 
 			}

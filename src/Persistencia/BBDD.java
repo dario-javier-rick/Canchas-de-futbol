@@ -11,7 +11,7 @@ import java.sql.Statement;
 
 public class BBDD {
 
-	private static String Path = "C:/sampleDario.db";
+	private static String Path = "C:/PROG3_TP2_BBDD.db";
 
 	public static Connection abrirConexion() {
 		Connection conexion = null;

@@ -63,15 +63,10 @@ public class Cancha {
 		return DAC.getUltimoIdCancha();
 	}
 
-	
-	public static void actualizarCanchas(ArrayList<Cancha> canchas) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public String toString() {
-		return ("Cancha: " +getNombre() + ", Tipo: " + getTipo_cancha());
+		return ("Id: " + getIdCancha() +" Cancha: " +getNombre() + ", Tipo: " + getTipo_cancha());
 	}
 
 	public String getNombre() {
@@ -104,6 +99,11 @@ public class Cancha {
 
 	private void setIdCancha(int idCancha) {
 		this.idCancha = idCancha;
+	}
+
+	public static boolean verificarExistenciaCancha(int idCancha) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 

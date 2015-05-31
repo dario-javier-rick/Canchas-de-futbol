@@ -104,9 +104,15 @@ public class AgregarClientes extends JFrame {
 		panel_7.setLayout(null);
 
 		txtApellido = new JTextField();
-		txtApellido.setBounds(6, 16, 150, 20);
+		txtApellido.setBounds(6, 16, 130, 20);
 		panel_7.add(txtApellido);
 		txtApellido.setColumns(10);
+		
+		JLabel label_8 = new JLabel("*");
+		label_8.setForeground(Color.RED);
+		label_8.setFont(new Font("Impact", Font.PLAIN, 55));
+		label_8.setBounds(139, 16, 23, 57);
+		panel_7.add(label_8);
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBounds(72, 59, 98, 43);
@@ -149,6 +155,12 @@ public class AgregarClientes extends JFrame {
 				"Elija un mes. . . .", "Enero", "Febrero", "Marzo", "Abril",
 				"Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre",
 				"Noviembre", "Diciembre" }));
+		
+		JLabel label_6 = new JLabel("*");
+		label_6.setForeground(Color.RED);
+		label_6.setFont(new Font("Impact", Font.PLAIN, 55));
+		label_6.setBounds(193, -25, 23, 57);
+		panel_6.add(label_6);
 
 		JPanel panel_4 = new JPanel();
 		panel_4.setBounds(72, 102, 98, 43);
@@ -289,11 +301,25 @@ public class AgregarClientes extends JFrame {
 		label_5.setForeground(Color.BLACK);
 		label_5.setBounds(168, 77, 115, 14);
 		panel_9.add(label_5);
+		
+		JLabel label_2 = new JLabel("*");
+		label_2.setForeground(Color.RED);
+		label_2.setBounds(180, 121, 23, 57);
+		panel_9.add(label_2);
+		label_2.setFont(new Font("Impact", Font.PLAIN, 55));
+		
+		JLabel label_7 = new JLabel("*");
+		label_7.setForeground(Color.RED);
+		label_7.setFont(new Font("Impact", Font.PLAIN, 55));
+		label_7.setBounds(232, 35, 23, 57);
+		panel_9.add(label_7);
 
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (validarDatos()) {
+					try
+					{
 					// Llamar a lógica y persistir Cliente
 					Cliente cliente = new Cliente(
 							Cliente.getUltimoIdCliente() + 1, txtNombre
@@ -303,6 +329,12 @@ public class AgregarClientes extends JFrame {
 					JOptionPane.showMessageDialog(null, "Cliente agregado!");
 					instancia.actualizarCombos();
 					dispose();
+					}
+					catch (Exception ex)
+					{
+						JOptionPane.showMessageDialog(null, "Ocurrio un problema al agregar el cliente. Codigo de error: "
+										+ ex.getMessage());
+					}
 				}
 			}
 
