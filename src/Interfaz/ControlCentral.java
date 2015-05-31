@@ -337,10 +337,12 @@ public class ControlCentral extends JFrame {
 		for (int i = 0; i<mdlMañana.getRowCount(); i++)
 		{
 			mdlMañana.removeRow(i);
+			i--;
 		}
 		for (int i = 0; i<mdlTarde.getRowCount(); i++)
 		{
 			mdlTarde.removeRow(i);
+			i--;
 		}
 		
 	}
