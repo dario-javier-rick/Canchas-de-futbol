@@ -14,16 +14,22 @@ public class Reserva {
 	private Cliente cliente;
 	private Cancha cancha;
 	private Date horario;
+	private int tiempo;
+	private int seña;
 	Boolean realizada;
-	int seña;
+
 	private static ReservaDAC DAC = new ReservaDAC();
 
-	public Reserva(int idReserva, Cliente cliente, Cancha cancha, Date horario) {
+	public Reserva(int idReserva, Cliente cliente, Cancha cancha, Date horario,
+			int tiempo, int seña) {
 		realizada = false;
 		this.setIdReserva(idReserva);
 		this.setCliente(cliente);
 		this.setCancha(cancha);
 		this.setHorario(horario);
+		this.setTiempo(tiempo);
+		this.setSeña(seña);
+
 	}
 
 	public void concretar() {
@@ -41,8 +47,10 @@ public class Reserva {
 						Integer.parseInt(array.get(i)[0]),
 						Cliente.obtenerCliente(Integer.parseInt(array.get(i)[1])),
 						Cancha.obtenerCancha(Integer.parseInt(array.get(i)[2])),
-						formatter.parse(array.get(i)[3]));
-				if (Boolean.parseBoolean(array.get(i)[4]))
+						formatter.parse(array.get(i)[3]), Integer
+								.parseInt(array.get(i)[4]), Integer
+								.parseInt(array.get(i)[5]));
+				if (Boolean.parseBoolean(array.get(i)[6]))
 					reserva.concretar();
 				arrayReservas.add(reserva);
 			}
@@ -57,7 +65,8 @@ public class Reserva {
 		try {
 			ArrayList<String[]> array = DAC.obtenerReservas(
 					calendar.get(Calendar.DAY_OF_MONTH),
-					calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+					calendar.get(Calendar.MONTH) + 1,
+					calendar.get(Calendar.YEAR));
 			for (int i = 0; i < array.size(); i++) {
 				DateFormat formatter = new SimpleDateFormat(
 						"dd-MM-yyyy HH:mm:ss");
@@ -65,8 +74,10 @@ public class Reserva {
 						Integer.parseInt(array.get(i)[0]),
 						Cliente.obtenerCliente(Integer.parseInt(array.get(i)[1])),
 						Cancha.obtenerCancha(Integer.parseInt(array.get(i)[2])),
-						formatter.parse(array.get(i)[3]));
-				if (Boolean.parseBoolean(array.get(i)[4]))
+						formatter.parse(array.get(i)[3]), Integer
+								.parseInt(array.get(i)[4]), Integer
+								.parseInt(array.get(i)[5]));
+				if (Boolean.parseBoolean(array.get(i)[6]))
 					reserva.concretar();
 				arrayReservas.add(reserva);
 			}
@@ -80,8 +91,8 @@ public class Reserva {
 	public void persistirReserva() {
 		try {
 			DAC.persistirReserva(this.idReserva, this.cliente.getIdCliente(),
-					this.cancha.getIdCancha(), this.horario, this.realizada,
-					this.seña);
+					this.cancha.getIdCancha(), this.horario, this.getTiempo(),
+					this.getSeña(), this.realizada);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
@@ -147,6 +158,29 @@ public class Reserva {
 
 	private void setIdReserva(int idReserva) {
 		this.idReserva = idReserva;
+	}
+
+	public String getRealizada() {
+		if (realizada)
+			return "Si";
+		else
+			return "No";
+	}
+
+	private void setTiempo(int tiempo) {
+		this.tiempo = tiempo;
+	}
+
+	public int getTiempo() {
+		return tiempo;
+	}
+
+	public int getSeña() {
+		return seña;
+	}
+
+	private void setSeña(int seña) {
+		this.seña = seña;
 	}
 
 }

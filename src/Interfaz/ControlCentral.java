@@ -27,6 +27,9 @@ import javax.swing.JTabbedPane;
 import com.toedter.calendar.JCalendar;
 
 import java.util.ArrayList;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
@@ -45,6 +48,8 @@ public class ControlCentral extends JFrame {
 	JComboBox cboReservas = new JComboBox();
 	private JTable tblMañana;
 	private JTable tblTarde;
+	DefaultTableModel mdlMañana = new DefaultTableModel(new Object[]{"Cancha","Id Cliente", "Horario", "Se\u00F1a", "Tiempo de Reserva", "Realizada"}, 0);
+	DefaultTableModel mdlTarde = new DefaultTableModel(new Object[]{"Cancha","Id Cliente", "Horario", "Se\u00F1a", "Tiempo de Reserva", "Realizada"}, 0);
 	private ControlCentral ControlCentral = this;
 
 	/**
@@ -246,56 +251,21 @@ public class ControlCentral extends JFrame {
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		tabbedPane.setBounds(8, 219, 399, 180);
 		panelGeneral.add(tabbedPane);
-
-		JScrollPane scrollPane1 = new JScrollPane();
-
-		tabbedPane.addTab("Tarde", null, scrollPane1, null);
-
-		tblTarde = new JTable();
-		scrollPane1.setViewportView(tblTarde);
-		tblTarde.setModel(new DefaultTableModel(new Object[][] {
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null }, }, new String[] {
-				"New column", "New column", "New column", "New column",
-				"New column" }));
-
+		
 		JScrollPane scrollPane = new JScrollPane();
-		tabbedPane.addTab("New tab", null, scrollPane, null);
-
+		JScrollPane scrollPane1 = new JScrollPane();
+		
+		tabbedPane.addTab("Mañana", null, scrollPane, null);
+		tabbedPane.addTab("Tarde", null, scrollPane1, null);
+		
 		tblMañana = new JTable();
 		scrollPane.setViewportView(tblMañana);
-		tblMañana.setModel(new DefaultTableModel(new Object[][] {
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null },
-				{ null, null, null, null, null }, }, new String[] { "Cancha",
-				"Id Cliente", "Horario", "Se\u00F1a", "Tiempo de Reserva" }) {
-			/**
-					 * 
-					 */
-			private static final long serialVersionUID = 1L;
-
-		});
-		tblMañana.getColumnModel().getColumn(4).setPreferredWidth(108);
-		tabbedPane.addTab("Mañana", null, scrollPane, null);
+		tblMañana.setModel(mdlMañana);
+		
+		tblTarde = new JTable();
+		scrollPane1.setViewportView(tblTarde);
+		tblTarde.setModel(mdlTarde);
+		
 
 		JButton btnCargar = new JButton("Cargar");
 		btnCargar.setBounds(595, 423, 89, 23);
@@ -304,6 +274,7 @@ public class ControlCentral extends JFrame {
 		bindCanchas();
 		bindClientes();
 		bindReservas();
+		bindTablasReservas();
 
 	}
 
@@ -334,7 +305,43 @@ public class ControlCentral extends JFrame {
 	}
 	
 	private void bindTablasReservas() {
-		// TODO Auto-generated method stub
+		limpiarTablas();
+		
 		ArrayList<Reserva> reservas = Reserva.obtenerReservas(calendario.getCalendar());
+		for (Reserva reserva : reservas)
+		{
+			String horario = String.valueOf(reserva.getHorario());
+			Pattern pattern = Pattern.compile(".........ART");
+			Matcher matcher = pattern.matcher(horario);
+			if (matcher.find())
+				horario = matcher.group();
+
+			
+			Vector<String> row = new Vector<String>();
+		    row.add(reserva.getCancha().getNombre());
+		    row.add(String.valueOf(reserva.getCliente().getIdCliente()));
+		    row.add(horario);
+		    row.add(String.valueOf(reserva.getSeña()));
+		    row.add(String.valueOf(reserva.getTiempo()));
+		    row.add(reserva.getRealizada());
+		    
+		    if (Integer.parseInt(horario.substring(0, 2)) <= 12)
+		    	mdlMañana.addRow(row);
+		    else
+		    	mdlTarde.addRow(row);
+		}
+		
+	}
+
+	private void limpiarTablas() {		
+		for (int i = 0; i<mdlMañana.getRowCount(); i++)
+		{
+			mdlMañana.removeRow(i);
+		}
+		for (int i = 0; i<mdlTarde.getRowCount(); i++)
+		{
+			mdlTarde.removeRow(i);
+		}
+		
 	}
 }

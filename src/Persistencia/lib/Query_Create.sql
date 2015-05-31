@@ -31,6 +31,8 @@ create table RESERVAS (
 	idCliente INTEGER, 
 	idCancha INTEGER,
 	horario STRING,
+	tiempo INTEGER,
+	seña INTEGER,
 	realizada BOOLEAN,
 	FOREIGN KEY(idCliente) REFERENCES CLIENTES(idCliente),
 	FOREIGN KEY(idCancha) REFERENCES CANCHAS(idCancha)

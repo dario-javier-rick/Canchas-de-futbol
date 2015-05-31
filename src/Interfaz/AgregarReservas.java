@@ -252,7 +252,9 @@ public class AgregarReservas extends JFrame {
 						Date d = new Date();
 						Reserva reserva = new Reserva(Reserva
 								.getUltimoIdReserva() + 1, Cliente
-								.obtenerCliente(1), Cancha.obtenerCancha(1), d);
+								.obtenerCliente(1), Cancha.obtenerCancha(1), d,
+								Integer.parseInt(txtTiempoReserva.getText()),
+								Integer.parseInt(txtSeña.getText()));
 
 						// idReserva INTEGER PRIMARY KEY AUTOINCREMENT,
 						// idCliente INTEGER,

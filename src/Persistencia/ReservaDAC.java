@@ -18,12 +18,14 @@ public class ReservaDAC {
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
 			ResultSet rs = statement.executeQuery("SELECT * FROM reservas");
 			while (rs.next()) {
-				String[] vector = new String[5];
+				String[] vector = new String[7];
 				vector[0] = String.valueOf(rs.getInt("idReserva"));
 				vector[1] = String.valueOf(rs.getInt("idCliente"));
 				vector[2] = String.valueOf(rs.getInt("idCancha"));
 				vector[3] = rs.getString("horario");
-				vector[4] = String.valueOf(rs.getInt("realizada"));
+				vector[4] = String.valueOf(rs.getInt("tiempo"));
+				vector[5] = String.valueOf(rs.getInt("seña"));
+				vector[6] = String.valueOf(rs.getInt("realizada"));
 				array.add(vector);
 			}
 			conn.close(); // Cierro conexion.
@@ -32,23 +34,29 @@ public class ReservaDAC {
 		}
 		return array;
 	}
-	
-	public ArrayList<String[]> obtenerReservas(int dayOfMonth, int month, int year) {
+
+	public ArrayList<String[]> obtenerReservas(int dayOfMonth, int month,
+			int year) {
 		Connection conn = BBDD.abrirConexion();
 		ArrayList<String[]> array = new ArrayList<String[]>();
+		String dia = String.format("%02d", dayOfMonth);
+		String mes = String.format("%02d", month);
+		String año = String.format("%02d", year);
 		try {
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
 			ResultSet rs = statement
 					.executeQuery("SELECT * FROM reservas WHERE horario like '"
-							+ dayOfMonth + "-" + month + "-" + year + "%'");
+							+ dia + "-" + mes + "-" + año + "%'");			
 			while (rs.next()) {
-				String[] vector = new String[5];
+				String[] vector = new String[7];
 				vector[0] = String.valueOf(rs.getInt("idReserva"));
 				vector[1] = String.valueOf(rs.getInt("idCliente"));
 				vector[2] = String.valueOf(rs.getInt("idCancha"));
 				vector[3] = rs.getString("horario");
-				vector[4] = String.valueOf(rs.getInt("realizada"));
+				vector[4] = String.valueOf(rs.getInt("tiempo"));
+				vector[5] = String.valueOf(rs.getInt("seña"));
+				vector[6] = String.valueOf(rs.getInt("realizada"));
 				array.add(vector);
 			}
 			conn.close(); // Cierro conexion.
@@ -117,7 +125,7 @@ public class ReservaDAC {
 	}
 
 	public void persistirReserva(int idReserva, int idCliente, int idCancha,
-			Date horario, Boolean realizada, int seña) {
+			Date horario, int tiempo, int seña, Boolean realizada) {
 		Connection conn = BBDD.abrirConexion();
 		try {
 			Statement statement = conn.createStatement();
@@ -158,7 +166,5 @@ public class ReservaDAC {
 		}
 		return resultado;
 	}
-
-
 
 }
