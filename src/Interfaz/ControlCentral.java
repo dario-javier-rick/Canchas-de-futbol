@@ -34,6 +34,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.border.LineBorder;
+import java.awt.SystemColor;
+import javax.swing.border.BevelBorder;
 
 public class ControlCentral extends JFrame {
 
@@ -229,27 +232,12 @@ public class ControlCentral extends JFrame {
 		panelGeneral.setOpaque(false);
 		p.add(panelGeneral);
 		panelGeneral.setLayout(null);
-		
-		JPanel panelCalendario = new JPanel();
-		panelCalendario.setForeground(new Color(0, 0, 0));
-		panelCalendario.setBounds(8, 11, 399, 197);
-		panelGeneral.add(panelCalendario);
-		calendario.addPropertyChangeListener("calendar",
-				new PropertyChangeListener() {
-					public void propertyChange(PropertyChangeEvent e) {
-						// Actualizar datatable
-						bindTablasReservas();
-					}
-				});
-
-		
-		panelCalendario.add(calendario);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(Color.WHITE);
-		tabbedPane.setBorder(new TitledBorder(null, "Revervas hechas",
+		tabbedPane.setBorder(new TitledBorder(null, "Reservas hechas",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		tabbedPane.setBounds(8, 219, 399, 180);
+		tabbedPane.setBounds(10, 0, 399, 399);
 		panelGeneral.add(tabbedPane);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -270,6 +258,25 @@ public class ControlCentral extends JFrame {
 		JButton btnCargar = new JButton("Cargar");
 		btnCargar.setBounds(595, 423, 89, 23);
 		p.add(btnCargar);
+		
+		JPanel panelCalendario = new JPanel();
+		panelCalendario.setBorder(null);
+		panelCalendario.setBackground(Color.LIGHT_GRAY);
+		panelCalendario.setBounds(44, 275, 202, 154);
+		p.add(panelCalendario);
+		panelCalendario.setForeground(new Color(0, 0, 0));
+		calendario.getDayChooser().setBorder(null);
+		calendario.getDayChooser().setDay(1);
+		calendario.addPropertyChangeListener("calendar",
+				new PropertyChangeListener() {
+					public void propertyChange(PropertyChangeEvent e) {
+						// Actualizar datatable
+						bindTablasReservas();
+					}
+				});
+		
+				
+				panelCalendario.add(calendario);
 
 		bindCanchas();
 		bindClientes();

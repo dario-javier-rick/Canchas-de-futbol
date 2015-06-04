@@ -51,7 +51,7 @@ public class Cancha {
 
 	public void persistirCancha() {
 		try {
-			DAC.persitirCancha(this.idCancha, this.nombre, this.tipo_cancha,
+			DAC.persistirCancha(this.idCancha, this.nombre, this.tipo_cancha,
 					this.getPrecioPorHora(), this.maxJugadores);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());

@@ -90,7 +90,7 @@ public class CanchaDAC {
 		}
 	}
 
-	public void persitirCancha(int idCancha, String nombre, String tipo_cancha,
+	public void persistirCancha(int idCancha, String nombre, String tipo_cancha,
 			int precioPorHora, int maxJugadores) {
 		Connection conn = BBDD.abrirConexion();
 		try {

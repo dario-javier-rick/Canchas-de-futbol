@@ -57,7 +57,7 @@ public class Inicio extends JFrame {
 	public Inicio() {
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Inicio.class.getResource("/Recursos/images.jpg")));
-		setTitle("CourtManager");
+		setTitle("Bienvenido!");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 400);
