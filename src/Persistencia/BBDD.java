@@ -11,7 +11,7 @@ import java.sql.Statement;
 
 public class BBDD {
 
-	private static String Path = "C:/PROG3_TP2_BBDD.db";
+	private static String Path = System.getProperty("user.home") + "/Desktop/PROG3_TP2_BBDD.db";
 
 	public static Connection abrirConexion() {
 		Connection conexion = null;
