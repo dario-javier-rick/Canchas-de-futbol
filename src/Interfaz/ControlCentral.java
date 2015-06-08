@@ -26,6 +26,8 @@ import javax.swing.JTabbedPane;
 
 import com.toedter.calendar.JCalendar;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -34,9 +36,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import javax.swing.border.LineBorder;
+
 import java.awt.SystemColor;
+
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ListSelectionEvent;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ControlCentral extends JFrame {
 
@@ -51,8 +60,12 @@ public class ControlCentral extends JFrame {
 	JComboBox cboReservas = new JComboBox();
 	private JTable tblMañana;
 	private JTable tblTarde;
-	DefaultTableModel mdlMañana = new DefaultTableModel(new Object[]{"Cancha","Id Cliente", "Horario", "Se\u00F1a", "Tiempo de Reserva", "Realizada"}, 0);
-	DefaultTableModel mdlTarde = new DefaultTableModel(new Object[]{"Cancha","Id Cliente", "Horario", "Se\u00F1a", "Tiempo de Reserva", "Realizada"}, 0);
+	DefaultTableModel mdlMañana = new DefaultTableModel(new Object[] {
+			"Cancha", "Id Cliente", "Horario", "Se\u00F1a",
+			"Tiempo de Reserva", "Resto a pagar", "Realizada" }, 0);
+	DefaultTableModel mdlTarde = new DefaultTableModel(new Object[] { "Cancha",
+			"Id Cliente", "Horario", "Se\u00F1a", "Tiempo de Reserva",
+			"Resto a pagar", "Realizada" }, 0);
 	private ControlCentral ControlCentral = this;
 
 	/**
@@ -77,28 +90,7 @@ public class ControlCentral extends JFrame {
 		bindClientes();
 		bindCanchas();
 		bindReservas();
-//		persistirCombos();
 	}
-
-//	private void persistirCombos() {
-//		ArrayList<Cancha> canchas = new ArrayList<Cancha>();
-//		for (int i = 0; i < cboCanchas.getItemCount(); i++) {
-//			canchas.add((Cancha) cboCanchas.getItemAt(i));
-//		}
-//		Cancha.actualizarCanchas(canchas);
-//
-//		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-//		for (int i = 0; i < cboClientes.getItemCount(); i++) {
-//			clientes.add((Cliente) cboClientes.getItemAt(i));
-//		}
-//		Cliente.actualizarClientes(clientes);
-//
-//		ArrayList<Reserva> reservas = new ArrayList<Reserva>();
-//		for (int i = 0; i < cboReservas.getItemCount(); i++) {
-//			reservas.add((Reserva) cboReservas.getItemAt(i));
-//		}
-//		Reserva.actualizarReservas(reservas);
-//	}
 
 	/**
 	 * Create the frame.
@@ -233,32 +225,47 @@ public class ControlCentral extends JFrame {
 		p.add(panelGeneral);
 		panelGeneral.setLayout(null);
 
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setBorder(new TitledBorder(null, "Reservas hechas",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		tabbedPane.setBounds(10, 0, 399, 399);
 		panelGeneral.add(tabbedPane);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		JScrollPane scrollPane1 = new JScrollPane();
-		
+
 		tabbedPane.addTab("Mañana", null, scrollPane, null);
 		tabbedPane.addTab("Tarde", null, scrollPane1, null);
-		
+
 		tblMañana = new JTable();
 		scrollPane.setViewportView(tblMañana);
 		tblMañana.setModel(mdlMañana);
-		
+
 		tblTarde = new JTable();
 		scrollPane1.setViewportView(tblTarde);
 		tblTarde.setModel(mdlTarde);
-		
 
-		JButton btnCargar = new JButton("Cargar");
-		btnCargar.setBounds(595, 423, 89, 23);
-		p.add(btnCargar);
-		
+		final JButton btnMarcar = new JButton("Marcar como realizada");
+		btnMarcar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (tabbedPane.getSelectedIndex() == 0) // Mañana
+				{
+					Cancha cancha = Cancha.obtenerCancha(Integer.parseInt((String) tblTarde.getValueAt(0, 1)));
+					Reserva reservaAEliminar = new Reserva();
+					reservaAEliminar.setIdReserva(1);
+//					Reserva.eliminarReserva(Reserva.getIdReserva());
+				} else if (tabbedPane.getSelectedIndex() == 1) // Tarde
+				{
+					System.out.println(tblTarde.getSelectedRow());
+				}
+
+			}
+		});
+		btnMarcar.setBounds(518, 423, 166, 23);
+		p.add(btnMarcar);
+		btnMarcar.setEnabled(false);
+
 		JPanel panelCalendario = new JPanel();
 		panelCalendario.setBorder(null);
 		panelCalendario.setBackground(Color.LIGHT_GRAY);
@@ -272,11 +279,24 @@ public class ControlCentral extends JFrame {
 					public void propertyChange(PropertyChangeEvent e) {
 						// Actualizar datatable
 						bindTablasReservas();
+						// Deshabilito botón marcar
+						btnMarcar.setEnabled(false);
 					}
 				});
-		
-				
-				panelCalendario.add(calendario);
+
+		panelCalendario.add(calendario);
+
+		tblMañana.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				btnMarcar.setEnabled(true);
+			}
+		});
+
+		tblTarde.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				btnMarcar.setEnabled(true);
+			}
+		});
 
 		bindCanchas();
 		bindClientes();
@@ -302,55 +322,63 @@ public class ControlCentral extends JFrame {
 	}
 
 	private void bindCanchas() {
-		
+
 		ArrayList<Cancha> canchas = Cancha.obtenerCanchas();
 		for (Cancha cancha : canchas) {
 			cboCanchas.addItem(cancha + ", Precio: $"
 					+ cancha.getPrecioPorHora());
 		}
-		
+
 	}
-	
+
 	private void bindTablasReservas() {
 		limpiarTablas();
-		
-		ArrayList<Reserva> reservas = Reserva.obtenerReservas(calendario.getCalendar());
-		for (Reserva reserva : reservas)
-		{
+
+		ArrayList<Reserva> reservas = Reserva.obtenerReservas(calendario
+				.getCalendar());
+		for (Reserva reserva : reservas) {
 			String horario = String.valueOf(reserva.getHorario());
 			Pattern pattern = Pattern.compile(".........ART");
 			Matcher matcher = pattern.matcher(horario);
 			if (matcher.find())
 				horario = matcher.group();
 
-			
 			Vector<String> row = new Vector<String>();
-		    row.add(reserva.getCancha().getNombre());
-		    row.add(String.valueOf(reserva.getCliente().getIdCliente()));
-		    row.add(horario);
-		    row.add(String.valueOf(reserva.getSeña()));
-		    row.add(String.valueOf(reserva.getTiempo()));
-		    row.add(reserva.getRealizada());
-		    
-		    if (Integer.parseInt(horario.substring(0, 2)) <= 12)
-		    	mdlMañana.addRow(row);
-		    else
-		    	mdlTarde.addRow(row);
+			row.add(reserva.getCancha().getNombre());
+			row.add(String.valueOf(reserva.getCliente().getIdCliente()));
+			row.add(horario);
+			row.add(String.valueOf(reserva.getSeña()));
+			row.add(String.valueOf(reserva.getTiempo()));
+			double resto = (reserva.getCancha().getPrecioPorHora() * (reserva
+					.getTiempo() * 0.0166666667)) - reserva.getSeña(); // 1
+																		// Minuto
+																		// =
+																		// 0,0166666667
+																		// Hora
+
+			DecimalFormat df = new DecimalFormat("##.##");
+			df.setRoundingMode(RoundingMode.DOWN);
+
+			row.add(String.valueOf(df.format(resto)));
+			row.add(reserva.getRealizada());
+
+			if (Integer.parseInt(horario.substring(0, 2)) <= 12)
+				mdlMañana.addRow(row);
+			else
+				mdlTarde.addRow(row);
 		}
-		
+
 	}
 
-	private void limpiarTablas() {		
-		for (int i = 0; i<mdlMañana.getRowCount(); i++)
-		{
+	private void limpiarTablas() {
+		for (int i = 0; i < mdlMañana.getRowCount(); i++) {
 			mdlMañana.removeRow(i);
 			i--;
 		}
-		for (int i = 0; i<mdlTarde.getRowCount(); i++)
-		{
+		for (int i = 0; i < mdlTarde.getRowCount(); i++) {
 			mdlTarde.removeRow(i);
 			i--;
 		}
-		
+
 	}
 }

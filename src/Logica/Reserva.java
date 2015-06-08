@@ -32,6 +32,10 @@ public class Reserva {
 
 	}
 
+	public Reserva() {
+		// Usado para eliminar reservas
+	}
+
 	public void concretar() {
 		this.realizada = true;
 	}
@@ -85,8 +89,8 @@ public class Reserva {
 			System.err.println(e.getMessage());
 		}
 		return arrayReservas;
-
 	}
+	
 
 	public void persistirReserva() {
 		try {
@@ -99,10 +103,6 @@ public class Reserva {
 
 	}
 
-	public static void actualizarReservas(ArrayList<Reserva> Reserva) {
-		// TODO Auto-generated method stub
-
-	}
 
 	public static int getUltimoIdReserva() {
 		return DAC.getUltimoIdReserva();
@@ -156,7 +156,7 @@ public class Reserva {
 		return idReserva;
 	}
 
-	private void setIdReserva(int idReserva) {
+	public void setIdReserva(int idReserva) {
 		this.idReserva = idReserva;
 	}
 
