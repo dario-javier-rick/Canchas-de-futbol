@@ -32,9 +32,6 @@ public class Reserva {
 
 	}
 
-	public Reserva() {
-		// Usado para eliminar reservas
-	}
 
 	public void concretar() {
 		this.realizada = true;

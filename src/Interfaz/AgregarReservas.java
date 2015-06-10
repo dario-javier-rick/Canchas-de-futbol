@@ -291,9 +291,11 @@ public class AgregarReservas extends JFrame {
 				}
 				if (!Cancha.verificarExistenciaCancha(Integer
 						.parseInt(txtCancha.getText())))
+				{
 					JOptionPane.showMessageDialog(null,
 							"El id de la cancha ingresada no existe");
-
+					return false;
+				}
 				// Validaciones de cliente
 				try {
 					if (!txtIdCliente.getText().equals(""))

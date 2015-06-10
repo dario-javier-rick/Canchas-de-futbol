@@ -66,6 +66,10 @@ public class ControlCentral extends JFrame {
 	DefaultTableModel mdlTarde = new DefaultTableModel(new Object[] { "Cancha",
 			"Id Cliente", "Horario", "Se\u00F1a", "Tiempo de Reserva",
 			"Resto a pagar", "Realizada" }, 0);
+	
+	//El ArrayList se declara como variable global, para poder trabajarlo mejor.
+	ArrayList<Reserva> reservas = new ArrayList<Reserva>();
+	
 	private ControlCentral ControlCentral = this;
 
 	/**
@@ -251,10 +255,14 @@ public class ControlCentral extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (tabbedPane.getSelectedIndex() == 0) // Mañana
 				{
-					Cancha cancha = Cancha.obtenerCancha(Integer.parseInt((String) tblTarde.getValueAt(0, 1)));
-					Reserva reservaAEliminar = new Reserva();
-					reservaAEliminar.setIdReserva(1);
-//					Reserva.eliminarReserva(Reserva.getIdReserva());
+
+					reservas.get(tblTarde.getSelectedRow()).concretar();
+					// ¿¿Update or insert??
+					reservas.get(tblTarde.getSelectedRow()).persistirReserva();
+					
+					bindTablasReservas();
+					
+					
 				} else if (tabbedPane.getSelectedIndex() == 1) // Tarde
 				{
 					System.out.println(tblTarde.getSelectedRow());
@@ -334,7 +342,7 @@ public class ControlCentral extends JFrame {
 	private void bindTablasReservas() {
 		limpiarTablas();
 
-		ArrayList<Reserva> reservas = Reserva.obtenerReservas(calendario
+		reservas = Reserva.obtenerReservas(calendario
 				.getCalendar());
 		for (Reserva reserva : reservas) {
 			String horario = String.valueOf(reserva.getHorario());
