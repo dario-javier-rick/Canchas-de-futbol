@@ -53,8 +53,8 @@ public class AgregarReservas extends JFrame {
 	private JTextField txtSeña;
 	private JPanel panelTiempoReserva;
 	private JTextField txtTiempoReserva;
+	private JButton btnCerrar;
 	private JButton btnAceptar;
-	private JButton button;
 	private JPanel panelHorario;
 	JComboBox cboHoras = new JComboBox();
 	JComboBox cboMinutos = new JComboBox();
@@ -169,8 +169,8 @@ public class AgregarReservas extends JFrame {
 		txtTiempoReserva.setBounds(6, 16, 169, 20);
 		panelTiempoReserva.add(txtTiempoReserva);
 
-		btnAceptar = new JButton("Cerrar");
-		btnAceptar.addMouseListener(new MouseAdapter() {
+		btnCerrar = new JButton("Cerrar");
+		btnCerrar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				dispose();
@@ -240,11 +240,11 @@ public class AgregarReservas extends JFrame {
 		lblMin.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblMin.setBounds(160, 17, 22, 15);
 		panelHorario.add(lblMin);
-		btnAceptar.setBounds(379, 247, 89, 23);
-		p.add(btnAceptar);
+		btnCerrar.setBounds(379, 247, 89, 23);
+		p.add(btnCerrar);
 
-		button = new JButton("Aceptar");
-		button.addActionListener(new ActionListener() {
+		btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (validarDatos()) {
 					// Llamar a lógica y persistir reserva
@@ -255,16 +255,7 @@ public class AgregarReservas extends JFrame {
 								.obtenerCliente(1), Cancha.obtenerCancha(1), d,
 								Integer.parseInt(txtTiempoReserva.getText()),
 								Integer.parseInt(txtSeña.getText()));
-
-						// idReserva INTEGER PRIMARY KEY AUTOINCREMENT,
-						// idCliente INTEGER,
-						// idCancha INTEGER,
-						// horario STRING,
-						// realizada BOOLEAN,
-						// FOREIGN KEY(idCliente) REFERENCES
-						// CLIENTES(idCliente),
-						// FOREIGN KEY(idCancha) REFERENCES CANCHAS(idCancha)
-
+						
 						reserva.persistirReserva();
 						JOptionPane
 								.showMessageDialog(null, "Reserva agregada!");
@@ -307,8 +298,11 @@ public class AgregarReservas extends JFrame {
 				}
 				if (!Cliente.verificarExistenciaCliente(Integer
 						.parseInt(txtIdCliente.getText())))
+				{
 					JOptionPane.showMessageDialog(null,
 							"El id del cliente ingresado no existe");
+					return false;
+				}
 
 				// Validaciones de seña
 				if (txtSeña.getText().equals("")) {
@@ -342,24 +336,24 @@ public class AgregarReservas extends JFrame {
 				return true;
 			}
 		});
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if (true) {
-					JOptionPane c = new JOptionPane();
-					JOptionPane.showMessageDialog(c,
-							"Se agrego exitosamente su reserva.");
-					dispose();
-				}
-				/*
-				 * else { JOptionPane c = new JOptionPane();
-				 * JOptionPane.showMessageDialog(c,
-				 * "Hubo un fallo, verifique los datos. Gracias" ); }
-				 */
-			}
-		});
-		button.setBounds(280, 248, 89, 23);
-		p.add(button);
+//		btnAceptar.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent arg0) {
+//				if (true) {
+//					JOptionPane c = new JOptionPane();
+//					JOptionPane.showMessageDialog(c,
+//							"Se agrego exitosamente su reserva.");
+//					dispose();
+//				}
+//				/*
+//				 * else { JOptionPane c = new JOptionPane();
+//				 * JOptionPane.showMessageDialog(c,
+//				 * "Hubo un fallo, verifique los datos. Gracias" ); }
+//				 */
+//			}
+//		});
+		btnAceptar.setBounds(280, 248, 89, 23);
+		p.add(btnAceptar);
 
 	}
 

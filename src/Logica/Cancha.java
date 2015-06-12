@@ -63,6 +63,10 @@ public class Cancha {
 		return DAC.getUltimoIdCancha();
 	}
 
+	public static boolean verificarExistenciaCancha(int idCancha) {
+		return DAC.verificarExistenciaCancha(idCancha);
+	}
+
 
 	@Override
 	public String toString() {
@@ -101,10 +105,6 @@ public class Cancha {
 		this.idCancha = idCancha;
 	}
 
-	public static boolean verificarExistenciaCancha(int idCancha) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 
 

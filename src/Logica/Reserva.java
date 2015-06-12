@@ -92,7 +92,7 @@ public class Reserva {
 	public void persistirReserva() {
 		try {
 			DAC.persistirReserva(this.idReserva, this.cliente.getIdCliente(),
-					this.cancha.getIdCancha(), this.horario, this.getTiempo(),
+					this.cancha.getIdCancha(), this.horario.toString(), this.getTiempo(),
 					this.getSeña(), this.realizada);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());

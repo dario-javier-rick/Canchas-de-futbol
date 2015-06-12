@@ -125,19 +125,27 @@ public class ReservaDAC {
 	}
 
 	public void persistirReserva(int idReserva, int idCliente, int idCancha,
-			Date horario, int tiempo, int seña, Boolean realizada) {
+			String horario, int tiempo, int seña, Boolean realizada) {
 		Connection conn = BBDD.abrirConexion();
 		try {
+			
+			int concretada = 0;
+			if (realizada)
+				concretada = 1;
+			
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
 			PreparedStatement prep = conn
-					.prepareStatement("INSERT INTO reservas VALUES (?,?,?,?,?);");
-			// Verificar!
-			// prep.setInt(1, idCancha);
-			// prep.setString(2, nombre);
-			// prep.setString(3, tipo_cancha);
-			// prep.setInt(4, maxJugadores);
-			// prep.setInt(5, precioPorHora);
+					.prepareStatement("INSERT INTO reservas VALUES (?,?,?,?,?,?,?);");
+			
+			prep.setInt(1, idReserva);
+			prep.setInt(2, idCliente);
+			prep.setInt(3, idCancha);
+			prep.setString(4, horario);
+			prep.setInt(5, tiempo);
+			prep.setInt(6, seña);
+			prep.setInt(7, concretada);
+			 
 			conn.setAutoCommit(false);
 			prep.executeUpdate();
 			conn.commit();

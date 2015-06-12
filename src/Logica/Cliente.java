@@ -63,6 +63,10 @@ public class Cliente {
 		
 
 	}
+	
+	public static boolean verificarExistenciaCliente(int idCliente) {
+		return DAC.verificarExistenciaCliente(idCliente);
+	}
 
 
 	@Override
@@ -98,9 +102,5 @@ public class Cliente {
 		return DAC.getUltimoIdCliente();
 	}
 
-	public static boolean verificarExistenciaCliente(int idCliente) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 }

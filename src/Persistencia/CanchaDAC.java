@@ -131,5 +131,23 @@ public class CanchaDAC {
 		return resultado;
 	}
 
+	public boolean verificarExistenciaCancha(int idCancha) {
+		try {
+			Connection conn = BBDD.abrirConexion();
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			ResultSet rs = statement
+					.executeQuery("SELECT idCancha FROM canchas WHERE idCancha = "
+							+ idCancha + ";");
+			if (rs.next()) {
+				return true;
+			}
+			conn.close(); // Cierro conexion.
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return false;
+	}
+
 
 }

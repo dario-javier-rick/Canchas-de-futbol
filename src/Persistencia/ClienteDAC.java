@@ -115,6 +115,24 @@ public class ClienteDAC {
 		return resultado;
 	}
 
+	public boolean verificarExistenciaCliente(int idCliente) {
+		try {
+			Connection conn = BBDD.abrirConexion();
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			ResultSet rs = statement
+					.executeQuery("SELECT idCliente FROM clientes WHERE idCliente = "
+							+ idCliente + ";");
+			if (rs.next()) {
+				return true;
+			}
+			conn.close(); // Cierro conexion.
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return false;
+	}
+
 
 
 }
