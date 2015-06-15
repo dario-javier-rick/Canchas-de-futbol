@@ -36,14 +36,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import javax.swing.border.LineBorder;
-
-import java.awt.SystemColor;
-
-import javax.swing.border.BevelBorder;
-import javax.swing.event.ListSelectionEvent;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -55,21 +47,22 @@ public class ControlCentral extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public static ControlCentral frame = new ControlCentral();
 	JCalendar calendario = new JCalendar();
-	JComboBox cboClientes = new JComboBox();
-	JComboBox cboCanchas = new JComboBox();
-	JComboBox cboReservas = new JComboBox();
+	JComboBox<Cliente> cboClientes = new JComboBox<Cliente>();
+	JComboBox<Cancha> cboCanchas = new JComboBox<Cancha>();
+	JComboBox<Reserva> cboReservas = new JComboBox<Reserva>();
 	private JTable tblMañana;
 	private JTable tblTarde;
-	DefaultTableModel mdlMañana = new DefaultTableModel(new Object[] {
+	DefaultTableModel mdlMañana = new DefaultTableModel(new Object[] { "Id",
 			"Cancha", "Id Cliente", "Horario", "Se\u00F1a",
 			"Tiempo de Reserva", "Resto a pagar", "Realizada" }, 0);
-	DefaultTableModel mdlTarde = new DefaultTableModel(new Object[] { "Cancha",
-			"Id Cliente", "Horario", "Se\u00F1a", "Tiempo de Reserva",
-			"Resto a pagar", "Realizada" }, 0);
-	
-	//El ArrayList se declara como variable global, para poder trabajarlo mejor.
+	DefaultTableModel mdlTarde = new DefaultTableModel(new Object[] { "Id",
+			"Cancha", "Id Cliente", "Horario", "Se\u00F1a",
+			"Tiempo de Reserva", "Resto a pagar", "Realizada" }, 0);
+
+	// El ArrayList se declara como variable global, para poder trabajarlo
+	// mejor.
 	ArrayList<Reserva> reservas = new ArrayList<Reserva>();
-	
+
 	private ControlCentral ControlCentral = this;
 
 	/**
@@ -255,14 +248,29 @@ public class ControlCentral extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (tabbedPane.getSelectedIndex() == 0) // Mañana
 				{
-
-					reservas.get(tblTarde.getSelectedRow()).concretar();
-					// ¿¿Update or insert??
-					reservas.get(tblTarde.getSelectedRow()).persistirReserva();
+					int pestaña = tabbedPane.getSelectedIndex();
+					int idReserva = -1; // La inicializo en un valor no real,
+										// para que compile
 					
+					if (pestaña == 0) {
+						// Columna 0 = id reserva.
+						idReserva = Integer.parseInt((String) tblMañana
+								.getModel().getValueAt(
+										tblMañana.getSelectedRow(), 0));
+					}
+					
+					if (pestaña == 1) {
+						// Columna 0 = id reserva.
+						idReserva = Integer.parseInt((String) tblTarde
+								.getModel().getValueAt(
+										tblTarde.getSelectedRow(), 0));
+					}
+
+					Logica.Reserva.concretar(idReserva);
 					bindTablasReservas();
 					
-					
+					System.out.println("Se concreto idReserva: " + idReserva);
+
 				} else if (tabbedPane.getSelectedIndex() == 1) // Tarde
 				{
 					System.out.println(tblTarde.getSelectedRow());
@@ -316,9 +324,12 @@ public class ControlCentral extends JFrame {
 	private void bindReservas() {
 		ArrayList<Reserva> reservas = Reserva.obtenerReservas();
 		for (Reserva reserva : reservas) {
-			cboReservas.addItem("Cliente: " + reserva.getCliente().getNombre()
-					+ ", Cancha: " + reserva.getCancha().getNombre()
-					+ ", Horario: " + reserva.getHorario());
+			// Verificar toString();
+			cboReservas.addItem(reserva);
+			// cboReservas.addItem("Cliente: " +
+			// reserva.getCliente().getNombre()
+			// + ", Cancha: " + reserva.getCancha().getNombre()
+			// + ", Horario: " + reserva.getHorario());
 		}
 	}
 
@@ -333,8 +344,10 @@ public class ControlCentral extends JFrame {
 
 		ArrayList<Cancha> canchas = Cancha.obtenerCanchas();
 		for (Cancha cancha : canchas) {
-			cboCanchas.addItem(cancha + ", Precio: $"
-					+ cancha.getPrecioPorHora());
+			// Verificar toString();
+			cboCanchas.addItem(cancha);
+			// cboCanchas.addItem(cancha + ", Precio: $"
+			// + cancha.getPrecioPorHora());
 		}
 
 	}
@@ -342,8 +355,7 @@ public class ControlCentral extends JFrame {
 	private void bindTablasReservas() {
 		limpiarTablas();
 
-		reservas = Reserva.obtenerReservas(calendario
-				.getCalendar());
+		reservas = Reserva.obtenerReservas(calendario.getCalendar());
 		for (Reserva reserva : reservas) {
 			String horario = String.valueOf(reserva.getHorario());
 			Pattern pattern = Pattern.compile(".........ART");
@@ -352,6 +364,7 @@ public class ControlCentral extends JFrame {
 				horario = matcher.group();
 
 			Vector<String> row = new Vector<String>();
+			row.add(String.valueOf(reserva.getIdReserva()));
 			row.add(reserva.getCancha().getNombre());
 			row.add(String.valueOf(reserva.getCliente().getIdCliente()));
 			row.add(horario);

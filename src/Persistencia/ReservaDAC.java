@@ -47,7 +47,7 @@ public class ReservaDAC {
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
 			ResultSet rs = statement
 					.executeQuery("SELECT * FROM reservas WHERE horario like '"
-							+ dia + "-" + mes + "-" + año + "%'");			
+							+ dia + "-" + mes + "-" + año + "%'");
 			while (rs.next()) {
 				String[] vector = new String[7];
 				vector[0] = String.valueOf(rs.getInt("idReserva"));
@@ -128,16 +128,16 @@ public class ReservaDAC {
 			String horario, int tiempo, int seña, Boolean realizada) {
 		Connection conn = BBDD.abrirConexion();
 		try {
-			
+
 			int concretada = 0;
 			if (realizada)
 				concretada = 1;
-			
+
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
 			PreparedStatement prep = conn
 					.prepareStatement("INSERT INTO reservas VALUES (?,?,?,?,?,?,?);");
-			
+
 			prep.setInt(1, idReserva);
 			prep.setInt(2, idCliente);
 			prep.setInt(3, idCancha);
@@ -145,7 +145,7 @@ public class ReservaDAC {
 			prep.setInt(5, tiempo);
 			prep.setInt(6, seña);
 			prep.setInt(7, concretada);
-			 
+
 			conn.setAutoCommit(false);
 			prep.executeUpdate();
 			conn.commit();
@@ -173,6 +173,24 @@ public class ReservaDAC {
 			System.err.println(e.getMessage());
 		}
 		return resultado;
+	}
+
+	public void concretar(int idReserva) {
+		try {
+			Connection conn = BBDD.abrirConexion();
+			Statement statement = conn.createStatement();
+			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+			PreparedStatement prep = conn
+					.prepareStatement("UPDATE reservas SET realizada = 1 WHERE idReserva = "
+							+ idReserva + " ;");
+			conn.setAutoCommit(false);
+			prep.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
+			conn.close(); // Cierro conexion.
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
 	}
 
 }

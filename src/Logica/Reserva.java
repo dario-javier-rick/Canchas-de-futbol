@@ -36,6 +36,10 @@ public class Reserva {
 	public void concretar() {
 		this.realizada = true;
 	}
+	
+	public static void concretar(int idReserva) {
+		DAC.concretar(idReserva);
+	}
 
 	public static ArrayList<Reserva> obtenerReservas() {
 		ArrayList<Reserva> arrayReservas = new ArrayList<Reserva>();
