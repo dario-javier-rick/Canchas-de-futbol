@@ -43,7 +43,7 @@ public class AgregarReservas extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	JCalendar calendar;
-	private JTextField txtCancha;
+	private JTextField txtIdCancha;
 	private JPanel panelCancha;
 	private JPanel panelIdCliente;
 	private JTextField txtIdCliente;
@@ -56,8 +56,8 @@ public class AgregarReservas extends JFrame {
 	private JButton btnCerrar;
 	private JButton btnAceptar;
 	private JPanel panelHorario;
-	JComboBox cboHoras = new JComboBox();
-	JComboBox cboMinutos = new JComboBox();
+	JComboBox<String> cboHoras = new JComboBox<String>();
+	JComboBox<String> cboMinutos = new JComboBox<String>();
 
 	/**
 	 * Launch the application.
@@ -88,12 +88,6 @@ public class AgregarReservas extends JFrame {
 		setContentPane(p);
 		p.setLayout(null);
 
-		JPanel panel = new JPanel();
-		panel.setOpaque(false);
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(262, 17, 222, 158);
-		p.add(panel);
-
 		panelCancha = new JPanel();
 		panelCancha
 				.setBorder(new TitledBorder(UIManager
@@ -104,10 +98,10 @@ public class AgregarReservas extends JFrame {
 		p.add(panelCancha);
 		panelCancha.setLayout(null);
 
-		txtCancha = new JTextField();
-		txtCancha.setBounds(6, 16, 176, 20);
-		panelCancha.add(txtCancha);
-		txtCancha.setColumns(10);
+		txtIdCancha = new JTextField();
+		txtIdCancha.setBounds(6, 16, 176, 20);
+		panelCancha.add(txtIdCancha);
+		txtIdCancha.setColumns(10);
 
 		panelIdCliente = new JPanel();
 		panelIdCliente.setLayout(null);
@@ -214,6 +208,12 @@ public class AgregarReservas extends JFrame {
 			}
 		});
 
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		panel.setBackground(Color.WHITE);
+		panel.setBounds(262, 17, 222, 158);
+		p.add(panel);
+
 		calendar = new JCalendar();
 		panel.add(calendar);
 		calendar.addPropertyChangeListener("calendar",
@@ -245,17 +245,33 @@ public class AgregarReservas extends JFrame {
 
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				if (validarDatos()) {
 					// Llamar a lógica y persistir reserva
 					try {
+
+						Calendar c = (Calendar) calendar.getCalendar();
 						Date d = new Date();
+						
+						d.setDate(c.get(Calendar.DAY_OF_MONTH));
+						d.setMonth(c.get(Calendar.MONTH));
+						d.setYear(c.get(Calendar.YEAR));
+						d.setHours(Integer.parseInt((String) cboHoras
+								.getSelectedItem()));
+						d.setMinutes(Integer.parseInt((String) cboMinutos
+								.getSelectedItem()));
+						d.setSeconds(00);
+
 						Reserva reserva = new Reserva(Reserva
 								.getUltimoIdReserva() + 1, Cliente
-								.obtenerCliente(1), Cancha.obtenerCancha(1), d,
-								Integer.parseInt(txtTiempoReserva.getText()),
-								Integer.parseInt(txtSeña.getText()));
-						
+								.obtenerCliente(Integer.parseInt(txtIdCliente
+										.getText())), Cancha
+								.obtenerCancha(Integer.parseInt(txtIdCancha
+										.getText())), d, Integer
+								.parseInt(txtTiempoReserva.getText()), Integer
+								.parseInt(txtSeña.getText()));
+
 						reserva.persistirReserva();
 						JOptionPane
 								.showMessageDialog(null, "Reserva agregada!");
@@ -273,16 +289,15 @@ public class AgregarReservas extends JFrame {
 			private boolean validarDatos() {
 				// Validaciones de cancha
 				try {
-					if (!txtCancha.getText().equals(""))
-						Integer.parseInt(txtCancha.getText());
+					if (!txtIdCancha.getText().equals(""))
+						Integer.parseInt(txtIdCancha.getText());
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null,
 							"El id de la cancha no tiene formato numérico");
 					return false;
 				}
 				if (!Cancha.verificarExistenciaCancha(Integer
-						.parseInt(txtCancha.getText())))
-				{
+						.parseInt(txtIdCancha.getText()))) {
 					JOptionPane.showMessageDialog(null,
 							"El id de la cancha ingresada no existe");
 					return false;
@@ -297,8 +312,7 @@ public class AgregarReservas extends JFrame {
 					return false;
 				}
 				if (!Cliente.verificarExistenciaCliente(Integer
-						.parseInt(txtIdCliente.getText())))
-				{
+						.parseInt(txtIdCliente.getText()))) {
 					JOptionPane.showMessageDialog(null,
 							"El id del cliente ingresado no existe");
 					return false;
@@ -336,22 +350,22 @@ public class AgregarReservas extends JFrame {
 				return true;
 			}
 		});
-//		btnAceptar.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent arg0) {
-//				if (true) {
-//					JOptionPane c = new JOptionPane();
-//					JOptionPane.showMessageDialog(c,
-//							"Se agrego exitosamente su reserva.");
-//					dispose();
-//				}
-//				/*
-//				 * else { JOptionPane c = new JOptionPane();
-//				 * JOptionPane.showMessageDialog(c,
-//				 * "Hubo un fallo, verifique los datos. Gracias" ); }
-//				 */
-//			}
-//		});
+		// btnAceptar.addMouseListener(new MouseAdapter() {
+		// @Override
+		// public void mouseClicked(MouseEvent arg0) {
+		// if (true) {
+		// JOptionPane c = new JOptionPane();
+		// JOptionPane.showMessageDialog(c,
+		// "Se agrego exitosamente su reserva.");
+		// dispose();
+		// }
+		// /*
+		// * else { JOptionPane c = new JOptionPane();
+		// * JOptionPane.showMessageDialog(c,
+		// * "Hubo un fallo, verifique los datos. Gracias" ); }
+		// */
+		// }
+		// });
 		btnAceptar.setBounds(280, 248, 89, 23);
 		p.add(btnAceptar);
 

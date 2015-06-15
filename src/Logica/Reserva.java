@@ -32,11 +32,10 @@ public class Reserva {
 
 	}
 
-
 	public void concretar() {
 		this.realizada = true;
 	}
-	
+
 	public static void concretar(int idReserva) {
 		DAC.concretar(idReserva);
 	}
@@ -91,19 +90,26 @@ public class Reserva {
 		}
 		return arrayReservas;
 	}
-	
 
 	public void persistirReserva() {
 		try {
+			// Verificar horario
+			// Formato: '31-05-2015 10:00:00'
+			@SuppressWarnings("deprecation")
+			String horario = "'" + String.format("%02d", this.getHorario().getDate()) + "-"
+					+ String.format("%02d", this.getHorario().getMonth()) + "-"
+					+ String.format("%04d", this.getHorario().getYear()) + " "
+					+ String.format("%02d", this.getHorario().getHours())+ ":"
+					+ String.format("%02d", this.getHorario().getMinutes()) + ":"
+					+ String.format("%02d", this.getHorario().getSeconds()) + "'";
 			DAC.persistirReserva(this.idReserva, this.cliente.getIdCliente(),
-					this.cancha.getIdCancha(), this.horario.toString(), this.getTiempo(),
+					this.cancha.getIdCancha(), horario, this.getTiempo(),
 					this.getSeña(), this.realizada);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 
 	}
-
 
 	public static int getUltimoIdReserva() {
 		return DAC.getUltimoIdReserva();
@@ -162,7 +168,7 @@ public class Reserva {
 	}
 
 	public String getRealizada() {
-		boolean realizada  = DAC.chequearEstado(this.idReserva);
+		boolean realizada = DAC.chequearEstado(this.idReserva);
 		if (realizada)
 			return "Si";
 		else

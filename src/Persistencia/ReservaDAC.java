@@ -146,10 +146,13 @@ public class ReservaDAC {
 			prep.setInt(6, seña);
 			prep.setInt(7, concretada);
 
-			conn.setAutoCommit(false);
-			prep.executeUpdate();
-			conn.commit();
-			conn.setAutoCommit(true);
+			System.out.println("INSERT INTO reservas VALUES (" + idReserva
+					+ "," + idCliente + "," + idCancha + ","+horario+","+tiempo+","+seña+","+concretada+");");
+
+			// conn.setAutoCommit(false);
+			// prep.executeUpdate();
+			// conn.commit();
+			// conn.setAutoCommit(true);
 			conn.close(); // Cierro conexion.
 
 		} catch (Exception e) {
