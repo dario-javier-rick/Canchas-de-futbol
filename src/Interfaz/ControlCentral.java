@@ -269,8 +269,6 @@ public class ControlCentral extends JFrame {
 					Logica.Reserva.concretar(idReserva);
 					bindTablasReservas();
 					
-					System.out.println("Se concreto idReserva: " + idReserva);
-
 				} else if (tabbedPane.getSelectedIndex() == 1) // Tarde
 				{
 					System.out.println(tblTarde.getSelectedRow());

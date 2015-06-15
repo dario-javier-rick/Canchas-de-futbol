@@ -162,6 +162,7 @@ public class Reserva {
 	}
 
 	public String getRealizada() {
+		boolean realizada  = DAC.chequearEstado(this.idReserva);
 		if (realizada)
 			return "Si";
 		else
