@@ -93,15 +93,16 @@ public class Reserva {
 
 	public void persistirReserva() {
 		try {
-			// Verificar horario
 			// Formato: '31-05-2015 10:00:00'
 			@SuppressWarnings("deprecation")
-			String horario = "'" + String.format("%02d", this.getHorario().getDate()) + "-"
-					+ String.format("%02d", this.getHorario().getMonth()) + "-"
-					+ String.format("%04d", this.getHorario().getYear()) + " "
-					+ String.format("%02d", this.getHorario().getHours())+ ":"
-					+ String.format("%02d", this.getHorario().getMinutes()) + ":"
-					+ String.format("%02d", this.getHorario().getSeconds()) + "'";
+			String horario = String.format("%02d", this.getHorario().getDate())
+					+ "-" + String.format("%02d", this.getHorario().getMonth()+1) // Enero = 0
+					+ "-" + String.format("%04d", this.getHorario().getYear())
+					+ " " + String.format("%02d", this.getHorario().getHours())
+					+ ":"
+					+ String.format("%02d", this.getHorario().getMinutes())
+					+ ":"
+					+ String.format("%02d", this.getHorario().getSeconds());
 			DAC.persistirReserva(this.idReserva, this.cliente.getIdCliente(),
 					this.cancha.getIdCancha(), horario, this.getTiempo(),
 					this.getSeña(), this.realizada);
@@ -116,7 +117,7 @@ public class Reserva {
 	}
 
 	public static void eliminarReservasPorCancha(Cancha cancha) {
-
+		DAC.eliminarReservaPorCancha(cancha.getIdCancha());
 	}
 
 	public static void eliminarReservasPorCliente(Cliente cliente) {
@@ -130,9 +131,9 @@ public class Reserva {
 
 	@Override
 	public String toString() {
-		return "Reserva [cliente=" + getCliente() + ", cancha=" + getCancha()
-				+ ", horario=" + getHorario() + ", realizada=" + realizada
-				+ "]";
+		return "Reserva " + this.idReserva + " Cliente: " + getCliente()
+				+ ", Cancha:" + getCancha() + ", Horario:" + getHorario()
+				+ ", Realizada: " + realizada + "]";
 	}
 
 	public Cliente getCliente() {

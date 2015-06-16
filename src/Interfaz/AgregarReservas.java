@@ -190,8 +190,9 @@ public class AgregarReservas extends JFrame {
 			public void itemStateChanged(ItemEvent arg0) {
 				Calendar c = (Calendar) calendar.getCalendar();
 				txtHoraReserva.setText(c.get(Calendar.DAY_OF_MONTH) + "/"
-						+ c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR)
-						+ " " + cboHoras.getSelectedItem().toString() + ":"
+						+ String.valueOf(c.get(Calendar.MONTH) + 1) + "/"
+						+ c.get(Calendar.YEAR) + " "
+						+ cboHoras.getSelectedItem().toString() + ":"
 						+ cboMinutos.getSelectedItem().toString() + " Hs.");
 			}
 		});
@@ -202,8 +203,9 @@ public class AgregarReservas extends JFrame {
 			public void itemStateChanged(ItemEvent arg0) {
 				Calendar c = (Calendar) calendar.getCalendar();
 				txtHoraReserva.setText(c.get(Calendar.DAY_OF_MONTH) + "/"
-						+ c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR)
-						+ " " + cboHoras.getSelectedItem().toString() + ":"
+						+ String.valueOf(c.get(Calendar.MONTH) + 1) + "/"
+						+ c.get(Calendar.YEAR) + " "
+						+ cboHoras.getSelectedItem().toString() + ":"
 						+ cboMinutos.getSelectedItem().toString() + " Hs.");
 			}
 		});
@@ -221,15 +223,21 @@ public class AgregarReservas extends JFrame {
 
 					@Override
 					public void propertyChange(PropertyChangeEvent e) {
-						Calendar c = (Calendar) e.getNewValue();
+						Calendar c = (Calendar) calendar.getCalendar();
 						txtHoraReserva.setText(c.get(Calendar.DAY_OF_MONTH)
-								+ "/" + c.get(Calendar.MONTH) + "/"
-								+ c.get(Calendar.YEAR) + " "
+								+ "/"
+								+ String.valueOf(c.get(Calendar.MONTH) + 1)
+								+ "/" + c.get(Calendar.YEAR) + " "
 								+ cboHoras.getSelectedItem().toString() + ":"
 								+ cboMinutos.getSelectedItem().toString()
 								+ " Hs.");
 					}
 				});
+		Calendar c = (Calendar) calendar.getCalendar();
+		txtHoraReserva.setText(c.get(Calendar.DAY_OF_MONTH) + "/"
+				+ String.valueOf(c.get(Calendar.MONTH)+1) + "/" + c.get(Calendar.YEAR)
+				+ " " + cboHoras.getSelectedItem().toString() + ":"
+				+ cboMinutos.getSelectedItem().toString() + " Hs.");
 
 		JLabel lblHoras = new JLabel("Horas");
 		lblHoras.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -253,9 +261,9 @@ public class AgregarReservas extends JFrame {
 
 						Calendar c = (Calendar) calendar.getCalendar();
 						Date d = new Date();
-						
+
 						d.setDate(c.get(Calendar.DAY_OF_MONTH));
-						d.setMonth(c.get(Calendar.MONTH));
+						d.setMonth(c.get(Calendar.MONTH)); // Enero es 0
 						d.setYear(c.get(Calendar.YEAR));
 						d.setHours(Integer.parseInt((String) cboHoras
 								.getSelectedItem()));

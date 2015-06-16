@@ -148,10 +148,10 @@ public class AgregarClientes extends JFrame {
 		panel_6.add(spinner_1);
 		spinner_1.setModel(new SpinnerNumberModel(1900, 1900, 2015, 1));
 
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(6, 16, 99, 20);
 		panel_6.add(comboBox);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {
 				"Elija un mes. . . .", "Enero", "Febrero", "Marzo", "Abril",
 				"Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre",
 				"Noviembre", "Diciembre" }));

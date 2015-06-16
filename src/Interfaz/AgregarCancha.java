@@ -29,7 +29,7 @@ public class AgregarCancha extends JFrame {
 	private JTextField nombre;
 	private JTextField maxJugadores;
 	private JTextField precioPorHora;
-	JComboBox tipo_cancha = new JComboBox();
+	JComboBox<String> tipo_cancha = new JComboBox<String>();
 
 	/**
 	 * Launch the application.

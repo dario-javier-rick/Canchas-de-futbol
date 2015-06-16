@@ -87,6 +87,7 @@ public class ControlCentral extends JFrame {
 		bindClientes();
 		bindCanchas();
 		bindReservas();
+		bindTablasReservas();
 	}
 
 	/**

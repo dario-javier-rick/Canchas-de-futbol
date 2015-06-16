@@ -28,9 +28,14 @@ public class ReservaDAC {
 				vector[6] = String.valueOf(rs.getInt("realizada"));
 				array.add(vector);
 			}
-			conn.close(); // Cierro conexion.
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+		} finally {
+			try {
+				conn.close(); // Cierro conexion.
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			}
 		}
 		return array;
 	}
@@ -59,17 +64,23 @@ public class ReservaDAC {
 				vector[6] = String.valueOf(rs.getInt("realizada"));
 				array.add(vector);
 			}
-			conn.close(); // Cierro conexion.
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+		} finally {
+			try {
+				conn.close(); // Cierro conexion.
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			}
 		}
 		return array;
 	}
 
 	public int obtenerIdReserva(int idCliente, int idCancha, Date horario) {
+		Connection conn = BBDD.abrirConexion();
 		int resultado = 0;
 		try {
-			Connection conn = BBDD.abrirConexion();
+
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
 			ResultSet rs = statement
@@ -78,66 +89,86 @@ public class ReservaDAC {
 			if (rs.next()) {
 				resultado = rs.getInt(1);
 			}
-			conn.close(); // Cierro conexion.
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+		} finally {
+			try {
+				conn.close(); // Cierro conexion.
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			}
 		}
 		return resultado;
 	}
 
 	public void eliminarReserva(int IdReserva) {
+		Connection conn = BBDD.abrirConexion();
 		try {
-			Connection conn = BBDD.abrirConexion();
+
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
 			statement.executeQuery("DELETE FROM reservas WHERE IdReserva = "
 					+ IdReserva + ";");
-			conn.close(); // Cierro conexion.
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+		} finally {
+			try {
+				conn.close(); // Cierro conexion.
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			}
 		}
 	}
 
 	public void eliminarReservaPorCancha(int idCancha) {
+		Connection conn = BBDD.abrirConexion();
 		try {
-			Connection conn = BBDD.abrirConexion();
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
-			statement.executeQuery("DELETE FROM reservas WHERE idCancha = "
+			statement.executeUpdate("DELETE FROM reservas WHERE idCancha = "
 					+ idCancha + ";");
-			conn.close(); // Cierro conexion.
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+		} finally {
+			try {
+				conn.close(); // Cierro conexion.
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			}
 		}
 	}
 
 	public void eliminarReservaPorCliente(int idCliente) {
+		Connection conn = BBDD.abrirConexion();
 		try {
-			Connection conn = BBDD.abrirConexion();
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
-			statement.executeQuery("DELETE FROM reservas WHERE idCliente = "
+			statement.executeUpdate("DELETE FROM reservas WHERE idCliente = "
 					+ idCliente + ";");
-			conn.close(); // Cierro conexion.
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+		} finally {
+			try {
+				conn.close(); // Cierro conexion.
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			}
 		}
 	}
 
 	public void persistirReserva(int idReserva, int idCliente, int idCancha,
 			String horario, int tiempo, int seña, Boolean realizada) {
 		Connection conn = BBDD.abrirConexion();
-		try {
-
+		try {	
 			int concretada = 0;
 			if (realizada)
 				concretada = 1;
 
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
+
 			PreparedStatement prep = conn
 					.prepareStatement("INSERT INTO reservas VALUES (?,?,?,?,?,?,?);");
-
 			prep.setInt(1, idReserva);
 			prep.setInt(2, idCliente);
 			prep.setInt(3, idCancha);
@@ -145,25 +176,27 @@ public class ReservaDAC {
 			prep.setInt(5, tiempo);
 			prep.setInt(6, seña);
 			prep.setInt(7, concretada);
-
-			System.out.println("INSERT INTO reservas VALUES (" + idReserva
-					+ "," + idCliente + "," + idCancha + ","+horario+","+tiempo+","+seña+","+concretada+");");
-
-			// conn.setAutoCommit(false);
-			// prep.executeUpdate();
-			// conn.commit();
-			// conn.setAutoCommit(true);
-			conn.close(); // Cierro conexion.
+			conn.setAutoCommit(false);
+			prep.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
 
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+		}
+		finally {
+			try {
+				conn.close(); // Cierro conexion.
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			}
 		}
 	}
 
 	public int getUltimoIdReserva() {
 		int resultado = 0;
+		Connection conn = BBDD.abrirConexion();
 		try {
-			Connection conn = BBDD.abrirConexion();
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
 			ResultSet rs = statement
@@ -171,16 +204,21 @@ public class ReservaDAC {
 			if (rs.next()) {
 				resultado = rs.getInt(1);
 			}
-			conn.close(); // Cierro conexion.
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+		}finally {
+			try {
+				conn.close(); // Cierro conexion.
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			}
 		}
 		return resultado;
 	}
 
 	public void concretar(int idReserva) {
-		try {
-			Connection conn = BBDD.abrirConexion();
+		Connection conn = BBDD.abrirConexion();
+		try {			
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
 			PreparedStatement prep = conn
@@ -190,16 +228,21 @@ public class ReservaDAC {
 			prep.executeUpdate();
 			conn.commit();
 			conn.setAutoCommit(true);
-			conn.close(); // Cierro conexion.
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+		} finally {
+			try {
+				conn.close(); // Cierro conexion.
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			}
 		}
 	}
 
 	public boolean chequearEstado(int idReserva) {
 		int resultado = 0;
+		Connection conn = BBDD.abrirConexion();
 		try {
-			Connection conn = BBDD.abrirConexion();
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
 			ResultSet rs = statement
@@ -208,14 +251,21 @@ public class ReservaDAC {
 			if (rs.next()) {
 				resultado = rs.getInt(1);
 			}
-			conn.close(); // Cierro conexion.
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-
+		finally {
+			try {
+				conn.close(); // Cierro conexion.
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			}
+		}
 		if (resultado == 1)
 			return true;
 		else
 			return false;
 	}
+
+
 }

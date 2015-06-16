@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -23,7 +22,7 @@ public class EliminarClientes extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -222451083314467403L;
-	JComboBox cboClientes = new JComboBox();
+	JComboBox<Cliente> cboClientes = new JComboBox<Cliente>();
 
 	/**
 	 * Launch the application.
@@ -58,14 +57,14 @@ public class EliminarClientes extends JFrame {
 		JButton btnNewButton_1 = new JButton("Eliminar");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (cboClientes.getSelectedIndex() != 0) {
-					// Elimino reservas asociadas a la cancha.
+				if (cboClientes.getSelectedIndex() != -1) {
+					// Elimino reservas asociadas al cliente.
 					Reserva.eliminarReservasPorCliente((Cliente) cboClientes
 							.getSelectedItem());
 					Cliente.eliminarCliente((Cliente) cboClientes.getSelectedItem());
 					JOptionPane.showMessageDialog(null, "Cliente eliminado!");
 					cboClientes.removeAllItems();
-					cboClientes.addItem("Seleccione un cliente. . . . ");
+//					cboClientes.addItem("Seleccione un cliente. . . . ");
 					bindClientes();
 				}
 				instancia.actualizarCombos();
@@ -83,9 +82,9 @@ public class EliminarClientes extends JFrame {
 		});
 		btnNewButton.setBounds(299, 86, 89, 23);
 		p.add(btnNewButton);
-
-		cboClientes.setModel(new DefaultComboBoxModel(
-				new String[] { "Seleccione un cliente. . . . " }));
+//
+//		cboClientes.setModel(new DefaultComboBoxModel(
+//				new String[] { "Seleccione un cliente. . . . " }));
 		cboClientes.setBounds(10, 11, 275, 20);
 		p.add(cboClientes);
 

@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -22,7 +21,7 @@ public class EliminarReservas extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -222451083314467403L;
-	JComboBox cboReservas = new JComboBox();
+	JComboBox<Reserva> cboReservas = new JComboBox<Reserva>();
 	/**
 	 * Launch the application.
 	 */
@@ -60,7 +59,7 @@ public class EliminarReservas extends JFrame {
 					Reserva.eliminarReserva((Reserva) cboReservas.getSelectedItem());
 					JOptionPane.showMessageDialog(null, "Reserva eliminada!");
 					cboReservas.removeAllItems();
-					cboReservas.addItem("Seleccione una reseva. . . . ");
+//					cboReservas.addItem("Seleccione una reseva. . . . ");
 					bindReservas();
 				}
 				instancia.actualizarCombos();
@@ -79,8 +78,8 @@ public class EliminarReservas extends JFrame {
 		btnNewButton.setBounds(299, 86, 89, 23);
 		p.add(btnNewButton);
 
-		cboReservas.setModel(new DefaultComboBoxModel(
-				new String[] { "Seleccione una reseva. . . . " }));
+//		cboReservas.setModel(new DefaultComboBoxModel(
+//				new String[] { "Seleccione una reseva. . . . " }));
 		cboReservas.setBounds(10, 11, 275, 20);
 		p.add(cboReservas);
 

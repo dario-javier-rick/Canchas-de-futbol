@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -23,7 +22,7 @@ public class EliminarCancha extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -222451083314467403L;
-	JComboBox cboCanchas = new JComboBox();
+	JComboBox<Cancha> cboCanchas = new JComboBox<Cancha>();
 
 	/**
 	 * Launch the application.
@@ -58,14 +57,14 @@ public class EliminarCancha extends JFrame {
 		JButton btnNewButton_1 = new JButton("Eliminar");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (cboCanchas.getSelectedIndex() != 0) {
+				if (cboCanchas.getSelectedIndex() != -1) {
 					// Elimino reservas asociadas a la cancha.
 					Reserva.eliminarReservasPorCancha((Cancha) cboCanchas
 							.getSelectedItem());
 					Cancha.eliminarCancha((Cancha) cboCanchas.getSelectedItem());
 					JOptionPane.showMessageDialog(null, "Cancha eliminada!");
 					cboCanchas.removeAllItems();
-					cboCanchas.addItem("Seleccione una cancha. . . . ");
+//					cboCanchas.addItem("Seleccione una cancha. . . . ");
 					bindCanchas();
 				}
 				instancia.actualizarCombos();
@@ -84,8 +83,6 @@ public class EliminarCancha extends JFrame {
 		btnNewButton.setBounds(299, 86, 89, 23);
 		p.add(btnNewButton);
 
-		cboCanchas.setModel(new DefaultComboBoxModel(
-				new String[] { "Seleccione una cancha. . . . " }));
 		cboCanchas.setBounds(10, 11, 275, 20);
 		p.add(cboCanchas);
 
