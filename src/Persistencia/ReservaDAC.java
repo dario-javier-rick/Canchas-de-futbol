@@ -107,7 +107,7 @@ public class ReservaDAC {
 
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30); // Seteo timeout máximo 30 segundos.
-			statement.executeQuery("DELETE FROM reservas WHERE IdReserva = "
+			statement.executeUpdate("DELETE FROM reservas WHERE IdReserva = "
 					+ IdReserva + ";");
 		} catch (Exception e) {
 			System.err.println(e.getMessage());

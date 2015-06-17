@@ -357,7 +357,7 @@ public class ControlCentral extends JFrame {
 		reservas = Reserva.obtenerReservas(calendario.getCalendar());
 		for (Reserva reserva : reservas) {
 			String horario = String.valueOf(reserva.getHorario());
-			Pattern pattern = Pattern.compile(".........ART");
+			Pattern pattern = Pattern.compile("..:..:.. ");
 			Matcher matcher = pattern.matcher(horario);
 			if (matcher.find())
 				horario = matcher.group();
