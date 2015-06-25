@@ -134,8 +134,8 @@ public class AgregarCancha extends JFrame {
 					// Llamar a lógica y persistir cancha
 					Cancha cancha = new Cancha(Cancha.getUltimoIdCancha() + 1,
 							nombre.getText(), tipo_cancha.getSelectedItem()
-									.toString(), Integer.parseInt(precioPorHora
-									.getText()), Integer.parseInt(maxJugadores
+									.toString(), Integer.parseInt(maxJugadores
+									.getText()), Integer.parseInt(precioPorHora
 									.getText()));
 					cancha.persistirCancha();
 					JOptionPane.showMessageDialog(null, "Cancha cargada!");

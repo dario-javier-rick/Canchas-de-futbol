@@ -252,14 +252,14 @@ public class ControlCentral extends JFrame {
 					int pestaña = tabbedPane.getSelectedIndex();
 					int idReserva = -1; // La inicializo en un valor no real,
 										// para que compile
-					
+
 					if (pestaña == 0) {
 						// Columna 0 = id reserva.
 						idReserva = Integer.parseInt((String) tblMañana
 								.getModel().getValueAt(
 										tblMañana.getSelectedRow(), 0));
 					}
-					
+
 					if (pestaña == 1) {
 						// Columna 0 = id reserva.
 						idReserva = Integer.parseInt((String) tblTarde
@@ -269,7 +269,7 @@ public class ControlCentral extends JFrame {
 
 					Logica.Reserva.concretar(idReserva);
 					bindTablasReservas();
-					
+
 				} else if (tabbedPane.getSelectedIndex() == 1) // Tarde
 				{
 					System.out.println(tblTarde.getSelectedRow());

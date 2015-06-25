@@ -152,7 +152,7 @@ public class AgregarReservas extends JFrame {
 		panelTiempoReserva.setLayout(null);
 		panelTiempoReserva
 				.setBorder(new TitledBorder(UIManager
-						.getBorder("TitledBorder.border"), "Tiempo de reserva",
+						.getBorder("TitledBorder.border"), "Tiempo de reserva (minutos)",
 						TitledBorder.CENTER, TitledBorder.TOP, null, new Color(
 								0, 0, 0)));
 		panelTiempoReserva.setBounds(272, 193, 195, 43);

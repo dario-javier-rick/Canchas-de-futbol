@@ -13,13 +13,14 @@ public class Cancha {
 	int maxJugadores;
 	private static CanchaDAC DAC = new CanchaDAC();
 
-	public Cancha(int idCancha, String nombre, String tipo_cancha, int precioPorHora,
-			int maxJugadores) {
+	public Cancha(int idCancha, String nombre, String tipo_cancha,
+			int maxJugadores, int precioPorHora) {
 		this.setIdCancha(idCancha);
 		this.setNombre(nombre);
 		this.setTipo_cancha(tipo_cancha);
-		this.setPrecioPorHora(precioPorHora);
 		this.maxJugadores = maxJugadores;
+		this.setPrecioPorHora(precioPorHora);
+
 	}
 
 	public static ArrayList<Cancha> obtenerCanchas() {
@@ -27,7 +28,8 @@ public class Cancha {
 		try {
 			ArrayList<String[]> array = DAC.obtenerCanchas();
 			for (int i = 0; i < array.size(); i++) {
-				Cancha cancha = new Cancha(Integer.parseInt(array.get(i)[0]), array.get(i)[1], array.get(i)[2],
+				Cancha cancha = new Cancha(Integer.parseInt(array.get(i)[0]),
+						array.get(i)[1], array.get(i)[2],
 						Integer.parseInt(array.get(i)[3]),
 						Integer.parseInt(array.get(i)[4]));
 				arrayCanchas.add(cancha);
@@ -40,11 +42,12 @@ public class Cancha {
 
 	public static Cancha obtenerCancha(int IdCancha) {
 		String[] datos = DAC.obtenerCancha(IdCancha);
-		Cancha cancha = new Cancha(Integer.parseInt(datos[0]), datos[1], datos[2],
-				Integer.parseInt(datos[3]), Integer.parseInt(datos[4]));
+		Cancha cancha = new Cancha(Integer.parseInt(datos[0]), datos[1],
+				datos[2], Integer.parseInt(datos[3]),
+				Integer.parseInt(datos[4]));
 		return cancha;
 	}
-	
+
 	public static void eliminarCancha(Cancha cancha) {
 		DAC.eliminarCancha(cancha.getIdCancha());
 	}
@@ -58,7 +61,7 @@ public class Cancha {
 		}
 
 	}
-	
+
 	public static int getUltimoIdCancha() {
 		return DAC.getUltimoIdCancha();
 	}
@@ -67,10 +70,9 @@ public class Cancha {
 		return DAC.verificarExistenciaCancha(idCancha);
 	}
 
-
 	@Override
 	public String toString() {
-		return ("Id: " + getIdCancha() +" Cancha: " +getNombre() + ", Tipo: " + getTipo_cancha());
+		return ("Id: " + getIdCancha() + " Cancha: " + getNombre() + ", Tipo: " + getTipo_cancha());
 	}
 
 	public String getNombre() {
@@ -104,10 +106,5 @@ public class Cancha {
 	private void setIdCancha(int idCancha) {
 		this.idCancha = idCancha;
 	}
-
-
-
-
-
 
 }

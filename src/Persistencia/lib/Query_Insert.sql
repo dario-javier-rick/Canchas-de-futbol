@@ -17,8 +17,8 @@ insert into CLIENTES values(6, 'Ricardo', 'Fort', 42225156);
 /*
  * Agrego canchas de prueba
  */ 
-insert into CANCHAS values(1, 'Cancha 1', 'Cancha de 7', 150, 8);
-insert into CANCHAS values(2, 'Cancha 2', 'Cancha de 11', 200, 11);
+insert into CANCHAS values(1, 'Cancha 1', 'Cancha de 7', 7, 150);
+insert into CANCHAS values(2, 'Cancha 2', 'Cancha de 11', 11, 200);
 
 /*
  * Agrego reservas de prueba
